@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# blueproximity 0.8
+# blueproximity 0.99
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -25,6 +25,7 @@ import gobject
 import signal
 from configobj import ConfigObj
 from validate import Validator
+
 
 try:
     import pygtk
@@ -95,6 +96,39 @@ class ProximityGUI:
         #Show the current settings
         self.readSettings()
         self.config = configobj
+        
+        #Prepare icon
+        self.window.hide()
+        self.icon = gtk.StatusIcon()
+        self.icon.set_tooltip("BlueProximity starting...")
+        self.icon.set_from_file("blueproximity_error.gif")
+        
+        self.popupmenu = gtk.Menu()
+        menuItem = gtk.ImageMenuItem(gtk.STOCK_EDIT)
+        menuItem.connect('activate', self.showWindow)
+        self.popupmenu.append(menuItem)
+        menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        menuItem.connect('activate', self.quit, self.icon)
+        self.popupmenu.append(menuItem)
+
+        self.icon.connect('activate', self.showWindow)
+        self.icon.connect('popup-menu', self.popupMenu, self.popupmenu)
+        
+        self.icon.set_visible(True)
+
+    def popupMenu(self, widget, button, time, data = None):
+        if button == 3:
+            if data:
+                data.show_all()
+                data.popup(None, None, None, 3, time)
+        pass
+
+    def showWindow(self, widget, data = None):
+        if self.window.get_property("visible"):
+            self.Close()
+        else:
+            self.window.show()
+            self.proxi.Simulate = True
 
     def readSettings(self):
         #Updates the controls to show the actual configuration of the running proximity
@@ -139,21 +173,30 @@ class ProximityGUI:
         
     def btnScan_clicked(self,widget):
         # scan the area for bluetooth devices and show the results
+        tmpMac = self.proxi.dev_mac
+        self.proxi.dev_mac = ''
+        self.proxi.kill_connection()
         macs = self.proxi.get_device_list()
+        self.proxi.dev_mac = tmpMac
         self.model.clear()
         for mac in macs:
             self.model.append([mac[0], mac[1]])
         
 
     def Close(self):
+        self.window.hide()
+        self.proxi.Simulate = False
+
+    def quit(self, widget, data = None):
         #try to close everything correctly
+        self.icon.set_from_file('blueproximity_attention.gif')
         self.proxi.Stop = 1
-        time.sleep(1)
+        time.sleep(2)
         gtk.main_quit()
 
     def updateState(self):
         # update the display with newest measurement values
-        newVal = int(self.proxi.Dist)
+        newVal = int(self.proxi.Dist) # Values are negative!
         if newVal > self.minDist:
             self.minDist = newVal
         if newVal < self.maxDist:
@@ -161,6 +204,21 @@ class ProximityGUI:
         self.wTree.get_widget("labState").set_text("min: " + 
             str(-self.minDist) + " max: " + str(-self.maxDist) + " state: " + self.proxi.State)
         self.wTree.get_widget("hscaleAct").set_value(-newVal)
+        
+        #Update icon too
+        if self.proxi.State != 'active':
+            self.icon.set_from_file('blueproximity_nocon.gif')
+        else:
+            if newVal < self.proxi.active_limit:
+                self.icon.set_from_file('blueproximity_attention.gif')
+            else:
+                self.icon.set_from_file('blueproximity_base.gif')
+        if self.proxi.Simulate:
+            simu = '\nSimulation Mode (locking disabled)'
+        else:
+            simu = ''
+        self.icon.set_tooltip('Detected Distance: ' + str(-newVal) + "\nCurrent State: " + self.proxi.State + "\nStatus: " + self.proxi.ErrorMsg + simu)
+        
         self.timer = gobject.timeout_add(1000,self.updateState)
 
 
@@ -174,7 +232,7 @@ class Proximity (threading.Thread):
         self.State = "gone"
         self.Simulate = False
         self.Stop = False
-        self.pid = 0
+        self.procid = 0
         self.dev_mac = self.config['device_mac']
         self.ringbuffer_size = self.config['buffer_size']
         self.ringbuffer = [-254] * self.ringbuffer_size
@@ -194,9 +252,10 @@ class Proximity (threading.Thread):
                 ret_tab.append(line.strip('\t\n').split('\t'))
         return ret_tab
 
-    def kill_connection(self,pid):
+    def kill_connection(self):
         # kills the rssi detection connection
-        ret_val = os.popen("kill -2 " + str(pid), "r").readlines()
+        ret_val = os.popen("kill -2 " + str(self.procid), "r").readlines()
+        self.procid = 0
         return ret_val
 
     def get_proximity_once(self,dev_mac):
@@ -212,12 +271,12 @@ class Proximity (threading.Thread):
         # fire up a connection
         # don't forget to set up your phone not to ask for a connection
         # (at least for this computer)
-        args = ["rfcomm", "connect" ,"1", dev_mac, str(self.config['device_channel'])]
+        args = ["rfcomm", "connect" ,"1", dev_mac, str(self.config['device_channel']), ">/dev/null"]
         cmd = "/usr/bin/rfcomm"
-        print cmd + " " + str(args)
-        self.pid = os.spawnv(os.P_NOWAIT, cmd, args)
+        self.procid = os.spawnv(os.P_NOWAIT, cmd, args)
         # take some time to connect
         time.sleep(5)
+        return self.procid
 
     def run_cycle(self,dev_mac):
         # reads the distance and averages it over the ringbuffer
@@ -228,8 +287,10 @@ class Proximity (threading.Thread):
             ret_val = ret_val + val
         if self.ringbuffer[self.ringbuffer_pos] == -255:
             self.ErrorMsg = "No connection found, trying to establish one..."
-            print "I can't find my master. Will try again..."
-            self.pid = self.get_connection(dev_mac)
+            #print "I can't find my master. Will try again..."
+            if self.procid != 0:
+                self.kill_connection()
+            self.procid = self.get_connection(dev_mac)
         return int(ret_val / self.ringbuffer_size)
 
     def go_active(self):
@@ -274,15 +335,16 @@ class Proximity (threading.Thread):
                     else:
                         duration_count = 0                    
                 if dist != self.Dist or state != self.State:
-                    print "Detected distance atm: " + str(dist) + "; state is " + state
+                    #print "Detected distance atm: " + str(dist) + "; state is " + state
+                    pass
                 self.State = state
                 self.Dist = dist
                 time.sleep(1)
             except KeyboardInterrupt:
                 break
-        if self.pid > 0:
-            print 'Now stopping connection...'
-            p.kill_connection(self.pid)
+        if self.procid != 0:
+            #print 'Now stopping connection...'
+            p.kill_connection()
 
 if __name__=='__main__':
     # react on ^C
@@ -294,10 +356,9 @@ if __name__=='__main__':
     config.write()
     
     p = Proximity(config)
-# This would just show the values but not react to them (no locking is done)
-#    p.Simulate = True
     p.start()
     pGui = ProximityGUI(p,config)
+
     # make GTK threadable 
     gtk.gdk.threads_init()
     gtk.main()
