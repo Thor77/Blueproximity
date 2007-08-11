@@ -1,10 +1,30 @@
+#!/usr/bin/env python
+
+# blueproximity 0.8
+# Add security to your desktop by automatically locking and unlocking 
+# the screen when you and your phone leave/enter the desk. 
+# Think of a proximity detector for your mobile phone via bluetooth.
 # requires bluetooth utils like hcitool to run
+
+# copyright by Lars Friedrichs <larsfriedrichs@gmx.de>
+# this source is licensed under the GPL.
+# I'm a big fan of talkback about how it performs!
+# I'm also open to feature requests and notes on programming issues, I am no python master at all...
+# ToDo List:
+# - DONE:add config file support
+# - add iconize function
+# - add device scan for possible services
+# - add usage of python native bluetooth lib
+# - add expert configuration GUI
+
 
 import os
 import time
 import threading
 import gobject
 import signal
+from configobj import ConfigObj
+from validate import Validator
 
 try:
     import pygtk
@@ -18,13 +38,30 @@ try:
 except:
     sys.exit(1)
 
+# Setup config file specs and defaults
+conf_specs = [
+    'device_mac=string(max=17,default=\'\')',
+    'device_channel=integer(1,30,default=7)',
+    'lock_distance=integer(0,255,default=4)',
+    'lock_duration=integer(0,255,default=2)',
+    'unlock_distance=integer(0,255,default=2)',
+    'unlock_duration=integer(0,255,default=1)',
+    'lock_command=string(default=''gnome-screensaver-command -a'')',
+    'unlock_command=string(default=''gnome-screensaver-command -d'')',
+    'buffer_size=integer(1,255,default=1)'
+    ]
+
 class ProximityGUI:
-    def __init__(self,proximityObject):
+    # this class represents the main configuration window and
+    # updates the config file after changes made are saved
+    def __init__(self,proximityObject,configobj):
+        #Constructor sets up the GUI and reads the current config
+        
         #Set the Glade file
         self.gladefile = "proximity.glade"  
         self.wTree = gtk.glade.XML(self.gladefile) 
 
-        #Create our dictionay and connect it
+        #Create our dictionary and connect it
         dic = { "on_btnActivate_clicked" : self.btnActivate_clicked,
             "on_btnClose_clicked" : self.btnClose_clicked,
             "on_btnScan_clicked" : self.btnScan_clicked,
@@ -42,6 +79,7 @@ class ProximityGUI:
         self.maxDist = 0
         self.timer = gobject.timeout_add(1000,self.updateState)
 
+        #Prepare the mac/name table
         self.model = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING)
         self.tree = self.wTree.get_widget("treeScanResult")
         self.tree.set_model(self.model)
@@ -53,9 +91,13 @@ class ProximityGUI:
         colLabel.set_resizable(True)
         colLabel.set_sort_column_id(1)
         self.tree.append_column(colLabel)
+        
+        #Show the current settings
         self.readSettings()
+        self.config = configobj
 
     def readSettings(self):
+        #Updates the controls to show the actual configuration of the running proximity
         self.wTree.get_widget("entryMAC").set_text(self.proxi.dev_mac)
         self.wTree.get_widget("hscaleLockDist").set_value(-self.proxi.gone_limit)
         self.wTree.get_widget("hscaleLockDur").set_value(self.proxi.gone_duration)
@@ -63,13 +105,21 @@ class ProximityGUI:
         self.wTree.get_widget("hscaleUnlockDur").set_value(self.proxi.active_duration)
 
     def writeSettings(self):
+        #Updates the running proximity and the config file with the new settings from the controls
         self.proxi.dev_mac = self.wTree.get_widget("entryMAC").get_text()
         self.proxi.gone_limit = -self.wTree.get_widget("hscaleLockDist").get_value()
         self.proxi.gone_duration = self.wTree.get_widget("hscaleLockDur").get_value()
         self.proxi.active_limit = -self.wTree.get_widget("hscaleUnlockDist").get_value()
         self.proxi.active_duration = self.wTree.get_widget("hscaleUnlockDur").get_value()
+        self.config['device_mac'] = str(self.proxi.dev_mac)
+        self.config['lock_distance'] = int(-self.proxi.gone_limit)
+        self.config['lock_duration'] = int(self.proxi.gone_duration)
+        self.config['unlock_distance'] = int(-self.proxi.active_limit)
+        self.config['unlock_duration'] = int(self.proxi.active_duration)
+        self.config.write()
 
     def btnResetMinMax_clicked(self,widget):
+        #Resets the values for the min/max viewer
         self.minDist = -255
         self.maxDist = 0
 
@@ -80,6 +130,7 @@ class ProximityGUI:
         self.Close()
 
     def btnSelect_clicked(self,widget):
+        #Takes the selected entry in the mac/name table and enters its mac in the MAC field
         selection = self.tree.get_selection()
         model, selection_iter = selection.get_selected()
         if (selection_iter):
@@ -95,12 +146,13 @@ class ProximityGUI:
         
 
     def Close(self):
+        #try to close everything correctly
         self.proxi.Stop = 1
         time.sleep(1)
         gtk.main_quit()
 
     def updateState(self):
-        # update the display with newest values
+        # update the display with newest measurement values
         newVal = int(self.proxi.Dist)
         if newVal > self.minDist:
             self.minDist = newVal
@@ -113,21 +165,24 @@ class ProximityGUI:
 
 
 class Proximity (threading.Thread):
-    def __init__(self,dev_mac,buffer_size,gone_duration,gone_limit,active_duration,active_limit):
+    # this class does 'all the magic'
+    def __init__(self,config):
+        # setup our local variables
         threading.Thread.__init__(self, name="WorkerThread")
+        self.config = config
         self.Dist = -255
         self.State = "gone"
         self.Simulate = False
         self.Stop = False
         self.pid = 0
-        self.dev_mac = dev_mac
-        self.ringbuffer_size = buffer_size
+        self.dev_mac = self.config['device_mac']
+        self.ringbuffer_size = self.config['buffer_size']
         self.ringbuffer = [-254] * self.ringbuffer_size
         self.ringbuffer_pos = 0
-        self.gone_duration = gone_duration
-        self.gone_limit = gone_limit
-        self.active_duration = active_duration
-        self.active_limit = active_limit
+        self.gone_duration = self.config['lock_duration']
+        self.gone_limit = -self.config['lock_distance']
+        self.active_duration = self.config['unlock_duration']
+        self.active_limit = -self.config['unlock_distance']
         self.ErrorMsg = "Initialized..."
     
     def get_device_list(self):
@@ -157,9 +212,8 @@ class Proximity (threading.Thread):
         # fire up a connection
         # don't forget to set up your phone not to ask for a connection
         # (at least for this computer)
-        args = ["rfcomm", "connect" ,"1", dev_mac, "7"]
+        args = ["rfcomm", "connect" ,"1", dev_mac, self.config['device_channel']]
         cmd = "/usr/bin/rfcomm"
-        #print "debug: fuehre aus '" + cmd + "' mit args '" + str(args) + "'"
         self.pid = os.spawnv(os.P_NOWAIT, cmd, args)
         time.sleep(5)
 
@@ -177,12 +231,12 @@ class Proximity (threading.Thread):
         return int(ret_val / self.ringbuffer_size)
 
     def go_active(self):
-        print "The Doctor is in !"
-        ret_val = os.popen("gnome-screensaver-command -d").readlines()
+        #The Doctor is in
+        ret_val = os.popen(self.config['unlock_command']).readlines()
 
     def go_gone(self):
-        print "The Doctor is out !"
-        ret_val = os.popen("gnome-screensaver-command -a").readlines()
+        #The Doctor is out
+        ret_val = os.popen(self.config['lock_command']).readlines()
 
     def run(self):
     # this is the main loop
@@ -229,16 +283,20 @@ class Proximity (threading.Thread):
             p.kill_connection(self.pid)
 
 if __name__=='__main__':
+    # react on ^C
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    p = Proximity("00:12:D1:8A:D7:8D",1,2,-4,1,-2)
-    p.Simulate = True
-    #print 'Now scanning surrounding devices (using hcitool)...'
-    #print (p.get_device_list())
-    #print 'Now starting connection to detect rssi values...'
-    #p.get_connection("00:12:D1:8A:D7:8D")
-    #print 'Started with PID ' + str(p.pid)
+    # read config if any
+    config = ConfigObj(os.getenv('HOME') + '/.blueproximityrc',{'create_empty':True,'configspec':conf_specs})
+    vdt = Validator()
+    config.validate(vdt, copy=True)
+    config.write()
+    
+    p = Proximity(config)
+# This would just show the values but not react to them (no locking is done)
+#    p.Simulate = True
     p.start()
-    pGui = ProximityGUI(p)
+    pGui = ProximityGUI(p,config)
+    # make GTK threadable 
     gtk.gdk.threads_init()
     gtk.main()
     
