@@ -212,9 +212,11 @@ class Proximity (threading.Thread):
         # fire up a connection
         # don't forget to set up your phone not to ask for a connection
         # (at least for this computer)
-        args = ["rfcomm", "connect" ,"1", dev_mac, self.config['device_channel']]
+        args = ["rfcomm", "connect" ,"1", dev_mac, str(self.config['device_channel'])]
         cmd = "/usr/bin/rfcomm"
+        print cmd + " " + str(args)
         self.pid = os.spawnv(os.P_NOWAIT, cmd, args)
+        # take some time to connect
         time.sleep(5)
 
     def run_cycle(self,dev_mac):
