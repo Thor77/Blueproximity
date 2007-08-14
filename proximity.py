@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 
-# blueproximity 1.01
+# blueproximity 1.04
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
-# requires bluetooth utils like hcitool and rfcomm to run
+# requires external bluetooth util hcitool to run
 # (which makes it unix only at this time)
+# Needed python extensions:
+#  ConfigObj (python-configobj)
+#  PyGTK (python-gtk2, python-glade2)
+#  Bluetooth (python-bluez)
 
 # copyright by Lars Friedrichs <larsfriedrichs@gmx.de>
 # this source is licensed under the GPL.
@@ -21,13 +25,13 @@ import gobject
 import signal
 from configobj import ConfigObj
 from validate import Validator
-#import bluetooth
+import bluetooth
 
 try:
     import pygtk
     pygtk.require("2.0")
 except:
-    pass
+    sys.exit(1)
 
 try:
     import gtk
@@ -204,13 +208,16 @@ class ProximityGUI:
         self.wTree.get_widget("hscaleAct").set_value(-newVal)
         
         #Update icon too
-        if self.proxi.State != 'active':
-            self.icon.set_from_file('blueproximity_nocon.gif')
+        if self.proxi.ErrorMsg == "No connection found, trying to establish one...":
+            self.icon.set_from_file('blueproximity_error.gif')
         else:
-            if newVal < self.proxi.active_limit:
-                self.icon.set_from_file('blueproximity_attention.gif')
+            if self.proxi.State != 'active':
+                self.icon.set_from_file('blueproximity_nocon.gif')
             else:
-                self.icon.set_from_file('blueproximity_base.gif')
+                if newVal < self.proxi.active_limit:
+                    self.icon.set_from_file('blueproximity_attention.gif')
+                else:
+                    self.icon.set_from_file('blueproximity_base.gif')
         if self.proxi.Simulate:
             simu = '\nSimulation Mode (locking disabled)'
         else:
@@ -240,21 +247,28 @@ class Proximity (threading.Thread):
         self.active_duration = self.config['unlock_duration']
         self.active_limit = -self.config['unlock_distance']
         self.ErrorMsg = "Initialized..."
+        self.sock = None
     
     def get_device_list(self):
         # returns all active bluetooth devices found
         ret_tab = list()
-        lines = os.popen("hcitool scan", "r").readlines()
-        for line in lines:
-            if line.startswith('\t'):
-                ret_tab.append(line.strip('\t\n').split('\t'))
+#        lines = os.popen("hcitool scan", "r").readlines()
+#        for line in lines:
+#            if line.startswith('\t'):
+#                ret_tab.append(line.strip('\t\n').split('\t'))
+        nearby_devices = bluetooth.discover_devices()
+        for bdaddr in nearby_devices:
+            ret_tab.append([str(bdaddr),str(bluetooth.lookup_name( bdaddr ))])
         return ret_tab
 
     def kill_connection(self):
         # kills the rssi detection connection
-        ret_val = os.popen("kill -2 " + str(self.procid), "r").readlines()
-        self.procid = 0
-        return ret_val
+        #ret_val = os.popen("kill -2 " + str(self.procid), "r").readlines()
+        #self.procid = 0
+        if self.sock != None:
+            self.sock.close()
+        self.sock = None
+        return 0 #ret_val if popen used
 
     def get_proximity_once(self,dev_mac):
         # returns all active bluetooth devices found
@@ -269,11 +283,15 @@ class Proximity (threading.Thread):
         # fire up a connection
         # don't forget to set up your phone not to ask for a connection
         # (at least for this computer)
-        args = ["rfcomm", "connect" ,"1", dev_mac, str(self.config['device_channel']), ">/dev/null"]
-        cmd = "/usr/bin/rfcomm"
-        self.procid = os.spawnv(os.P_NOWAIT, cmd, args)
-        # take some time to connect
-        time.sleep(5)
+        #args = ["rfcomm", "connect" ,"1", dev_mac, str(self.config['device_channel']), ">/dev/null"]
+        #cmd = "/usr/bin/rfcomm"
+        #self.procid = os.spawnv(os.P_NOWAIT, cmd, args)
+        self.procid = 1
+        self.sock = bluetooth.BluetoothSocket( bluetooth.RFCOMM )
+        self.sock.connect((dev_mac, self.config['device_channel']))
+
+        # take some time to connect (only when using spawnv)
+        #time.sleep(5)
         return self.procid
 
     def run_cycle(self,dev_mac):
@@ -286,9 +304,8 @@ class Proximity (threading.Thread):
         if self.ringbuffer[self.ringbuffer_pos] == -255:
             self.ErrorMsg = "No connection found, trying to establish one..."
             #print "I can't find my master. Will try again..."
-            if self.procid != 0:
-                self.kill_connection()
-            self.procid = self.get_connection(dev_mac)
+            self.kill_connection()
+            self.get_connection(dev_mac)
         return int(ret_val / self.ringbuffer_size)
 
     def go_active(self):
@@ -340,9 +357,7 @@ class Proximity (threading.Thread):
                 time.sleep(1)
             except KeyboardInterrupt:
                 break
-        if self.procid != 0:
-            #print 'Now stopping connection...'
-            p.kill_connection()
+        self.kill_connection()
 
 if __name__=='__main__':
     # react on ^C
