@@ -1,22 +1,18 @@
 #!/usr/bin/env python
 
-# blueproximity 0.99
+# blueproximity 1.01
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
-# requires bluetooth utils like hcitool to run
+# requires bluetooth utils like hcitool and rfcomm to run
+# (which makes it unix only at this time)
 
 # copyright by Lars Friedrichs <larsfriedrichs@gmx.de>
 # this source is licensed under the GPL.
 # I'm a big fan of talkback about how it performs!
 # I'm also open to feature requests and notes on programming issues, I am no python master at all...
-# ToDo List:
-# - DONE:add config file support
-# - add iconize function
-# - add device scan for possible services
-# - add usage of python native bluetooth lib
-# - add expert configuration GUI
-
+# ToDo List can be found on sourceforge
+# follow http://blueproximity.sourceforge.net
 
 import os
 import time
@@ -55,7 +51,7 @@ conf_specs = [
 class ProximityGUI:
     # this class represents the main configuration window and
     # updates the config file after changes made are saved
-    def __init__(self,proximityObject,configobj):
+    def __init__(self,proximityObject,configobj,show_window_on_start):
         #Constructor sets up the GUI and reads the current config
         
         #Set the Glade file
@@ -98,7 +94,8 @@ class ProximityGUI:
         self.config = configobj
         
         #Prepare icon
-        self.window.hide()
+        if not show_window_on_start:
+            self.window.hide()
         self.icon = gtk.StatusIcon()
         self.icon.set_tooltip("BlueProximity starting...")
         self.icon.set_from_file("blueproximity_error.gif")
@@ -350,14 +347,20 @@ if __name__=='__main__':
     # react on ^C
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     # read config if any
-    config = ConfigObj(os.getenv('HOME') + '/.blueproximityrc',{'create_empty':True,'configspec':conf_specs})
+    new_config = False
+    try:
+        config = ConfigObj(os.getenv('HOME') + '/.blueproximityrc',{'create_empty':False,'file_error':True,'configspec':conf_specs})
+    except:
+        new_config = True
+    if new_config:
+        config = ConfigObj(os.getenv('HOME') + '/.blueproximityrc',{'create_empty':True,'file_error':False,'configspec':conf_specs})
     vdt = Validator()
     config.validate(vdt, copy=True)
     config.write()
     
     p = Proximity(config)
     p.start()
-    pGui = ProximityGUI(p,config)
+    pGui = ProximityGUI(p,config,new_config)
 
     # make GTK threadable 
     gtk.gdk.threads_init()
