@@ -3,11 +3,11 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
-	<META NAME="AUTHOR" CONTENT="Lars Friedrichs">
+	<meta name="generator" content="Bluefish 1.0.7">
+	<meta name="author" content="Lars Friedrichs">
 	<META NAME="CREATED" CONTENT="20070811;21544300">
 	<META NAME="CHANGEDBY" CONTENT="Lars Friedrichs">
-	<META NAME="CHANGED" CONTENT="20070812;1021100">
+	<META NAME="CHANGED" CONTENT="20070814;17082000">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { size: 21cm 29.7cm; margin: 2cm }
@@ -46,19 +46,21 @@ change...</P>
 environments you will most likely get reproduceable results.</P>
 <H2 CLASS="western">Installation</H2>
 <P>At the moment the prerequisites include a unix system with an
-installed python interpreter. You need the <EM>hcitool</EM> and
-<EM>rfcomm</EM> tools installed. On my Ubuntu system they are
-included in the <EM>bluez-utils</EM> package. You also need the <EM>PyGTK</EM>
-and <EM>ConfigObj</EM> extensions for python.</P>
+installed python interpreter. You need the <KBD>hcitool</KBD> tool
+installed. On my Ubuntu system they are included in the <EM>bluez-utils</EM>
+package. You also need the <STRONG>PyGTK</STRONG> (<EM>python-gtk2,
+python-glade2</EM>), <EM> </EM><STRONG>ConfigObj</STRONG>
+(<EM>python-configobj</EM>) and <STRONG>Bluetooth</STRONG><EM>
+(python-bluez) </EM>extensions for python.</P>
 <P>You should download the newest version of BlueProximity from its
-sourceforge site at <A HREF="http://blueproximity.sourceforge.net/">http://blueproximity.sourceforge.net</A>
+sourceforge site at <A HREF="http://blueproximity.sourceforge.net/"></A><A HREF="http://blueproximity.sourceforge.net/"></A><A HREF="http://blueproximity.sourceforge.net/">http://blueproximity.sourceforge.net</A><A HREF="http://blueproximity.sourceforge.net/"></A><A HREF="http://blueproximity.sourceforge.net/"></A>
 and unpack it via <KBD>tar xvzf blueproximity-versionnumber.tar.gz</KBD></P>
-<P>Start BlueProximity by typing <KBD>python proximity.py</KBD></P>
+<P>Start BlueProximity by typing <KBD>start_proximity.sh</KBD></P>
 <H2 CLASS="western">Configuration</H2>
 <H3 CLASS="western">Setting up the phone</H3>
 <P>First you should pair your computer and your mobile phone. It
 should not be part of this manual how to do that at this time. Just
-as a hint – using the GNOME desktop the package bluetooth-gnome
+as a hint – using the GNOME desktop the package <STRONG>bluetooth-gnome</STRONG>
 might help you do that. Once being paired your mobile won't ask for a
 password when a connection from the computer to the phone is made.
 There is still the possibility that your mobile phone will ask you to
@@ -69,8 +71,10 @@ Disable that question as not disabled renders BlueProximity quite
 unusable.</P>
 <H3 CLASS="western">Connecting the phone</H3>
 <P>After setting up the phone computer pair you can now move on and
-configure BlueProximity. You see the BlueProximity icon in the
-notification area as shown here.</P>
+configure BlueProximity. After the first start you see the settings
+window. if you closed that by accident or it did not show up, you see
+the BlueProximity icon in the notification area as shown here. (It
+may appear with a colorless P and a yellow spark in there.)</P>
 <P><IMG SRC="manual_html_m92a64f9.png" NAME="Grafik1" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>Single-left-click
 on the icon to make the settings screen appear.</P>
 <P><IMG SRC="manual_html_311f102e.png" NAME="Grafik2" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>You
@@ -83,7 +87,7 @@ mobile phone. If you know it you can skip the next step.</P>
 <P>To find out that address you should configure your phone to
 bluetooth visible mode. It may be the standard setting but you never
 know... Now click on the <KBD>Scan for devices</KBD> button. A scan
-takes about 5 seconds. You should find your device in the list now,
+takes about 10 seconds. You should find your device in the list now,
 maybe among other bluetooth devices around your place.</P>
 <P><IMG SRC="manual_html_m54b276bb.png" NAME="Grafik3" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>Just
 click on your device and on the <KBD>Use selected device</KBD>
@@ -130,7 +134,7 @@ over it. You may see these icons:</P>
 <P><IMG SRC="manual_html_mb65dd2a.png" NAME="Grafik5" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>The
 white 'P' letter shows that BlueProximity thinks everything is ok and
 you are around within the safe distance.</P>
-<P><IMG SRC="manual_html_41e5c7c8.png" NAME="Grafik6" ALIGN=LEFT  BORDER=0><BR CLEAR=LEFT>The
+<P><IMG SRC="manual_html_41e5c7c8.png" NAME="Grafik6" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>The
 yellow 'P' letter let's you know that the detected distance is now
 still below the lock distance but above the unlock distance. So if
 your computer was locked by BlueProximity it would not yet be
@@ -152,19 +156,20 @@ might be) you should right click on the tray icon and select <KBD>close</KBD>
 in that menu. It may take up to three seconds to shutdown the
 software.</P>
 <H2 CLASS="western">FAQ</H2>
-<P>Q: I can't see my mobile phone when scanning.</P>
-<P>A: You need to activate bluetooth and disable invisibility in your
-phone's bluetooth settings.</P>
+<P><EM>Q:</EM> I can't see my mobile phone when scanning.</P>
+<P><EM>A:</EM> You need to activate bluetooth and disable
+invisibility in your phone's bluetooth settings.</P>
 <P><BR><BR>
 </P>
-<P>Q: My phone gets detected but the distance is always 255.</P>
-<P>A: Most likely your phone uses another channel for communication
-than the phones we tried. You can find a usable channel by brute
-force or by using the <KBD>sdptool browse</KBD> command. In the
-output watch for the lines starting with <EM>RFCOMM</EM> and <EM>Channel:</EM>
-where the number after channel is the needed channel number. In the
-config file <CODE>~/.blueproximityrc</CODE> change the <CODE>device_channel</CODE>
-setting to the new channel. Channels address different services on
-the phone – you might sometimes even appear as a headset e.g.</P>
+<P><EM>Q:</EM> My phone gets detected but the distance is always 255.</P>
+<P><EM>A:</EM> Most likely your phone uses another channel for
+communication than the phones we tried. You can find a usable channel
+by brute force or by using the <KBD>sdptool browse</KBD> command. In
+the output watch for the lines starting with <EM>RFCOMM</EM> and
+<EM>Channel:</EM> where the number after channel is the needed
+channel number. In the config file <CODE>~/.blueproximityrc</CODE>
+change the <CODE>device_channel</CODE> setting to the new channel.
+Channels address different services on the phone – you might
+sometimes even appear as a headset e.g.</P>
 </BODY>
 </HTML>

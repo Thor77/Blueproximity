@@ -24,10 +24,11 @@ there might be updates for other systems too. If you have the GTK
 libs and proper python bindings installed it should also run under
 KDE desktop (untestet!) but you should change the lock/unlock 
 commands in the config file. With python you need installed 
-python-configobj which is used for configuration management.
+python-configobj which is used for configuration management and
+pybluez that is a python bluez/windows bluetooth stack library.
 
-You need the hcitools package installed so that the commands 
-hcitool and rfcomm are available to the current user.
+You need the hcitools package installed so that the command 
+hcitool is available to the current user.
 
 Please also note that your computer and your mobile phone should 
 already be paired correctly in a way that your phone won't ask 
@@ -42,7 +43,7 @@ Installation - blueproximity
 2. Unzip the downloaded file into a directory of choice.
 3. Open a terminal and switch to the chosen directory with the 
    cd command.
-4. type python proximity.py
+4. type start_proximity.sh
 	    
 Running blueproximity
 	    
