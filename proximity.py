@@ -21,7 +21,7 @@ import gobject
 import signal
 from configobj import ConfigObj
 from validate import Validator
-
+#import bluetooth
 
 try:
     import pygtk
@@ -37,7 +37,7 @@ except:
 
 # Setup config file specs and defaults
 conf_specs = [
-    'device_mac=string(max=17,default=\'\')',
+    'device_mac=string(max=17,default="")',
     'device_channel=integer(1,30,default=7)',
     'lock_distance=integer(0,255,default=4)',
     'lock_duration=integer(0,255,default=2)',
@@ -93,9 +93,10 @@ class ProximityGUI:
         self.readSettings()
         self.config = configobj
         
+        if show_window_on_start:
+            self.window.show()
+
         #Prepare icon
-        if not show_window_on_start:
-            self.window.hide()
         self.icon = gtk.StatusIcon()
         self.icon.set_tooltip("BlueProximity starting...")
         self.icon.set_from_file("blueproximity_error.gif")
@@ -354,6 +355,8 @@ if __name__=='__main__':
         new_config = True
     if new_config:
         config = ConfigObj(os.getenv('HOME') + '/.blueproximityrc',{'create_empty':True,'file_error':False,'configspec':conf_specs})
+        # next line fixes a problem with creating empty strings in default values for configobj
+        config['device_mac'] = ''
     vdt = Validator()
     config.validate(vdt, copy=True)
     config.write()
