@@ -8,6 +8,7 @@ Changelog for BlueProximity
 - added: startup script start_proximity.sh to be run from anywhere (link it in your session startup)
 - added: automatically show settings screen on first startup (Feature #1772589)
 - added: pause mode via icon's context menu (Feature #1776527)
+- added: Ubuntu Feisty package (Feature #1772590)
 - modified: some aspects regarding easier packaging
 - modified: logo
 - modified: switching most bt functions to pybluez, only rssi detection relies on hcitool

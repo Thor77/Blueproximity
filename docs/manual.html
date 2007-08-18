@@ -3,11 +3,11 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<meta name="generator" content="Bluefish 1.0.7">
-	<meta name="author" content="Lars Friedrichs">
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Lars Friedrichs">
 	<META NAME="CREATED" CONTENT="20070811;21544300">
 	<META NAME="CHANGEDBY" CONTENT="Lars Friedrichs">
-	<META NAME="CHANGED" CONTENT="20070814;17082000">
+	<META NAME="CHANGED" CONTENT="20070818;11112400">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { size: 21cm 29.7cm; margin: 2cm }
@@ -45,6 +45,17 @@ change...</P>
 <P>You see, we cannot measure exact distances but in stable
 environments you will most likely get reproduceable results.</P>
 <H2 CLASS="western">Installation</H2>
+<P>There are two ways of installing BlueProximity. One and by far the
+easiest is by installing the Ubuntu (Feisty) package that can be
+downloaded via sourceforge. If you are unsure if that will do or you
+have a different distribution you can also select a normal tarball
+installation explained below. If the Ubuntu package is installed you
+find the start icon in your Applications menu in the utilities
+subfolder. To start BlueProximity from the console just type
+<KBD>blueproximity</KBD>. You can add this one to your session
+manager's startup profile for automatic start with system boot.
+Please start it now and move on to the next chapter <EM>Configuration</EM>
+in this document.</P>
 <P>At the moment the prerequisites include a unix system with an
 installed python interpreter. You need the <KBD>hcitool</KBD> tool
 installed. On my Ubuntu system they are included in the <EM>bluez-utils</EM>
@@ -55,7 +66,10 @@ python-glade2</EM>), <EM> </EM><STRONG>ConfigObj</STRONG>
 <P>You should download the newest version of BlueProximity from its
 sourceforge site at <A HREF="http://blueproximity.sourceforge.net/"></A><A HREF="http://blueproximity.sourceforge.net/"></A><A HREF="http://blueproximity.sourceforge.net/">http://blueproximity.sourceforge.net</A><A HREF="http://blueproximity.sourceforge.net/"></A><A HREF="http://blueproximity.sourceforge.net/"></A>
 and unpack it via <KBD>tar xvzf blueproximity-versionnumber.tar.gz</KBD></P>
-<P>Start BlueProximity by typing <KBD>start_proximity.sh</KBD></P>
+<P>Start BlueProximity by typing <KBD>start_proximity.sh</KBD> which
+can also be put in your gnome menu and into the session manager for
+automatic start with system boot. 
+</P>
 <H2 CLASS="western">Configuration</H2>
 <H3 CLASS="western">Setting up the phone</H3>
 <P>First you should pair your computer and your mobile phone. It
@@ -75,9 +89,9 @@ configure BlueProximity. After the first start you see the settings
 window. if you closed that by accident or it did not show up, you see
 the BlueProximity icon in the notification area as shown here. (It
 may appear with a colorless P and a yellow spark in there.)</P>
-<P><IMG SRC="manual_html_m92a64f9.png" NAME="Grafik1" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>Single-left-click
+<P><IMG SRC="manual_html_m92a64f9.png" NAME="Grafik1" ALIGN=LEFT WIDTH=315 HEIGHT=138 BORDER=0><BR CLEAR=LEFT>Single-left-click
 on the icon to make the settings screen appear.</P>
-<P><IMG SRC="manual_html_311f102e.png" NAME="Grafik2" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>You
+<P><IMG SRC="manual_html_311f102e.png" NAME="Grafik2" ALIGN=LEFT WIDTH=471 HEIGHT=612 BORDER=0><BR CLEAR=LEFT>You
 will see two tabs regarding different types of settings. On the first
 tab you may configure the basic connection between computer and
 phone, the second tab will show settings to adapt the distance
@@ -89,21 +103,18 @@ bluetooth visible mode. It may be the standard setting but you never
 know... Now click on the <KBD>Scan for devices</KBD> button. A scan
 takes about 10 seconds. You should find your device in the list now,
 maybe among other bluetooth devices around your place.</P>
-<P><IMG SRC="manual_html_m54b276bb.png" NAME="Grafik3" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>Just
+<P><IMG SRC="manual_html_m54b276bb.png" NAME="Grafik3" ALIGN=LEFT WIDTH=471 HEIGHT=612 BORDER=0><BR CLEAR=LEFT>Just
 click on your device and on the <KBD>Use selected device</KBD>
 button. Your device's mac address should now appear in the mac
 address field.</P>
-<P>You may click on the button called <KBD>Anwenden</KBD> in this
-screenshot. I am sorry, but I have a german system and don't know how
-the button is called on an english system, it might be <KBD>accept</KBD>
-or <KBD>activate</KBD> or something like that.</P>
+<P>You should click on the button called <KBD>Apply</KBD>.</P>
 <H3 CLASS="western">Setup distance detection</H3>
 <P>Now BlueProximity should already start working but there might be
 further tuning of distance parameters needed. Note: Your screen will
 never be locked as long as the settings screen is shown. This way you
 can change the detection parameters and test them.</P>
 <P>The second tab will look like this:</P>
-<P><IMG SRC="manual_html_39564f6.png" NAME="Grafik4" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>You
+<P><IMG SRC="manual_html_39564f6.png" NAME="Grafik4" ALIGN=LEFT WIDTH=471 HEIGHT=612 BORDER=0><BR CLEAR=LEFT>You
 see three sections called Locking, Unlocking and measured atm. The
 Locking section sets the parameters when to lock the screen. The
 distance parameter refers to the ruler in the distance section. You
@@ -121,8 +132,8 @@ loose seconds of security but win usability by not unexpectedly
 locking your screen.</P>
 <P>Set the values for unlocking in a similar maner. It is usual to
 set the distance lower than the lock distance. Click on the button
-called <KBD>Anwenden</KBD> in the screenshot again to let
-BlueProximity use the new settings.</P>
+called <KBD>Apply</KBD> again to let BlueProximity use the new
+settings.</P>
 <H3 CLASS="western">Testing the settings</H3>
 <P>You may just press the close button and see if your desktop gets
 locked or use the simulation mode which is always active if the
@@ -131,15 +142,15 @@ actual measured value and the resulting locking state right to the
 reset button. You may also have a look at the notification area icon
 which even gives you a nice tooltip when hovering your mousepointer
 over it. You may see these icons:</P>
-<P><IMG SRC="manual_html_mb65dd2a.png" NAME="Grafik5" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>The
+<P><IMG SRC="manual_html_mb65dd2a.png" NAME="Grafik5" ALIGN=LEFT WIDTH=200 HEIGHT=118 BORDER=0><BR CLEAR=LEFT>The
 white 'P' letter shows that BlueProximity thinks everything is ok and
 you are around within the safe distance.</P>
-<P><IMG SRC="manual_html_41e5c7c8.png" NAME="Grafik6" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>The
+<P><IMG SRC="manual_html_41e5c7c8.png" NAME="Grafik6" ALIGN=LEFT WIDTH=198 HEIGHT=118 BORDER=0><BR CLEAR=LEFT>The
 yellow 'P' letter let's you know that the detected distance is now
 still below the lock distance but above the unlock distance. So if
 your computer was locked by BlueProximity it would not yet be
 unlocked here.</P>
-<P><IMG SRC="manual_html_m92a64f9.png" NAME="Grafik7" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>The
+<P><IMG SRC="manual_html_m92a64f9.png" NAME="Grafik7" ALIGN=LEFT WIDTH=315 HEIGHT=138 BORDER=0><BR CLEAR=LEFT>The
 red 'P' letter shows what you would never see while the settings
 dialog is closed – this shows the screen would be locked now.</P>
 <P>You should play around with the settings for some time to find a
@@ -150,12 +161,27 @@ shows all configurable settings with its default values. In this file
 you may use different commands to lock the screen to make the
 programm useable with the KDE desktop or even start your own scripts.
 </P>
+<H3 CLASS="western">Pausing the software</H3>
+<P>If you would like keep the software from connecting to your phone
+(because you want to transfer files and it is somewhat interfering
+the transmission) you can activate <EM>pause mode</EM>. Right click
+on the icon to get the popup menu</P>
+<P><IMG SRC="manual_html_255afcfc.png" NAME="Grafik8" ALIGN=LEFT WIDTH=173 HEIGHT=111 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P>and select <KBD>Pause</KBD> in that menu. You will see the icon
+changing to pause mode too.</P>
+<P><IMG SRC="manual_html_4ee630fe.png" NAME="Grafik10" ALIGN=LEFT WIDTH=261 HEIGHT=69 BORDER=0><BR CLEAR=LEFT>To
+deactivate pause mode do the above steps again. You will see
+BlueProximity reconnecting to your phone and work again.</P>
 <H3 CLASS="western">Stopping the software</H3>
 <P>If you would like to stop the software (for whatever reason that
-might be) you should right click on the tray icon and select <KBD>close</KBD>
-in that menu. It may take up to three seconds to shutdown the
-software.</P>
-<H2 CLASS="western">FAQ</H2>
+might be) you should right click on the tray icon 
+</P>
+<P><IMG SRC="manual_html_255afcfc.png" NAME="Grafik9" ALIGN=LEFT WIDTH=173 HEIGHT=111 BORDER=0><BR CLEAR=LEFT><BR><BR>
+</P>
+<P>and select <KBD>close</KBD> in that menu. It may take up to three
+seconds to shutdown the software.</P>
+<H3 CLASS="western">FAQ</H3>
 <P><EM>Q:</EM> I can't see my mobile phone when scanning.</P>
 <P><EM>A:</EM> You need to activate bluetooth and disable
 invisibility in your phone's bluetooth settings.</P>
@@ -171,5 +197,20 @@ channel number. In the config file <CODE>~/.blueproximityrc</CODE>
 change the <CODE>device_channel</CODE> setting to the new channel.
 Channels address different services on the phone – you might
 sometimes even appear as a headset e.g.</P>
+<P><BR><BR>
+</P>
+<P><EM>Q:</EM> I want to connect to my phone (or to my computer) to
+send files but it tells me I am already connected and this won't
+work. Killing the connection via the phones menu does not work. What
+can I do?</P>
+<P><EM>A:</EM> You cannot kill the connection from your phone because
+BlueProximity restarts the connection immediately afterwards. You can
+put BlueProximity into <EM>pause mode</EM> (see previous chapter) or
+quit BlueProximity for the time connecting. Pause mode should be
+prefered, of course :-).</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
 </BODY>
 </HTML>
