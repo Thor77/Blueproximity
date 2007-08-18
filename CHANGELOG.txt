@@ -1,6 +1,9 @@
 Changelog for BlueProximity
 
-1.1 "see what's coming" - to be released
+1.2 "call me HIG" - to be released
+- modified: scanning now shows by message and watch cursor (Bug #1776732)
+
+1.1 "see what's coming" - released 2007-08-18
 - fixed: icon shows connecting process
 - fixed: no window flicker on startup (Bug #1772241) 
 - fixed: first window not displaced at upper left corner (Bug #1772241)

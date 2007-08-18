@@ -64,7 +64,7 @@ class ProximityGUI:
         #Constructor sets up the GUI and reads the current config
         
         #Set the Glade file
-        self.gladefile = "proximity.glade"  
+        self.gladefile = dist_path + "proximity.glade"  
         self.wTree = gtk.glade.XML(self.gladefile) 
 
         #Create our dictionary and connect it
@@ -196,8 +196,8 @@ class ProximityGUI:
             mac = self.model.get_value(selection_iter, 0)
             self.wTree.get_widget("entryMAC").set_text(mac)
         
-    def btnScan_clicked(self,widget):
-        # scan the area for bluetooth devices and show the results
+    def cb_btnScan_clicked(self):
+        #Idle callback to show the watch cursor while scanning (HIG)
         tmpMac = self.proxi.dev_mac
         self.proxi.dev_mac = ''
         self.proxi.kill_connection()
@@ -206,6 +206,16 @@ class ProximityGUI:
         self.model.clear()
         for mac in macs:
             self.model.append([mac[0], mac[1]])
+        self.window.window.set_cursor(None)
+        
+        
+    def btnScan_clicked(self,widget):
+        # scan the area for bluetooth devices and show the results
+        watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
+        self.window.window.set_cursor(watch)
+        self.model.clear()
+        self.model.append(['...', 'Now scanning...'])
+        gobject.idle_add(self.cb_btnScan_clicked)
         
 
     def Close(self):
@@ -370,7 +380,7 @@ class Proximity (threading.Thread):
             _sock = bluez.btsocket()
             self.sock = bluetooth.BluetoothSocket( bluetooth.RFCOMM , _sock )
             self.sock.connect((dev_mac, self.config['device_channel']))
-            print str(_sock.getsockid())
+            #print str(_sock.getsockid())
         except:
             self.procid = 0
             pass
