@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# blueproximity 1.04
+# blueproximity 1.1
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
