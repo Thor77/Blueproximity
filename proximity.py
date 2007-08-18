@@ -26,6 +26,7 @@ import signal
 from configobj import ConfigObj
 from validate import Validator
 import bluetooth
+import _bluetooth as bluez
 
 try:
     import pygtk
@@ -51,6 +52,10 @@ conf_specs = [
     'unlock_command=string(default=''gnome-screensaver-command -d'')',
     'buffer_size=integer(1,255,default=1)'
     ]
+
+# set this value to './' for svn version
+# or to '/usr/share/blueproximity/' for packaged version
+dist_path = './' 
 
 class ProximityGUI:
     # this class represents the main configuration window and
@@ -78,7 +83,9 @@ class ProximityGUI:
         self.proxi = proximityObject
         self.minDist = -255
         self.maxDist = 0
+        self.pauseMode = False
         self.timer = gobject.timeout_add(1000,self.updateState)
+        self.lastMAC = ''
 
         #Prepare the mac/name table
         self.model = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING)
@@ -103,11 +110,14 @@ class ProximityGUI:
         #Prepare icon
         self.icon = gtk.StatusIcon()
         self.icon.set_tooltip("BlueProximity starting...")
-        self.icon.set_from_file("blueproximity_error.gif")
+        self.icon.set_from_file(dist_path + "blueproximity_error.gif")
         
         self.popupmenu = gtk.Menu()
         menuItem = gtk.ImageMenuItem(gtk.STOCK_EDIT)
         menuItem.connect('activate', self.showWindow)
+        self.popupmenu.append(menuItem)
+        menuItem = gtk.ImageMenuItem(gtk.STOCK_MEDIA_PAUSE)
+        menuItem.connect('activate', self.pausePressed)
         self.popupmenu.append(menuItem)
         menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
         menuItem.connect('activate', self.quit, self.icon)
@@ -131,6 +141,19 @@ class ProximityGUI:
         else:
             self.window.show()
             self.proxi.Simulate = True
+
+    def pausePressed(self, widget, data = None):
+        if self.pauseMode:
+            self.pauseMode = False
+            self.proxi.dev_mac = self.lastMAC
+            self.proxi.Simulate = False
+            self.icon.set_from_file(dist_path + "blueproximity_error.gif")
+        else:
+            self.pauseMode = True
+            self.lastMAC = self.proxi.dev_mac
+            self.proxi.dev_mac = ''
+            self.proxi.Simulate = True
+            self.proxi.kill_connection()
 
     def readSettings(self):
         #Updates the controls to show the actual configuration of the running proximity
@@ -191,7 +214,7 @@ class ProximityGUI:
 
     def quit(self, widget, data = None):
         #try to close everything correctly
-        self.icon.set_from_file('blueproximity_attention.gif')
+        self.icon.set_from_file(dist_path + 'blueproximity_attention.gif')
         self.proxi.Stop = 1
         time.sleep(2)
         gtk.main_quit()
@@ -208,21 +231,25 @@ class ProximityGUI:
         self.wTree.get_widget("hscaleAct").set_value(-newVal)
         
         #Update icon too
-        if self.proxi.ErrorMsg == "No connection found, trying to establish one...":
-            self.icon.set_from_file('blueproximity_error.gif')
+        if self.pauseMode:
+            self.icon.set_from_file(dist_path + 'blueproximity_pause.gif')
+            self.icon.set_tooltip('Pause Mode - not connected')
         else:
-            if self.proxi.State != 'active':
-                self.icon.set_from_file('blueproximity_nocon.gif')
+            if self.proxi.ErrorMsg == "No connection found, trying to establish one...":
+                self.icon.set_from_file(dist_path + 'blueproximity_error.gif')
             else:
-                if newVal < self.proxi.active_limit:
-                    self.icon.set_from_file('blueproximity_attention.gif')
+                if self.proxi.State != 'active':
+                    self.icon.set_from_file(dist_path + 'blueproximity_nocon.gif')
                 else:
-                    self.icon.set_from_file('blueproximity_base.gif')
-        if self.proxi.Simulate:
-            simu = '\nSimulation Mode (locking disabled)'
-        else:
-            simu = ''
-        self.icon.set_tooltip('Detected Distance: ' + str(-newVal) + "\nCurrent State: " + self.proxi.State + "\nStatus: " + self.proxi.ErrorMsg + simu)
+                    if newVal < self.proxi.active_limit:
+                        self.icon.set_from_file(dist_path + 'blueproximity_attention.gif')
+                    else:
+                        self.icon.set_from_file(dist_path + 'blueproximity_base.gif')
+            if self.proxi.Simulate:
+                simu = '\nSimulation Mode (locking disabled)'
+            else:
+                simu = ''
+            self.icon.set_tooltip('Detected Distance: ' + str(-newVal) + "\nCurrent State: " + self.proxi.State + "\nStatus: " + self.proxi.ErrorMsg + simu)
         
         self.timer = gobject.timeout_add(1000,self.updateState)
 
@@ -270,8 +297,60 @@ class Proximity (threading.Thread):
         self.sock = None
         return 0 #ret_val if popen used
 
+    def get_proximity_by_mac(self,dev_mac):
+        sock = bluez.hci_open_dev(dev_id)
+        old_filter = sock.getsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, 14)
+
+        # perform a device inquiry on bluetooth device #0
+        # The inquiry should last 8 * 1.28 = 10.24 seconds
+        # before the inquiry is performed, bluez should flush its cache of
+        # previously discovered devices
+        flt = bluez.hci_filter_new()
+        bluez.hci_filter_all_events(flt)
+        bluez.hci_filter_set_ptype(flt, bluez.HCI_EVENT_PKT)
+        sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, flt )
+
+        duration = 4
+        max_responses = 255
+        cmd_pkt = struct.pack("BBBBB", 0x33, 0x8b, 0x9e, duration, max_responses)
+        bluez.hci_send_cmd(sock, bluez.OGF_LINK_CTL, bluez.OCF_INQUIRY, cmd_pkt)
+
+        results = []
+
+        done = False
+        while not done:
+            pkt = sock.recv(255)
+            ptype, event, plen = struct.unpack("BBB", pkt[:3])
+            if event == bluez.EVT_INQUIRY_RESULT_WITH_RSSI:
+                pkt = pkt[3:]
+                nrsp = struct.unpack("B", pkt[0])[0]
+                for i in range(nrsp):
+                    addr = bluez.ba2str( pkt[1+6*i:1+6*i+6] )
+                    rssi = struct.unpack("b", pkt[1+13*nrsp+i])[0]
+                    results.append( ( addr, rssi ) )
+                    print "[%s] RSSI: [%d]" % (addr, rssi)
+            elif event == bluez.EVT_INQUIRY_COMPLETE:
+                done = True
+            elif event == bluez.EVT_CMD_STATUS:
+                status, ncmd, opcode = struct.unpack("BBH", pkt[3:7])
+                if status != 0:
+                    print "uh oh..."
+                    printpacket(pkt[3:7])
+                    done = True
+            else:
+                print "unrecognized packet type 0x%02x" % ptype
+
+
+        # restore old filter
+        sock.setsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, old_filter )
+
+        sock.close()
+        return results
+
+
     def get_proximity_once(self,dev_mac):
         # returns all active bluetooth devices found
+        # this should also be removed but I still have to find a way to read the rssi value from python
         ret_val = os.popen("hcitool rssi " + dev_mac + " 2>/dev/null").readlines()
         if ret_val == []:
             ret_val = -255
@@ -286,9 +365,15 @@ class Proximity (threading.Thread):
         #args = ["rfcomm", "connect" ,"1", dev_mac, str(self.config['device_channel']), ">/dev/null"]
         #cmd = "/usr/bin/rfcomm"
         #self.procid = os.spawnv(os.P_NOWAIT, cmd, args)
-        self.procid = 1
-        self.sock = bluetooth.BluetoothSocket( bluetooth.RFCOMM )
-        self.sock.connect((dev_mac, self.config['device_channel']))
+        try:
+            self.procid = 1
+            _sock = bluez.btsocket()
+            self.sock = bluetooth.BluetoothSocket( bluetooth.RFCOMM , _sock )
+            self.sock.connect((dev_mac, self.config['device_channel']))
+            print str(_sock.getsockid())
+        except:
+            self.procid = 0
+            pass
 
         # take some time to connect (only when using spawnv)
         #time.sleep(5)
