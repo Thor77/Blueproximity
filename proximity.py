@@ -127,7 +127,7 @@ class ProximityGUI:
         menuItem = gtk.MenuItem()
         self.popupmenu.append(menuItem)
         menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-        menuItem.connect('activate', self.quit, self.icon)
+        menuItem.connect('activate', self.quit)
         self.popupmenu.append(menuItem)
 
         self.icon.connect('activate', self.showWindow)
