@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-# blueproximity 1.2 CVS
+# blueproximity
+SW_VERSION = '1.2 svn'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -28,6 +29,7 @@ from validate import Validator
 import bluetooth
 import _bluetooth as bluez
 
+
 try:
     import pygtk
     pygtk.require("2.0")
@@ -48,7 +50,7 @@ conf_specs = [
     'lock_duration=integer(0,255,default=2)',
     'unlock_distance=integer(0,255,default=2)',
     'unlock_duration=integer(0,255,default=1)',
-    'lock_command=string(default=''gnome-screensaver-command -a'')',
+    'lock_command=string(default=''gnome-screensaver-command -l'')',
     'unlock_command=string(default=''gnome-screensaver-command -d'')',
     'buffer_size=integer(1,255,default=1)'
     ]
@@ -73,13 +75,13 @@ class ProximityGUI:
             "on_btnScan_clicked" : self.btnScan_clicked,
             "on_btnSelect_clicked" : self.btnSelect_clicked,
             "on_btnResetMinMax_clicked" : self.btnResetMinMax_clicked,
-            "on_MainWindow_destroy" : self.Close }
+            "on_MainWindow_destroy" : self.btnClose_clicked }
         self.wTree.signal_autoconnect(dic)
 
         #Get the Main Window, and connect the "destroy" event
         self.window = self.wTree.get_widget("MainWindow")
         if (self.window):
-            self.window.connect("destroy", self.Close)
+            self.window.connect("destroy", self.btnClose_clicked)
         self.proxi = proximityObject
         self.minDist = -255
         self.maxDist = 0
@@ -119,6 +121,11 @@ class ProximityGUI:
         menuItem = gtk.ImageMenuItem(gtk.STOCK_MEDIA_PAUSE)
         menuItem.connect('activate', self.pausePressed)
         self.popupmenu.append(menuItem)
+        menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+        menuItem.connect('activate', self.aboutPressed)
+        self.popupmenu.append(menuItem)
+        menuItem = gtk.MenuItem()
+        self.popupmenu.append(menuItem)
         menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
         menuItem.connect('activate', self.quit, self.icon)
         self.popupmenu.append(menuItem)
@@ -141,6 +148,25 @@ class ProximityGUI:
         else:
             self.window.show()
             self.proxi.Simulate = True
+
+    def aboutPressed(self, widget, data = None):
+        logo = gtk.gdk.pixbuf_new_from_file(dist_path + "blueproximity_base.gif")
+        description = "Leave it - it's locked, come back - it's back too..."
+        copyright = u"""Copyright \xa9 2007 Lars Friedrichs"""
+        people = [
+            u"Lars Friedrichs <LarsFriedrichs@gmx.de>",
+            u"Tobias Jakobs"]
+        about = gtk.AboutDialog()
+        about.set_name("BlueProximity")
+        about.set_version(SW_VERSION)
+        about.set_copyright(copyright)
+        about.set_comments(description)
+        about.set_authors(people)
+        about.set_logo(logo)
+        #about.set_license(license)
+        about.set_website("http://blueproximity.sourceforge.net")
+        about.connect('response', lambda widget, response: widget.destroy())
+        about.show()
 
     def pausePressed(self, widget, data = None):
         if self.pauseMode:

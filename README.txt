@@ -58,4 +58,12 @@ You may now set your bluetooth mode to invisible again.
 	    
 Please note that there are still some bugs, use the sourceforge 
 site to keep track of them or tell me about new ones not mentioned 
-there.
+there. 
+Please read the whole manual - it's short enough, hopefully easy 
+understandable and hey - it even got some pretty pictures in there
+too :-)
+
+Here's a list on contributors to the source:
+ - Tobias Jakobs (GUI optimizations)
+
+
