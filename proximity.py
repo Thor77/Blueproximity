@@ -82,6 +82,7 @@ class ProximityGUI:
         self.window = self.wTree.get_widget("MainWindow")
         if (self.window):
             self.window.connect("destroy", self.btnClose_clicked)
+        self.window.set_icon(gtk.gdk.pixbuf_new_from_file(dist_path + "blueproximity_base.gif"))
         self.proxi = proximityObject
         self.minDist = -255
         self.maxDist = 0
@@ -157,6 +158,7 @@ class ProximityGUI:
             u"Lars Friedrichs <LarsFriedrichs@gmx.de>",
             u"Tobias Jakobs"]
         about = gtk.AboutDialog()
+        about.set_icon(logo)
         about.set_name("BlueProximity")
         about.set_version(SW_VERSION)
         about.set_copyright(copyright)

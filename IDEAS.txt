@@ -25,3 +25,6 @@ Ideas:
     | |  |  |  |   |   ||   |
      |    |||      ||||
 
+- make DBUS interface so other programs can check the status
+- make a PAM module for passwordless authentication
+

@@ -7,6 +7,7 @@ Changelog for BlueProximity
 - modified: control range optimized to possible value range (Bug #1776732)
 - modified: gnome screensaver now locks the screen no matter what its settings say (Bug #1778306)
 - modified: new program info dialog accessable via icon's context menu (Bug #1776732)
+- modified: preferences dialog now has a proper icon (Bug #1776732)
 
 1.1 "see what's coming" - released 2007-08-18
 - fixed: icon shows connecting process
