@@ -65,16 +65,20 @@ class ProximityGUI:
     def __init__(self,proximityObject,configobj,show_window_on_start):
         #Constructor sets up the GUI and reads the current config
         
+        #This is to block events from firing a config write because we initialy set a value
+        self.gone_live = False
+        
         #Set the Glade file
         self.gladefile = dist_path + "proximity.glade"  
         self.wTree = gtk.glade.XML(self.gladefile) 
 
         #Create our dictionary and connect it
-        dic = { "on_btnActivate_clicked" : self.btnActivate_clicked,
+        dic = { "on_btnInfo_clicked" : self.aboutPressed,
             "on_btnClose_clicked" : self.btnClose_clicked,
             "on_btnScan_clicked" : self.btnScan_clicked,
             "on_btnSelect_clicked" : self.btnSelect_clicked,
             "on_btnResetMinMax_clicked" : self.btnResetMinMax_clicked,
+            "on_settings_changed" : self.event_settings_changed,
             "on_MainWindow_destroy" : self.btnClose_clicked }
         self.wTree.signal_autoconnect(dic)
 
@@ -104,8 +108,8 @@ class ProximityGUI:
         self.tree.append_column(colLabel)
         
         #Show the current settings
-        self.readSettings()
         self.config = configobj
+        self.readSettings()
         
         if show_window_on_start:
             self.window.show()
@@ -116,7 +120,7 @@ class ProximityGUI:
         self.icon.set_from_file(dist_path + "blueproximity_error.gif")
         
         self.popupmenu = gtk.Menu()
-        menuItem = gtk.ImageMenuItem(gtk.STOCK_EDIT)
+        menuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
         menuItem.connect('activate', self.showWindow)
         self.popupmenu.append(menuItem)
         menuItem = gtk.ImageMenuItem(gtk.STOCK_MEDIA_PAUSE)
@@ -135,6 +139,9 @@ class ProximityGUI:
         self.icon.connect('popup-menu', self.popupMenu, self.popupmenu)
         
         self.icon.set_visible(True)
+        
+        #now the control may fire change events
+        self.gone_live = True
 
     def popupMenu(self, widget, button, time, data = None):
         if button == 3:
@@ -205,18 +212,21 @@ class ProximityGUI:
         self.config['unlock_duration'] = int(self.proxi.active_duration)
         self.config.write()
 
-    def btnResetMinMax_clicked(self,widget):
+    def btnResetMinMax_clicked(self,widget, data = None):
         #Resets the values for the min/max viewer
         self.minDist = -255
         self.maxDist = 0
 
-    def btnActivate_clicked(self,widget):
-        self.writeSettings()
+    def event_settings_changed(self,widget, data = None):
+        #Don't react if we are still initializing (were we set the values)
+        if self.gone_live:
+            self.writeSettings()
+        pass
 
-    def btnClose_clicked(self,widget):
+    def btnClose_clicked(self,widget, data = None):
         self.Close()
 
-    def btnSelect_clicked(self,widget):
+    def btnSelect_clicked(self,widget, data = None):
         #Takes the selected entry in the mac/name table and enters its mac in the MAC field
         selection = self.tree.get_selection()
         model, selection_iter = selection.get_selected()
@@ -237,7 +247,7 @@ class ProximityGUI:
         self.window.window.set_cursor(None)
         
         
-    def btnScan_clicked(self,widget):
+    def btnScan_clicked(self,widget, data = None):
         # scan the area for bluetooth devices and show the results
         watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
         self.window.window.set_cursor(watch)
