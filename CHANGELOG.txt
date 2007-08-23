@@ -11,6 +11,7 @@ Changelog for BlueProximity
 - modified: preferences dialog now accessable via 'preferences' entry in icon's context menu (Bug #1776732)
 - modified: preferences dialog now does autosave and autoactivate values - changes are active immediately (Bug #1776732)
 - modified: info replaces old apply button which was no longer needed (Bug #1776732)
+- modified: switched to new, scalable iconset by Tobias and me
 
 1.1 "see what's coming" - released 2007-08-18
 - fixed: icon shows connecting process

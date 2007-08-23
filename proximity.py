@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # blueproximity
-SW_VERSION = '1.1.5'
+SW_VERSION = '1.1.6'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -59,6 +59,12 @@ conf_specs = [
 # or to '/usr/share/blueproximity/' for packaged version
 dist_path = './' 
 
+icon_base = 'blueproximity_base.svg'
+icon_att = 'blueproximity_attention.svg'
+icon_away = 'blueproximity_nocon.svg'
+icon_con = 'blueproximity_error.svg'
+icon_pause = 'blueproximity_pause.svg'
+
 class ProximityGUI:
     # this class represents the main configuration window and
     # updates the config file after changes made are saved
@@ -86,7 +92,7 @@ class ProximityGUI:
         self.window = self.wTree.get_widget("MainWindow")
         if (self.window):
             self.window.connect("destroy", self.btnClose_clicked)
-        self.window.set_icon(gtk.gdk.pixbuf_new_from_file(dist_path + "blueproximity_base.gif"))
+        self.window.set_icon(gtk.gdk.pixbuf_new_from_file(dist_path + icon_base))
         self.proxi = proximityObject
         self.minDist = -255
         self.maxDist = 0
@@ -117,7 +123,7 @@ class ProximityGUI:
         #Prepare icon
         self.icon = gtk.StatusIcon()
         self.icon.set_tooltip("BlueProximity starting...")
-        self.icon.set_from_file(dist_path + "blueproximity_error.gif")
+        self.icon.set_from_file(dist_path + icon_con)
         
         self.popupmenu = gtk.Menu()
         menuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
@@ -158,12 +164,30 @@ class ProximityGUI:
             self.proxi.Simulate = True
 
     def aboutPressed(self, widget, data = None):
-        logo = gtk.gdk.pixbuf_new_from_file(dist_path + "blueproximity_base.gif")
+        logo = gtk.gdk.pixbuf_new_from_file(dist_path + icon_base)
         description = "Leave it - it's locked, come back - it's back too..."
         copyright = u"""Copyright \xa9 2007 Lars Friedrichs"""
         people = [
             u"Lars Friedrichs <LarsFriedrichs@gmx.de>",
             u"Tobias Jakobs"]
+        license = """
+        BlueProximity is free software; you can redistribute it and/or modify it 
+        under the terms of the GNU General Public License as published by the 
+        Free Software Foundation; either version 2 of the License, or 
+        (at your option) any later version.
+
+        BlueProximity is distributed in the hope that it will be useful, but 
+        WITHOUT ANY WARRANTY; without even the implied warranty of 
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+        See the GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License 
+        along with Envy; if not, write to the 
+
+        Free Software Foundation, Inc., 
+        59 Temple Place, Suite 330, 
+        Boston, MA  02111-1307  USA
+kFile        """
         about = gtk.AboutDialog()
         about.set_icon(logo)
         about.set_name("BlueProximity")
@@ -172,7 +196,7 @@ class ProximityGUI:
         about.set_comments(description)
         about.set_authors(people)
         about.set_logo(logo)
-        #about.set_license(license)
+        about.set_license(license)
         about.set_website("http://blueproximity.sourceforge.net")
         about.connect('response', lambda widget, response: widget.destroy())
         about.show()
@@ -182,7 +206,7 @@ class ProximityGUI:
             self.pauseMode = False
             self.proxi.dev_mac = self.lastMAC
             self.proxi.Simulate = False
-            self.icon.set_from_file(dist_path + "blueproximity_error.gif")
+            self.icon.set_from_file(dist_path + icon_con)
         else:
             self.pauseMode = True
             self.lastMAC = self.proxi.dev_mac
@@ -197,6 +221,30 @@ class ProximityGUI:
         self.wTree.get_widget("hscaleLockDur").set_value(self.proxi.gone_duration)
         self.wTree.get_widget("hscaleUnlockDist").set_value(-self.proxi.active_limit)
         self.wTree.get_widget("hscaleUnlockDur").set_value(self.proxi.active_duration)
+        self.setValueInCombo(self.wTree.get_widget("comboLock"),self.config['lock_command'])
+        self.setValueInCombo(self.wTree.get_widget("comboUnlock"),self.config['unlock_command'])
+
+    def setValueInCombo(self,widget, value):
+        #activates the given entry in a ComboBox and adds it if needed
+        model = widget.get_model()
+        iter = model.get_iter_root()
+        found = None
+        while (iter):
+            if model.get_value(iter,0)==value:
+                found = iter
+            iter = model.iter_next(iter)
+        if (found):
+            #widget.set_text(value)
+            #widget.set_active_iter(iter)
+            pass
+        else:
+            #widget.set_text(value)
+            pass
+        
+    def getValueInCombo(self,widget):
+        model = widget.get_model()
+        iter = widget.get_active_iter()
+        return model.get_value(iter,0)
 
     def writeSettings(self):
         #Updates the running proximity and the config file with the new settings from the controls
@@ -210,6 +258,8 @@ class ProximityGUI:
         self.config['lock_duration'] = int(self.proxi.gone_duration)
         self.config['unlock_distance'] = int(-self.proxi.active_limit)
         self.config['unlock_duration'] = int(self.proxi.active_duration)
+        #self.config['lock_command'] = self.getValueInCombo(self.wTree.get_widget('comboLock'))
+        #self.config['unlock_command'] = self.getValueInCombo(self.wTree.get_widget('comboLock'))
         self.config.write()
 
     def btnResetMinMax_clicked(self,widget, data = None):
@@ -262,7 +312,7 @@ class ProximityGUI:
 
     def quit(self, widget, data = None):
         #try to close everything correctly
-        self.icon.set_from_file(dist_path + 'blueproximity_attention.gif')
+        self.icon.set_from_file(dist_path + icon_att)
         self.proxi.Stop = 1
         time.sleep(2)
         gtk.main_quit()
@@ -280,19 +330,19 @@ class ProximityGUI:
         
         #Update icon too
         if self.pauseMode:
-            self.icon.set_from_file(dist_path + 'blueproximity_pause.gif')
+            self.icon.set_from_file(dist_path + icon_pause)
             self.icon.set_tooltip('Pause Mode - not connected')
         else:
             if self.proxi.ErrorMsg == "No connection found, trying to establish one...":
-                self.icon.set_from_file(dist_path + 'blueproximity_error.gif')
+                self.icon.set_from_file(dist_path + icon_con)
             else:
                 if self.proxi.State != 'active':
-                    self.icon.set_from_file(dist_path + 'blueproximity_nocon.gif')
+                    self.icon.set_from_file(dist_path + icon_away)
                 else:
                     if newVal < self.proxi.active_limit:
-                        self.icon.set_from_file(dist_path + 'blueproximity_attention.gif')
+                        self.icon.set_from_file(dist_path + icon_att)
                     else:
-                        self.icon.set_from_file(dist_path + 'blueproximity_base.gif')
+                        self.icon.set_from_file(dist_path + icon_base)
             if self.proxi.Simulate:
                 simu = '\nSimulation Mode (locking disabled)'
             else:
