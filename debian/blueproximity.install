@@ -1,4 +1,4 @@
-*.py *.gif *.glade *.gladep *.txt usr/share/blueproximity
+*.py *.svg *.glade *.gladep *.txt usr/share/blueproximity
 doc/* usr/share/doc/blueproximity
 *.desktop usr/share/applications
 blueproximity usr/bin

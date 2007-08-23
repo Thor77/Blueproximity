@@ -3,7 +3,7 @@
 # (c) 2007 Lars Friedrichs
 #
 # configure base variables
-VERSION=1.1.5
+VERSION=1.1.6
 VNAME=blueproximity
 DNAME=$VNAME-$VERSION
 export DEBFULLNAME="Lars Friedrichs"
@@ -20,7 +20,7 @@ cp $VNAME/proximity.glade $DNAME
 cp $VNAME/proximity.gladep $DNAME
 cp $VNAME/proximity.py $DNAME
 cp $VNAME/start_proximity.sh $DNAME
-cp $VNAME/bluepro*.gif $DNAME
+cp $VNAME/bluepro*.svg $DNAME
 cp $VNAME/README.txt $DNAME
 cp $VNAME/CHANGELOG.txt $DNAME
 cp -r $VNAME/doc $DNAME
