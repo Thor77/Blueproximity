@@ -3,7 +3,7 @@
 # (c) 2007 Lars Friedrichs
 #
 # configure base variables
-VERSION=1.1.6
+VERSION=1.1.7
 VNAME=blueproximity
 DNAME=$VNAME-$VERSION
 export DEBFULLNAME="Lars Friedrichs"

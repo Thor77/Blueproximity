@@ -1,15 +1,4 @@
 Ideas:
-- make settings become active immediately (HIG)
-- new notebook page
- Logging 
-  (x) syslog
-        logfaciliy:  ________V
-        logseverity: ________V
-  (x) file
-        filename: ____________
- Set action commands
-   Locking command: __________
-   Unlocking command: ________
 
 - new notebook page
  History

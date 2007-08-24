@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # blueproximity
-SW_VERSION = '1.1.6'
+SW_VERSION = '1.1.7'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -28,6 +28,8 @@ from configobj import ConfigObj
 from validate import Validator
 import bluetooth
 import _bluetooth as bluez
+import syslog
+import time
 
 
 try:
@@ -46,14 +48,21 @@ except:
 conf_specs = [
     'device_mac=string(max=17,default="")',
     'device_channel=integer(1,30,default=7)',
-    'lock_distance=integer(0,255,default=4)',
-    'lock_duration=integer(0,255,default=2)',
-    'unlock_distance=integer(0,255,default=2)',
-    'unlock_duration=integer(0,255,default=1)',
+    'lock_distance=integer(0,127,default=4)',
+    'lock_duration=integer(0,120,default=2)',
+    'unlock_distance=integer(0,127,default=2)',
+    'unlock_duration=integer(0,120,default=1)',
     'lock_command=string(default=''gnome-screensaver-command -l'')',
     'unlock_command=string(default=''gnome-screensaver-command -d'')',
-    'buffer_size=integer(1,255,default=1)'
+    'proximity_command=string(default=''gnome-screensaver-command -p'')',
+    'proximity_interval=integer(5,600,default=60)',
+    'buffer_size=integer(1,255,default=1)',
+    'log_to_syslog=boolean(default=True)',
+    'log_syslog_facility=string(default=''local7'')',
+    'log_to_file=boolean(default=False)',
+    'log_filelog_filename=string(default=''' + os.getenv('HOME') + '/blueproximity.log'')'
     ]
+    
 
 # set this value to './' for svn version
 # or to '/usr/share/blueproximity/' for packaged version
@@ -64,6 +73,7 @@ icon_att = 'blueproximity_attention.svg'
 icon_away = 'blueproximity_nocon.svg'
 icon_con = 'blueproximity_error.svg'
 icon_pause = 'blueproximity_pause.svg'
+
 
 class ProximityGUI:
     # this class represents the main configuration window and
@@ -97,7 +107,6 @@ class ProximityGUI:
         self.minDist = -255
         self.maxDist = 0
         self.pauseMode = False
-        self.timer = gobject.timeout_add(1000,self.updateState)
         self.lastMAC = ''
 
         #Prepare the mac/name table
@@ -116,7 +125,10 @@ class ProximityGUI:
         #Show the current settings
         self.config = configobj
         self.readSettings()
+        self.timer = gobject.timeout_add(1000,self.updateState)
+        self.timer2 = gobject.timeout_add(1000*self.config['proximity_interval'],self.proximityCommand)
         
+        #Only show if we started unconfigured
         if show_window_on_start:
             self.window.show()
 
@@ -148,6 +160,7 @@ class ProximityGUI:
         
         #now the control may fire change events
         self.gone_live = True
+        self.proxi.logger.log_line('started.')
 
     def popupMenu(self, widget, button, time, data = None):
         if button == 3:
@@ -187,7 +200,7 @@ class ProximityGUI:
         Free Software Foundation, Inc., 
         59 Temple Place, Suite 330, 
         Boston, MA  02111-1307  USA
-kFile        """
+        """
         about = gtk.AboutDialog()
         about.set_icon(logo)
         about.set_name("BlueProximity")
@@ -214,6 +227,21 @@ kFile        """
             self.proxi.Simulate = True
             self.proxi.kill_connection()
 
+    def setComboValue(self, widget, value):
+        #helper to set a ComboBox's value to value if that exists in the Combo's list
+        model = widget.get_model()
+        for row in model:
+            if row[0] == value:
+                widget.set_active_iter(row.iter)
+                break
+        
+
+    def getComboValue(self, widget):
+        #helper to get a ComboBox's value
+        model = widget.get_model()
+        iter = widget.get_active_iter()
+        return model.get_value(iter, 0)
+
     def readSettings(self):
         #Updates the controls to show the actual configuration of the running proximity
         self.wTree.get_widget("entryMAC").set_text(self.proxi.dev_mac)
@@ -221,30 +249,14 @@ kFile        """
         self.wTree.get_widget("hscaleLockDur").set_value(self.proxi.gone_duration)
         self.wTree.get_widget("hscaleUnlockDist").set_value(-self.proxi.active_limit)
         self.wTree.get_widget("hscaleUnlockDur").set_value(self.proxi.active_duration)
-        self.setValueInCombo(self.wTree.get_widget("comboLock"),self.config['lock_command'])
-        self.setValueInCombo(self.wTree.get_widget("comboUnlock"),self.config['unlock_command'])
-
-    def setValueInCombo(self,widget, value):
-        #activates the given entry in a ComboBox and adds it if needed
-        model = widget.get_model()
-        iter = model.get_iter_root()
-        found = None
-        while (iter):
-            if model.get_value(iter,0)==value:
-                found = iter
-            iter = model.iter_next(iter)
-        if (found):
-            #widget.set_text(value)
-            #widget.set_active_iter(iter)
-            pass
-        else:
-            #widget.set_text(value)
-            pass
-        
-    def getValueInCombo(self,widget):
-        model = widget.get_model()
-        iter = widget.get_active_iter()
-        return model.get_value(iter,0)
+        self.wTree.get_widget("comboLock").child.set_text(self.config['lock_command'])
+        self.wTree.get_widget("comboUnlock").child.set_text(self.config['unlock_command'])
+        self.wTree.get_widget("comboProxi").child.set_text(self.config['proximity_command'])
+        self.wTree.get_widget("hscaleProxi").set_value(self.config['proximity_interval'])
+        self.wTree.get_widget("checkSyslog").set_active(self.config['log_to_syslog'])
+        self.setComboValue(self.wTree.get_widget("comboFacility"), self.config['log_syslog_facility'])
+        self.wTree.get_widget("checkFile").set_active(self.config['log_to_file'])
+        self.wTree.get_widget("entryFile").set_text(self.config['log_filelog_filename'])
 
     def writeSettings(self):
         #Updates the running proximity and the config file with the new settings from the controls
@@ -258,8 +270,15 @@ kFile        """
         self.config['lock_duration'] = int(self.proxi.gone_duration)
         self.config['unlock_distance'] = int(-self.proxi.active_limit)
         self.config['unlock_duration'] = int(self.proxi.active_duration)
-        #self.config['lock_command'] = self.getValueInCombo(self.wTree.get_widget('comboLock'))
-        #self.config['unlock_command'] = self.getValueInCombo(self.wTree.get_widget('comboLock'))
+        self.config['lock_command'] = self.wTree.get_widget('comboLock').child.get_text()
+        self.config['unlock_command'] = str(self.wTree.get_widget('comboUnlock').child.get_text())
+        self.config['proximity_command'] = str(self.wTree.get_widget('comboProxi').child.get_text())
+        self.config['proximity_interval'] = int(self.wTree.get_widget('hscaleProxi').get_value())
+        self.config['log_to_syslog'] = self.wTree.get_widget("checkSyslog").get_active()
+        self.config['log_syslog_facility'] = str(self.getComboValue(self.wTree.get_widget("comboFacility")))
+        self.config['log_to_file'] = self.wTree.get_widget("checkFile").get_active()
+        self.config['log_filelog_filename'] = str(self.wTree.get_widget("entryFile").get_text())
+        self.proxi.logger.configureFromConfig(self.config)
         self.config.write()
 
     def btnResetMinMax_clicked(self,widget, data = None):
@@ -313,12 +332,13 @@ kFile        """
     def quit(self, widget, data = None):
         #try to close everything correctly
         self.icon.set_from_file(dist_path + icon_att)
+        self.proxi.logger.log_line('stopped.')
         self.proxi.Stop = 1
         time.sleep(2)
         gtk.main_quit()
 
     def updateState(self):
-        # update the display with newest measurement values
+        # update the display with newest measurement values (once per second)
         newVal = int(self.proxi.Dist) # Values are negative!
         if newVal > self.minDist:
             self.minDist = newVal
@@ -350,6 +370,85 @@ kFile        """
             self.icon.set_tooltip('Detected Distance: ' + str(-newVal) + "\nCurrent State: " + self.proxi.State + "\nStatus: " + self.proxi.ErrorMsg + simu)
         
         self.timer = gobject.timeout_add(1000,self.updateState)
+        
+    def proximityCommand(self):
+        #This is the proximity command callback called asynchronously as the updateState above
+        ret_val = os.popen(self.config['proximity_command']).readlines()
+        self.timer2 = gobject.timeout_add(1000*self.config['proximity_interval'],self.proximityCommand)
+
+class Logger:
+    def __init__(self):
+        self.disable_syslogging()
+        self.disable_filelogging()
+        
+    def getFacilityFromString(self, facility):
+        #Returns the correct constant value for the given facility
+        dict = {
+            "local0" : syslog.LOG_LOCAL0,
+            "local1" : syslog.LOG_LOCAL1,
+            "local2" : syslog.LOG_LOCAL2,
+            "local3" : syslog.LOG_LOCAL3,
+            "local4" : syslog.LOG_LOCAL4,
+            "local5" : syslog.LOG_LOCAL5,
+            "local6" : syslog.LOG_LOCAL6,
+            "local7" : syslog.LOG_LOCAL7,
+            "user" : syslog.LOG_USER
+        }
+        return dict[facility]
+
+    def enable_syslogging(self, facility):
+        self.syslog_facility = self.getFacilityFromString(facility)
+        syslog.openlog('blueproximity',syslog.LOG_PID)
+        self.syslogging = True
+        
+    def disable_syslogging(self):
+        self.syslogging = False
+        self.syslog_facility = None
+        
+    def enable_filelogging(self, filename):
+        self.filename = filename
+        try:
+            #let's append
+            self.flog = file(filename,'a')
+            self.filelogging = True
+        except:
+            try:
+                #did not work, then try to create file (is this really needed or does python know another attribute to file()?
+                self.flog = file(filename,'w')
+                self.filelogging = True
+            except:
+                print "Could not open '" + filename +  "' for writing."
+                self.disable_filelogging
+
+    def disable_filelogging(self):
+        try:
+            self.flog.close()
+        except:
+            pass
+        self.filelogging = False
+        self.filename = ''
+
+    def log_line(self, line):
+        if self.syslogging:
+            syslog.syslog(self.syslog_facility | syslog.LOG_NOTICE, line)
+        if self.filelogging:
+            try:
+                self.flog.write( time.ctime() + " blueproximity: " + line + "\n")
+                self.flog.flush()
+            except:
+                self.disable_filelogging()
+    
+    def configureFromConfig(self, config):
+        if config['log_to_syslog']:
+            self.enable_syslogging(config['log_syslog_facility'])
+        else:
+            self.disable_syslogging()
+        if config['log_to_file']:
+            if self.filelogging and config['log_filelog_filename'] != self.filename:
+                self.disable_filelogging()
+                self.enable_filelogging(config['log_filelog_filename'])
+            elif not self.filelogging:
+                self.enable_filelogging(config['log_filelog_filename'])
 
 
 class Proximity (threading.Thread):
@@ -373,6 +472,9 @@ class Proximity (threading.Thread):
         self.active_limit = -self.config['unlock_distance']
         self.ErrorMsg = "Initialized..."
         self.sock = None
+        self.ignoreFirstTransition = True
+        self.logger = Logger()
+        self.logger.configureFromConfig(self.config)
     
     def get_device_list(self):
         # returns all active bluetooth devices found
@@ -493,11 +595,19 @@ class Proximity (threading.Thread):
 
     def go_active(self):
         #The Doctor is in
-        ret_val = os.popen(self.config['unlock_command']).readlines()
+        if self.ignoreFirstTransition:
+            self.ignoreFirstTransition = False
+        else:
+            self.logger.log_line('screen is unlocked')
+            ret_val = os.popen(self.config['unlock_command']).readlines()
 
     def go_gone(self):
         #The Doctor is out
-        ret_val = os.popen(self.config['lock_command']).readlines()
+        if self.ignoreFirstTransition:
+            self.ignoreFirstTransition = False
+        else:
+            self.logger.log_line('screen is locked')
+            ret_val = os.popen(self.config['lock_command']).readlines()
 
     def run(self):
     # this is the main loop

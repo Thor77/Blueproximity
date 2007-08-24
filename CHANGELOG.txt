@@ -1,6 +1,10 @@
 Changelog for BlueProximity
 
 1.2 "call me HIG" - to be released
+- fixed: unlock command was always executed at startup
+- added: lock/unlock commands now can be changed via gui (notebook tab 'Locking')
+- added: logging functions to log to syslog or file
+- added: proximity command which will be fired at given interval while proximity is detected (possible use: never activate screensaver while near)
 - modified: scanning now shows by message and watch cursor (Bug #1776732)
 - modified: every control directly accessable via keyboard (Bug #1776732)
 - modified: layout optimized by Tobias Jakobs (Bug #1776732)
@@ -12,6 +16,7 @@ Changelog for BlueProximity
 - modified: preferences dialog now does autosave and autoactivate values - changes are active immediately (Bug #1776732)
 - modified: info replaces old apply button which was no longer needed (Bug #1776732)
 - modified: switched to new, scalable iconset by Tobias and me
+- modified: changed allowed settings for ranges and durations to limits given by the gui.
 
 1.1 "see what's coming" - released 2007-08-18
 - fixed: icon shows connecting process
