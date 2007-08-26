@@ -287,9 +287,9 @@ class ProximityGUI:
 
     def event_settings_changed(self,widget, data = None):
         #Don't react if we are still initializing (were we set the values)
-        print "on_settings_changed reached"
+        #print "on_settings_changed reached"
         if self.gone_live:
-            print "so writing the settings"
+            #print "so writing the settings"
             self.writeSettings()
         pass
 
