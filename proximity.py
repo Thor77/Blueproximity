@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # blueproximity
-SW_VERSION = '1.1.7'
+SW_VERSION = '1.1.8'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -29,7 +29,6 @@ from validate import Validator
 import bluetooth
 import _bluetooth as bluez
 import syslog
-import time
 
 
 try:
@@ -288,7 +287,9 @@ class ProximityGUI:
 
     def event_settings_changed(self,widget, data = None):
         #Don't react if we are still initializing (were we set the values)
+        print "on_settings_changed reached"
         if self.gone_live:
+            print "so writing the settings"
             self.writeSettings()
         pass
 
