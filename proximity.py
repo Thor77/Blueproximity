@@ -662,7 +662,7 @@ if __name__=='__main__':
     #Translation stuff
 
     #Get the local directory since we are not installing anything
-    local_path = dist_path #os.path.realpath(os.path.dirname(sys.argv[0]))
+    local_path = dist_path + 'LANG/'
     # Init the list of languages to support
     langs = []
     #Check the default locale
