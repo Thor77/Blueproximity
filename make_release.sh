@@ -21,7 +21,7 @@ cp $VNAME/proximity.gladep $DNAME
 cp $VNAME/proximity.py $DNAME
 cp $VNAME/start_proximity.sh $DNAME
 cp $VNAME/bluepro*.svg $DNAME
-cp -r $VNAME/
+cp -r $VNAME/LANG $DNAME
 cp $VNAME/README.txt $DNAME
 cp $VNAME/CHANGELOG.txt $DNAME
 cp -r $VNAME/doc $DNAME
