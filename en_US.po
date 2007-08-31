@@ -1,0 +1,343 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2007 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Lars Friedrichs <LarsFriedrichs@gmx.de>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-08-31 20:48+0200\n"
+"PO-Revision-Date: 2007-08-31 20:49+0200\n"
+"Last-Translator: Lars Friedrichs <LarsFriedrichs@gmx.de>\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: proximity.py:115
+msgid "MAC"
+msgstr "MAC"
+
+#: proximity.py:119
+msgid "Name"
+msgstr "Name"
+
+#: proximity.py:136
+msgid "BlueProximity starting..."
+msgstr "BlueProximity starting..."
+
+#: proximity.py:162
+msgid "started."
+msgstr "started."
+
+#: proximity.py:180
+msgid "Leave it - it's locked, come back - it's back too..."
+msgstr "Leave it - it's locked, come back - it's back too..."
+
+#: proximity.py:185
+msgid ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or "
+"modify it \n"
+"        under the terms of the GNU General Public License as published by "
+"the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, "
+"but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+msgstr ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or "
+"modify it \n"
+"        under the terms of the GNU General Public License as published by "
+"the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, "
+"but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+
+#: proximity.py:325
+msgid "Now scanning..."
+msgstr "Now scanning..."
+
+#: proximity.py:336
+msgid "stopped."
+msgstr "stopped."
+
+#: proximity.py:348
+msgid "min: "
+msgstr "min: "
+
+#: proximity.py:349
+msgid " max: "
+msgstr " max: "
+
+#: proximity.py:349
+msgid " state: "
+msgstr " state: "
+
+#: proximity.py:355
+msgid "Pause Mode - not connected"
+msgstr "Pause Mode - not connected"
+
+#: proximity.py:360 proximity.py:630
+msgid "active"
+msgstr "active"
+
+#: proximity.py:368
+msgid ""
+"\n"
+"Simulation Mode (locking disabled)"
+msgstr ""
+"\n"
+"Simulation Mode (locking disabled)"
+
+#: proximity.py:371
+msgid "Detected Distance: "
+msgstr "Detected Distance: "
+
+#: proximity.py:371
+msgid ""
+"\n"
+"Current State: "
+msgstr ""
+"\n"
+"Current State: "
+
+#: proximity.py:371
+msgid ""
+"\n"
+"Status: "
+msgstr ""
+"\n"
+"Status: "
+
+#: proximity.py:421
+msgid "Could not open '"
+msgstr "Could not open '"
+
+#: proximity.py:421
+msgid "' for writing."
+msgstr "' for writing."
+
+#: proximity.py:462 proximity.py:616 proximity.py:626 proximity.py:640
+msgid "gone"
+msgstr "gone"
+
+#: proximity.py:474
+msgid "Initialized..."
+msgstr "Initialized..."
+
+#: proximity.py:591
+msgid "No connection found, trying to establish one..."
+msgstr "No connection found, trying to establish one..."
+
+#: proximity.py:602
+msgid "screen is unlocked"
+msgstr "screen is unlocked"
+
+#: proximity.py:610
+msgid "screen is locked"
+msgstr "screen is locked"
+
+#: proximity.py:621
+msgid "running..."
+msgstr "running..."
+
+#: proximity.glade.h:1
+msgid "<b>Action commands</b>"
+msgstr "<b>Action commands</b>"
+
+#: proximity.glade.h:2
+msgid "<b>Locking</b>"
+msgstr "<b>Locking</b>"
+
+#: proximity.glade.h:3
+msgid "<b>Logging</b>"
+msgstr "<b>Logging</b>"
+
+#: proximity.glade.h:4
+msgid "<b>Measured atm</b>"
+msgstr "<b>Measured atm</b>"
+
+#: proximity.glade.h:5
+msgid "<b>Unlocking</b>"
+msgstr "<b>Unlocking</b>"
+
+#: proximity.glade.h:6
+msgid ""
+"<i><small>Please note that the device should already be paired!</small></i>"
+msgstr ""
+"<i><small>Please note that the device should already be paired!</small></i>"
+
+#: proximity.glade.h:7
+msgid "BlueProximity Preferences"
+msgstr "BlueProximity Preferences"
+
+#: proximity.glade.h:8
+msgid ""
+"Command _interval:\n"
+"(sec.)"
+msgstr ""
+"Command _interval:\n"
+"(sec.)"
+
+#: proximity.glade.h:10
+msgid "D_istance:"
+msgstr "D_istance:"
+
+#: proximity.glade.h:11
+msgid "D_uration (sec.):"
+msgstr "D_uration (sec.):"
+
+#: proximity.glade.h:12
+msgid "Distance:"
+msgstr "Distance:"
+
+#: proximity.glade.h:13
+msgid "Dur_ation (sec.):"
+msgstr "Dur_ation (sec.):"
+
+#: proximity.glade.h:14
+msgid "F_acility"
+msgstr "F_acility"
+
+#: proximity.glade.h:15
+msgid "File_name"
+msgstr "File_name"
+
+#: proximity.glade.h:16
+msgid "L_ocking command:"
+msgstr "L_ocking command:"
+
+#: proximity.glade.h:17
+msgid "MAC _Address"
+msgstr "MAC _Address"
+
+#: proximity.glade.h:18
+msgid "Pro_ximity command:"
+msgstr "Pro_ximity command:"
+
+#: proximity.glade.h:19
+msgid "Select from _detected devices:"
+msgstr "Select from _detected devices:"
+
+#: proximity.glade.h:20
+msgid "_Bluetooth Device"
+msgstr "_Bluetooth Device"
+
+#: proximity.glade.h:21
+msgid "_Distance:"
+msgstr "_Distance:"
+
+#: proximity.glade.h:22
+msgid "_File"
+msgstr "_File"
+
+#: proximity.glade.h:23
+msgid "_Locking"
+msgstr "_Locking"
+
+#: proximity.glade.h:24
+msgid "_Proximity Details"
+msgstr "_Proximity Details"
+
+#: proximity.glade.h:25
+msgid "_Reset Min/Max"
+msgstr "_Reset Min/Max"
+
+#: proximity.glade.h:26
+msgid "_Scan for devices"
+msgstr "_Scan for devices"
+
+#: proximity.glade.h:27
+msgid "_Syslog"
+msgstr "_Syslog"
+
+#: proximity.glade.h:28
+msgid "_Unlocking command:"
+msgstr "_Unlocking command:"
+
+#: proximity.glade.h:29
+msgid "_Use selected device"
+msgstr "_Use selected device"
+
+#: proximity.glade.h:30
+msgid ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+msgstr ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+
+#: proximity.glade.h:32
+msgid ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+msgstr ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+
+#: proximity.glade.h:34
+msgid ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+msgstr ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+
+#: proximity.glade.h:36
+msgid ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+msgstr ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+
+#: proximity.glade.h:45
+msgid "min: - max: - state: -"
+msgstr "min: - max: - state: -"
+
+#: proximity.glade.h:46
+msgid "~/blueproximity.log"
+msgstr "~/blueproximity.log"
