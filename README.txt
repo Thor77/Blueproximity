@@ -38,7 +38,7 @@ describing it and link to it here soon.
 
 Installation - blueproximity
 
-1. Download the most recent version of parpwatch from the 
+1. Download the most recent version of blueproximity from the 
    sourceforge download page.
 2. Unzip the downloaded file into a directory of choice.
 3. Open a terminal and switch to the chosen directory with the 

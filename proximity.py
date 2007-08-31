@@ -20,6 +20,7 @@ SW_VERSION = '1.1.8'
 # follow http://blueproximity.sourceforge.net
 
 import os
+import sys
 import time
 import threading
 import gobject
@@ -29,7 +30,9 @@ from validate import Validator
 import bluetooth
 import _bluetooth as bluez
 import syslog
-
+import locale
+import gettext
+APP_NAME="blueproximity"
 
 try:
     import pygtk
@@ -112,11 +115,11 @@ class ProximityGUI:
         self.model = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING)
         self.tree = self.wTree.get_widget("treeScanResult")
         self.tree.set_model(self.model)
-        colLabel=gtk.TreeViewColumn('MAC', gtk.CellRendererText(), text=0)
+        colLabel=gtk.TreeViewColumn(_('MAC'), gtk.CellRendererText(), text=0)
         colLabel.set_resizable(True)
         colLabel.set_sort_column_id(0)
         self.tree.append_column(colLabel)
-        colLabel=gtk.TreeViewColumn('Name', gtk.CellRendererText(), text=1)
+        colLabel=gtk.TreeViewColumn(_('Name'), gtk.CellRendererText(), text=1)
         colLabel.set_resizable(True)
         colLabel.set_sort_column_id(1)
         self.tree.append_column(colLabel)
@@ -133,7 +136,7 @@ class ProximityGUI:
 
         #Prepare icon
         self.icon = gtk.StatusIcon()
-        self.icon.set_tooltip("BlueProximity starting...")
+        self.icon.set_tooltip(_("BlueProximity starting..."))
         self.icon.set_from_file(dist_path + icon_con)
         
         self.popupmenu = gtk.Menu()
@@ -159,7 +162,7 @@ class ProximityGUI:
         
         #now the control may fire change events
         self.gone_live = True
-        self.proxi.logger.log_line('started.')
+        self.proxi.logger.log_line(_('started.'))
 
     def popupMenu(self, widget, button, time, data = None):
         if button == 3:
@@ -177,12 +180,12 @@ class ProximityGUI:
 
     def aboutPressed(self, widget, data = None):
         logo = gtk.gdk.pixbuf_new_from_file(dist_path + icon_base)
-        description = "Leave it - it's locked, come back - it's back too..."
-        copyright = u"""Copyright \xa9 2007 Lars Friedrichs"""
+        description = _("Leave it - it's locked, come back - it's back too...")
+        copyright = u"""Copyright (c) 2007 Lars Friedrichs"""
         people = [
             u"Lars Friedrichs <LarsFriedrichs@gmx.de>",
             u"Tobias Jakobs"]
-        license = """
+        license = _("""
         BlueProximity is free software; you can redistribute it and/or modify it 
         under the terms of the GNU General Public License as published by the 
         Free Software Foundation; either version 2 of the License, or 
@@ -199,7 +202,7 @@ class ProximityGUI:
         Free Software Foundation, Inc., 
         59 Temple Place, Suite 330, 
         Boston, MA  02111-1307  USA
-        """
+        """)
         about = gtk.AboutDialog()
         about.set_icon(logo)
         about.set_name("BlueProximity")
@@ -322,7 +325,7 @@ class ProximityGUI:
         watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
         self.window.window.set_cursor(watch)
         self.model.clear()
-        self.model.append(['...', 'Now scanning...'])
+        self.model.append(['...', _('Now scanning...')])
         gobject.idle_add(self.cb_btnScan_clicked)
         
 
@@ -333,7 +336,7 @@ class ProximityGUI:
     def quit(self, widget, data = None):
         #try to close everything correctly
         self.icon.set_from_file(dist_path + icon_att)
-        self.proxi.logger.log_line('stopped.')
+        self.proxi.logger.log_line(_('stopped.'))
         self.proxi.Stop = 1
         time.sleep(2)
         gtk.main_quit()
@@ -345,19 +348,19 @@ class ProximityGUI:
             self.minDist = newVal
         if newVal < self.maxDist:
             self.maxDist = newVal
-        self.wTree.get_widget("labState").set_text("min: " + 
-            str(-self.minDist) + " max: " + str(-self.maxDist) + " state: " + self.proxi.State)
+        self.wTree.get_widget("labState").set_text(_("min: ") + 
+            str(-self.minDist) + _(" max: ") + str(-self.maxDist) + _(" state: ") + self.proxi.State)
         self.wTree.get_widget("hscaleAct").set_value(-newVal)
         
         #Update icon too
         if self.pauseMode:
             self.icon.set_from_file(dist_path + icon_pause)
-            self.icon.set_tooltip('Pause Mode - not connected')
+            self.icon.set_tooltip(_('Pause Mode - not connected'))
         else:
             if self.proxi.ErrorMsg == "No connection found, trying to establish one...":
                 self.icon.set_from_file(dist_path + icon_con)
             else:
-                if self.proxi.State != 'active':
+                if self.proxi.State != _('active'):
                     self.icon.set_from_file(dist_path + icon_away)
                 else:
                     if newVal < self.proxi.active_limit:
@@ -365,10 +368,10 @@ class ProximityGUI:
                     else:
                         self.icon.set_from_file(dist_path + icon_base)
             if self.proxi.Simulate:
-                simu = '\nSimulation Mode (locking disabled)'
+                simu = _('\nSimulation Mode (locking disabled)')
             else:
                 simu = ''
-            self.icon.set_tooltip('Detected Distance: ' + str(-newVal) + "\nCurrent State: " + self.proxi.State + "\nStatus: " + self.proxi.ErrorMsg + simu)
+            self.icon.set_tooltip(_('Detected Distance: ') + str(-newVal) + _("\nCurrent State: ") + self.proxi.State + _("\nStatus: ") + self.proxi.ErrorMsg + simu)
         
         self.timer = gobject.timeout_add(1000,self.updateState)
         
@@ -418,7 +421,7 @@ class Logger:
                 self.flog = file(filename,'w')
                 self.filelogging = True
             except:
-                print "Could not open '" + filename +  "' for writing."
+                print _("Could not open '") + filename +  _("' for writing.")
                 self.disable_filelogging
 
     def disable_filelogging(self):
@@ -459,7 +462,7 @@ class Proximity (threading.Thread):
         threading.Thread.__init__(self, name="WorkerThread")
         self.config = config
         self.Dist = -255
-        self.State = "gone"
+        self.State = _("gone")
         self.Simulate = False
         self.Stop = False
         self.procid = 0
@@ -471,7 +474,7 @@ class Proximity (threading.Thread):
         self.gone_limit = -self.config['lock_distance']
         self.active_duration = self.config['unlock_duration']
         self.active_limit = -self.config['unlock_distance']
-        self.ErrorMsg = "Initialized..."
+        self.ErrorMsg = _("Initialized...")
         self.sock = None
         self.ignoreFirstTransition = True
         self.logger = Logger()
@@ -588,7 +591,7 @@ class Proximity (threading.Thread):
         for val in self.ringbuffer:
             ret_val = ret_val + val
         if self.ringbuffer[self.ringbuffer_pos] == -255:
-            self.ErrorMsg = "No connection found, trying to establish one..."
+            self.ErrorMsg = _("No connection found, trying to establish one...")
             #print "I can't find my master. Will try again..."
             self.kill_connection()
             self.get_connection(dev_mac)
@@ -599,7 +602,7 @@ class Proximity (threading.Thread):
         if self.ignoreFirstTransition:
             self.ignoreFirstTransition = False
         else:
-            self.logger.log_line('screen is unlocked')
+            self.logger.log_line(_('screen is unlocked'))
             ret_val = os.popen(self.config['unlock_command']).readlines()
 
     def go_gone(self):
@@ -607,27 +610,27 @@ class Proximity (threading.Thread):
         if self.ignoreFirstTransition:
             self.ignoreFirstTransition = False
         else:
-            self.logger.log_line('screen is locked')
+            self.logger.log_line(_('screen is locked'))
             ret_val = os.popen(self.config['lock_command']).readlines()
 
     def run(self):
     # this is the main loop
         duration_count = 0
-        state = "gone"
+        state = _("gone")
         while not self.Stop:
             #print "tick"
             try:
                 if self.dev_mac != "":
-                    self.ErrorMsg = "running..."
+                    self.ErrorMsg = _("running...")
                     dist = self.run_cycle(self.dev_mac)
                 else:
                     dist = -255
                     self.ErrorMsg = "No bluetooth device configured..."
-                if state == "gone":
+                if state == _("gone"):
                     if dist>=self.active_limit:
                         duration_count = duration_count + 1
                         if duration_count >= self.active_duration:
-                            state = "active"
+                            state = _("active")
                             duration_count = 0
                             if not self.Simulate:
                                 self.go_active()
@@ -637,7 +640,7 @@ class Proximity (threading.Thread):
                     if dist<=self.gone_limit:
                         duration_count = duration_count + 1
                         if duration_count >= self.gone_duration:
-                            state = "gone"
+                            state = _("gone")
                             duration_count = 0
                             if not self.Simulate:
                                 self.go_gone()
@@ -654,6 +657,45 @@ class Proximity (threading.Thread):
         self.kill_connection()
 
 if __name__=='__main__':
+    
+    
+    #Translation stuff
+
+    #Get the local directory since we are not installing anything
+    local_path = dist_path #os.path.realpath(os.path.dirname(sys.argv[0]))
+    # Init the list of languages to support
+    langs = []
+    #Check the default locale
+    lc, encoding = locale.getdefaultlocale()
+    if (lc):
+        #If we have a default, it's the first in the list
+        langs = [lc]
+    # Now lets get all of the supported languages on the system
+    language = os.environ.get('LANGUAGE', None)
+    if (language):
+        """langage comes back something like en_CA:en_US:en_GB:en
+        on linuxy systems, on Win32 it's nothing, so we need to
+        split it up into a list"""
+        langs += language.split(":")
+    """Now add on to the back of the list the translations that we
+    know that we have, our defaults"""
+    langs += ["de", "en_US"]
+
+    """Now langs is a list of all of the languages that we are going
+    to try to use.  First we check the default, then what the system
+    told us, and finally the 'known' list"""
+
+    gettext.bindtextdomain(APP_NAME, local_path)
+    gettext.textdomain(APP_NAME)
+    # Get the language to use
+    lang = gettext.translation(APP_NAME, local_path, languages=langs, fallback = True)
+    """Install the language, map _() (which we marked our
+    strings to translate with) to self.lang.gettext() which will
+    translate them."""
+    _ = lang.gettext    
+    gtk.glade.bindtextdomain(APP_NAME, local_path)
+    gtk.glade.textdomain(APP_NAME)
+    
     # react on ^C
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     # read config if any

@@ -14,6 +14,13 @@ Ideas:
     | |  |  |  |   |   ||   |
      |    |||      ||||
 
+- let the user give command line options to
+  - activate security mode (Settings read only, not stoppable)
+  - select a different config file
+- make BP monitor more than one device
+- manage settings seperately for each device
+
+
 - make DBUS interface so other programs can check the status
 - make a PAM module for passwordless authentication
 
