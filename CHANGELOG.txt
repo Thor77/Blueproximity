@@ -6,7 +6,10 @@ Changelog for BlueProximity
 - added: lock/unlock commands now can be changed via gui (notebook tab 'Locking')
 - added: logging functions to log to syslog or file
 - added: proximity command which will be fired at given interval while proximity is detected (possible use: never activate screensaver while near)
-- added: we are now multilingual - see the .pot file. English and German in included (thx selsine) (Bug #1772603)
+- added: we are now multilingual - see the .pot file. English and German in included (thx to Mark Mruss and www.learningpython.com) (Bug #1772603)
+- added: language French (Claude - f5pbl@users.sourceforge.net)
+- added: language Farsi (Ali Sattari - ali.sattari@gmail.com)
+- added: language Spanish (César Palma - cesarpalma80@gmail.com)
 - modified: scanning now shows by message and watch cursor (Bug #1776732)
 - modified: every control directly accessable via keyboard (Bug #1776732)
 - modified: layout optimized by Tobias Jakobs (Bug #1776732)

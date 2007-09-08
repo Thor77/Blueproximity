@@ -1,0 +1,335 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BlueProximity 1.1.9\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-09-08 12:43+0100\n"
+"Last-Translator: Lars Friedrichs <LarsFriedrichs@gmx.de>\n"
+"Language-Team: Persian <ali.sattari@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Persian\n"
+"X-Poedit-Country: IRAN, ISLAMIC REPUBLIC OF\n"
+
+#: proximity.py:115
+msgid "MAC"
+msgstr "MAC"
+
+#: proximity.py:119
+msgid "Name"
+msgstr "نام"
+
+#: proximity.py:136
+msgid "BlueProximity starting..."
+msgstr "BlueProximity در حال اجرست..."
+
+#: proximity.py:162
+msgid "started."
+msgstr "اجرا شد."
+
+#: proximity.py:180
+msgid "Leave it - it's locked, come back - it's back too..."
+msgstr "ترکش کن - قفل شده، برگرد - اینهم برگشته..."
+
+#: proximity.py:185
+msgid ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or modify it \n"
+"        under the terms of the GNU General Public License as published by the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+msgstr ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or modify it \n"
+"        under the terms of the GNU General Public License as published by the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+
+#: proximity.py:325
+msgid "Now scanning..."
+msgstr "در حال پویش..."
+
+#: proximity.py:336
+msgid "stopped."
+msgstr "متوقف شد."
+
+#: proximity.py:348
+msgid "min: "
+msgstr "حداقل:"
+
+#: proximity.py:349
+msgid " max: "
+msgstr "حداکثر:"
+
+#: proximity.py:349
+msgid " state: "
+msgstr "حالت:"
+
+#: proximity.py:355
+msgid "Pause Mode - not connected"
+msgstr "حالت وقفه - متصل نیست"
+
+#: proximity.py:360
+#: proximity.py:630
+msgid "active"
+msgstr "فعال"
+
+#: proximity.py:368
+msgid ""
+"\n"
+"Simulation Mode (locking disabled)"
+msgstr ""
+"\n"
+"حالت شبیه‌سازی (قفل کردن غیر فعال است)"
+
+#: proximity.py:371
+msgid "Detected Distance: "
+msgstr "فاصله کشف شده:"
+
+#: proximity.py:371
+msgid ""
+"\n"
+"Current State: "
+msgstr ""
+"\n"
+"حال فعلی:"
+
+#: proximity.py:371
+msgid ""
+"\n"
+"Status: "
+msgstr ""
+"\n"
+"وضعیت:"
+
+#: proximity.py:421
+msgid "Could not open '"
+msgstr "امکان باز کردن '"
+
+#: proximity.py:421
+msgid "' for writing."
+msgstr "' برای نوشتن نیست."
+
+#: proximity.py:462
+#: proximity.py:616
+#: proximity.py:626
+#: proximity.py:640
+msgid "gone"
+msgstr "رفته"
+
+#: proximity.py:474
+msgid "Initialized..."
+msgstr "ارزش‌گذاری اولیه شد..."
+
+#: proximity.py:591
+msgid "No connection found, trying to establish one..."
+msgstr "اتصالی پیدا نشد، در تلاش برای برقراری ارتباط..."
+
+#: proximity.py:602
+msgid "screen is unlocked"
+msgstr "صفحه آزاد شده"
+
+#: proximity.py:610
+msgid "screen is locked"
+msgstr "صفحه قفل شده"
+
+#: proximity.py:621
+msgid "running..."
+msgstr "در حال اجرا..."
+
+#: proximity.glade.h:1
+msgid "<b>Action commands</b>"
+msgstr "<b>دستورات اعمال</b>"
+
+#: proximity.glade.h:2
+msgid "<b>Locking</b>"
+msgstr "<b>قفل شدن</b>"
+
+#: proximity.glade.h:3
+msgid "<b>Logging</b>"
+msgstr "<b>گزارش کردن</b>"
+
+#: proximity.glade.h:4
+msgid "<b>Measured atm</b>"
+msgstr "<b>فاصله اندازه گیری شده</b>"
+
+#: proximity.glade.h:5
+msgid "<b>Unlocking</b>"
+msgstr "<b>آزاد کردن</b>"
+
+#: proximity.glade.h:6
+msgid "<i><small>Please note that the device should already be paired!</small></i>"
+msgstr "<i><small>لطفا توجه داشته باشید که دستگاه باید قبلا جفت شده باشد!</small></i>"
+
+#: proximity.glade.h:7
+msgid "BlueProximity Preferences"
+msgstr "ترجیحات BlueProximity"
+
+#: proximity.glade.h:8
+msgid ""
+"Command _interval:\n"
+"(sec.)"
+msgstr ""
+"وقفه دستور:\n"
+"(ثانیه)"
+
+#: proximity.glade.h:10
+msgid "D_istance:"
+msgstr "ف_اصله:"
+
+#: proximity.glade.h:11
+msgid "D_uration (sec.):"
+msgstr "م_دت (ثانیه):"
+
+#: proximity.glade.h:12
+msgid "Distance:"
+msgstr "فاصله:"
+
+#: proximity.glade.h:13
+msgid "Dur_ation (sec.):"
+msgstr "مدت_ (ثانیه):"
+
+#: proximity.glade.h:14
+msgid "F_acility"
+msgstr "ا_مکان"
+
+#: proximity.glade.h:15
+msgid "File_name"
+msgstr "نام ف_ایل"
+
+#: proximity.glade.h:16
+msgid "L_ocking command:"
+msgstr "د_ستور قفل کردن:"
+
+#: proximity.glade.h:17
+msgid "MAC _Address"
+msgstr "_نشانی MAC"
+
+#: proximity.glade.h:18
+msgid "Pro_ximity command:"
+msgstr "دستور فا_صله:"
+
+#: proximity.glade.h:19
+msgid "Select from _detected devices:"
+msgstr "از بین دستگاههای کشف شده انتخاب کنید:"
+
+#: proximity.glade.h:20
+msgid "_Bluetooth Device"
+msgstr "_دستگاه بلوتوث"
+
+#: proximity.glade.h:21
+msgid "_Distance:"
+msgstr "_فاصله:"
+
+#: proximity.glade.h:22
+msgid "_File"
+msgstr "_فایل"
+
+#: proximity.glade.h:23
+msgid "_Locking"
+msgstr "_قفل کردن"
+
+#: proximity.glade.h:24
+msgid "_Proximity Details"
+msgstr "_جزئیات فاصله"
+
+#: proximity.glade.h:25
+msgid "_Reset Min/Max"
+msgstr "_بازنشانی حداقل/حداکثر"
+
+#: proximity.glade.h:26
+msgid "_Scan for devices"
+msgstr "_پویش برای دستگاه"
+
+#: proximity.glade.h:27
+msgid "_Syslog"
+msgstr "_گزارش سیستم"
+
+#: proximity.glade.h:28
+msgid "_Unlocking command:"
+msgstr "_دستور زمان بازشدن قفل:"
+
+#: proximity.glade.h:29
+msgid "_Use selected device"
+msgstr "_استفاده از دسنگاه انتخاب دشه"
+
+#: proximity.glade.h:30
+msgid ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+msgstr ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+
+#: proximity.glade.h:32
+msgid ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+msgstr ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+
+#: proximity.glade.h:34
+msgid ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+msgstr ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+
+#: proximity.glade.h:36
+msgid ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+msgstr ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+
+#: proximity.glade.h:45
+msgid "min: - max: - state: -"
+msgstr "حداقل: - حداکثر: - حالت: -"
+
+#: proximity.glade.h:46
+msgid "~/blueproximity.log"
+msgstr "~/blueproximity.log"
+
