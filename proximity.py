@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding: utf-8
 
 # blueproximity
 SW_VERSION = '1.2'
@@ -50,9 +51,9 @@ except:
 conf_specs = [
     'device_mac=string(max=17,default="")',
     'device_channel=integer(1,30,default=7)',
-    'lock_distance=integer(0,127,default=4)',
-    'lock_duration=integer(0,120,default=2)',
-    'unlock_distance=integer(0,127,default=2)',
+    'lock_distance=integer(0,127,default=7)',
+    'lock_duration=integer(0,120,default=6)',
+    'unlock_distance=integer(0,127,default=4)',
     'unlock_duration=integer(0,120,default=1)',
     'lock_command=string(default=''gnome-screensaver-command -l'')',
     'unlock_command=string(default=''gnome-screensaver-command -d'')',
@@ -186,14 +187,13 @@ class ProximityGUI:
             u"Lars Friedrichs <LarsFriedrichs@gmx.de>",
             u"Tobias Jakobs",
             u"Zsolt Mazolt"]
-        translators = [
-            u"de Lars Friedrichs <LarsFriedrichs@gmx.de>",
-            u"en Lars Friedrichs <LarsFriedrichs@gmx.de>",
-            u"es César Palma <cesarpalma80@gmail.com>",
-            u"fa Ali Sattari <ali.sattari@gmail.com>",
-            u"fr Claude <f5pbl@users.sourceforge.net>",
-            u"sv Alexander Jönsson <tp-sv@listor.tp-sv.se>",
-            u" "]
+        translators = """de Lars Friedrichs <LarsFriedrichs@gmx.de>
+en Lars Friedrichs <LarsFriedrichs@gmx.de>
+es César Palma <cesarpalma80@gmail.com>
+fa Ali Sattari <ali.sattari@gmail.com>
+fr Claude <f5pbl@users.sourceforge.net>
+sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
+            """
         license = _("""
         BlueProximity is free software; you can redistribute it and/or modify it 
         under the terms of the GNU General Public License as published by the 
@@ -222,6 +222,7 @@ class ProximityGUI:
         about.set_logo(logo)
         about.set_license(license)
         about.set_website("http://blueproximity.sourceforge.net")
+        about.set_translator_credits(translators)
         about.connect('response', lambda widget, response: widget.destroy())
         about.show()
 

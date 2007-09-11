@@ -3,11 +3,11 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
-	<META NAME="AUTHOR" CONTENT="Lars Friedrichs">
+	<meta name="generator" content="Bluefish 1.0.7">
+	<meta name="author" content="Lars Friedrichs">
 	<META NAME="CREATED" CONTENT="20070811;21544300">
 	<META NAME="CHANGEDBY" CONTENT="Lars Friedrichs">
-	<META NAME="CHANGED" CONTENT="20070818;11112400">
+	<META NAME="CHANGED" CONTENT="20070911;23213900">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { size: 21cm 29.7cm; margin: 2cm }
@@ -56,7 +56,7 @@ subfolder. To start BlueProximity from the console just type
 manager's startup profile for automatic start with system boot.
 Please start it now and move on to the next chapter <EM>Configuration</EM>
 in this document.</P>
-<P>At the moment the prerequisites include a unix system with an
+<P>Using the tarball the prerequisites include a unix system with an
 installed python interpreter. You need the <KBD>hcitool</KBD> tool
 installed. On my Ubuntu system they are included in the <EM>bluez-utils</EM>
 package. You also need the <STRONG>PyGTK</STRONG> (<EM>python-gtk2,
@@ -72,30 +72,31 @@ automatic start with system boot.
 </P>
 <H2 CLASS="western">Configuration</H2>
 <H3 CLASS="western">Setting up the phone</H3>
-<P>First you should pair your computer and your mobile phone. It
-should not be part of this manual how to do that at this time. Just
-as a hint – using the GNOME desktop the package <STRONG>bluetooth-gnome</STRONG>
-might help you do that. Once being paired your mobile won't ask for a
-password when a connection from the computer to the phone is made.
-There is still the possibility that your mobile phone will ask you to
-accept the connection which is an additional layer of security appart
-from the pairing mechanism. Your phone should have an option to
-disable this question for all or even one special paired device.
-Disable that question as not disabled renders BlueProximity quite
-unusable.</P>
+<P>First you should pair your computer and your mobile phone. Please
+refer to the FAQ part at the end of this manual how to do that. Once
+being paired your mobile won't ask for a password when a connection
+from the computer to the phone is made. There is still the
+possibility that your mobile phone will ask you to accept the
+connection which is an additional layer of security appart from the
+pairing mechanism. Your phone should have an option to disable this
+question for all or even one special paired device. Disable that
+question as not disabling it renders BlueProximity quite unusable
+since you must always do something to your phone when you come back
+to your computer.</P>
 <H3 CLASS="western">Connecting the phone</H3>
 <P>After setting up the phone computer pair you can now move on and
-configure BlueProximity. After the first start you see the settings
-window. if you closed that by accident or it did not show up, you see
-the BlueProximity icon in the notification area as shown here. (It
-may appear with a colorless P and a yellow spark in there.)</P>
-<P><IMG SRC="manual_html_m92a64f9.png" NAME="Grafik1" ALIGN=LEFT WIDTH=315 HEIGHT=138 BORDER=0><BR CLEAR=LEFT>Single-left-click
-on the icon to make the settings screen appear.</P>
-<P><IMG SRC="manual_html_311f102e.png" NAME="Grafik2" ALIGN=LEFT WIDTH=471 HEIGHT=612 BORDER=0><BR CLEAR=LEFT>You
-will see two tabs regarding different types of settings. On the first
-tab you may configure the basic connection between computer and
+configure BlueProximity. After the first start you should see the
+settings window. If you closed that by accident or it did not show up
+(because you had installed BlueProximity earlier), you see the
+BlueProximity icon in the notification area as shown here.</P>
+<P><IMG SRC="manual_html_34e1dc3d.png" NAME="Grafik1" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>A
+single left click on the icon to make the settings screen appear.</P>
+<P><IMG SRC="manual_html_m1df5b94c.png" NAME="Grafik2" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>You
+will see three tabs regarding different types of settings. On the
+first tab you may configure the basic connection between computer and
 phone, the second tab will show settings to adapt the distance
-detection to your hardware.</P>
+detection to your hardware, the third tab defines the actions and
+commands that should be engaged when locking or unlocking happens.</P>
 <P>The first setting you should adjust is the MAC address of your
 mobile phone. If you know it you can skip the next step.</P>
 <P>To find out that address you should configure your phone to
@@ -103,24 +104,28 @@ bluetooth visible mode. It may be the standard setting but you never
 know... Now click on the <KBD>Scan for devices</KBD> button. A scan
 takes about 10 seconds. You should find your device in the list now,
 maybe among other bluetooth devices around your place.</P>
-<P><IMG SRC="manual_html_m54b276bb.png" NAME="Grafik3" ALIGN=LEFT WIDTH=471 HEIGHT=612 BORDER=0><BR CLEAR=LEFT>Just
+<P><IMG SRC="manual_html_m4f150133.png" NAME="Grafik3" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>Just
 click on your device and on the <KBD>Use selected device</KBD>
 button. Your device's mac address should now appear in the mac
-address field.</P>
-<P>You should click on the button called <KBD>Apply</KBD>.</P>
+address field. If your BlueProximity was started for the first time
+your changes will be activated after you close the window, otherwise
+any change will be active immediately.</P>
 <H3 CLASS="western">Setup distance detection</H3>
 <P>Now BlueProximity should already start working but there might be
 further tuning of distance parameters needed. Note: Your screen will
 never be locked as long as the settings screen is shown. This way you
-can change the detection parameters and test them.</P>
+can change the detection parameters and test them. You will notice
+how the icon changes if you play with the values. See the FAQ for a
+good way to tune these settings.</P>
 <P>The second tab will look like this:</P>
-<P><IMG SRC="manual_html_39564f6.png" NAME="Grafik4" ALIGN=LEFT WIDTH=471 HEIGHT=612 BORDER=0><BR CLEAR=LEFT>You
-see three sections called Locking, Unlocking and measured atm. The
-Locking section sets the parameters when to lock the screen. The
-distance parameter refers to the ruler in the distance section. You
-should experiment by placing the phone to a place where you want the
-lock to happen. Wait some seconds and you should see the value grow.
-It might be easier if you click on the <KBD>Reset Min/Max</KBD>
+<P><IMG SRC="manual_html_42101a15.png" NAME="Grafik4" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>You
+see three sections called Locking, Unlocking and measured atm. 
+</P>
+<P>The Locking section sets the parameters when to lock the screen.
+The distance parameter refers to the ruler in the distance section.
+You should experiment by placing the phone to a place where you want
+the lock to happen. Wait some seconds and you should see the value
+grow. It might be easier if you click on the <KBD>Reset Min/Max</KBD>
 button, move the mobile phone to the lock perimeter and wait some
 seconds. Take it back to the computer and you will see the maximum
 value right to the button. Set the lock distance to that value. The
@@ -131,56 +136,72 @@ possible for the rssi value to oscillate sometimes. You will only
 loose seconds of security but win usability by not unexpectedly
 locking your screen.</P>
 <P>Set the values for unlocking in a similar maner. It is usual to
-set the distance lower than the lock distance. Click on the button
-called <KBD>Apply</KBD> again to let BlueProximity use the new
-settings.</P>
+set the distance lower than the lock distance. Please note that
+BlueProximity uses the new settings immediately.</P>
+<H3 CLASS="western">Setup of locking actions</H3>
+<P>Switch to the third tab named locking to see the following screen:</P>
+<P><IMG SRC="manual_html_m16b1226e.png" NAME="Grafik11" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>The
+upper section refers to the commands that BlueProximity will execute
+for the according event. The preset is the command to lock/unlock the
+screen using the GNOME desktop screensaver. If you are a KDE user you
+should activate the combobox and select the xscreensaver-command
+entry. Please note that this will only work with the KDE integrated
+version of xscreensaver. The original xscreensaver does not include
+an unlock command.</P>
+<P>The proximity command is a command that is executed every given
+interval while the user is in reach (the screen is unlocked). That
+way you can e.g. prevent your screensaver from becoming active while
+you are near. Actually this is the standard setup.</P>
+<P>The lower section refers to logging of state changes. The syslog
+entry allows you to generate a syslog message on every state change
+coming from the given logfacility and the loglevel notice. You may
+also additionally or exclusively log to a certain file.</P>
 <H3 CLASS="western">Testing the settings</H3>
-<P>You may just press the close button and see if your desktop gets
+<P>You could just press the close button and see if your desktop gets
 locked or use the simulation mode which is always active if the
-settings dialog is open. You may switch to the second tab to see the
-actual measured value and the resulting locking state right to the
+settings dialog is open. You can switch to the second tab to see the
+actual measured values and the resulting locking state right to the
 reset button. You may also have a look at the notification area icon
-which even gives you a nice tooltip when hovering your mousepointer
-over it. You may see these icons:</P>
-<P><IMG SRC="manual_html_mb65dd2a.png" NAME="Grafik5" ALIGN=LEFT WIDTH=200 HEIGHT=118 BORDER=0><BR CLEAR=LEFT>The
-white 'P' letter shows that BlueProximity thinks everything is ok and
-you are around within the safe distance.</P>
-<P><IMG SRC="manual_html_41e5c7c8.png" NAME="Grafik6" ALIGN=LEFT WIDTH=198 HEIGHT=118 BORDER=0><BR CLEAR=LEFT>The
-yellow 'P' letter let's you know that the detected distance is now
-still below the lock distance but above the unlock distance. So if
-your computer was locked by BlueProximity it would not yet be
-unlocked here.</P>
-<P><IMG SRC="manual_html_m92a64f9.png" NAME="Grafik7" ALIGN=LEFT WIDTH=315 HEIGHT=138 BORDER=0><BR CLEAR=LEFT>The
-red 'P' letter shows what you would never see while the settings
-dialog is closed – this shows the screen would be locked now.</P>
+which even gives you a nice tooltip when hovering your mouse pointer
+over it. You will see these icons and messages:</P>
+<P><IMG SRC="manual_html_232399f2.png" NAME="Grafik5" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>The
+green key shows that BlueProximity thinks everything is ok and you
+are around within the safe distance.</P>
+<P><IMG SRC="manual_html_m6fd06b47.png" NAME="Grafik6" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>The
+yellow key let's you know that the detected distance is now still
+below the lock distance but above the unlock distance. So if your
+computer was locked by BlueProximity it would not yet be unlocked
+here.</P>
+<P><IMG SRC="manual_html_m4dd3226e.png" NAME="Grafik7" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>The
+red key shows what you would never see while the preferences dialog
+is closed – this shows the screen would be locked now.</P>
 <P>You should play around with the settings for some time to find a
-good setting that fits your demand and environment.</P>
+good setting that fits your demand and environment. See the FAQ if
+you have problems to find good values.</P>
 <H3 CLASS="western">The configfile</H3>
 <P>Once started a config file named ~/.blueproximityrc is created and
-shows all configurable settings with its default values. In this file
-you may use different commands to lock the screen to make the
-programm useable with the KDE desktop or even start your own scripts.
+shows all configurable settings with their default values. In this
+file you may adjust all values found in the gui plus the
+communication channel to the mobile phone. 
 </P>
 <H3 CLASS="western">Pausing the software</H3>
 <P>If you would like keep the software from connecting to your phone
 (because you want to transfer files and it is somewhat interfering
 the transmission) you can activate <EM>pause mode</EM>. Right click
 on the icon to get the popup menu</P>
-<P><IMG SRC="manual_html_255afcfc.png" NAME="Grafik8" ALIGN=LEFT WIDTH=173 HEIGHT=111 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
-<P>and select <KBD>Pause</KBD> in that menu. You will see the icon
-changing to pause mode too.</P>
-<P><IMG SRC="manual_html_4ee630fe.png" NAME="Grafik10" ALIGN=LEFT WIDTH=261 HEIGHT=69 BORDER=0><BR CLEAR=LEFT>To
+<P><IMG SRC="manual_html_20077f87.png" NAME="Grafik8" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>and
+select <KBD>Pause</KBD> in that menu. You will see the icon changing
+to pause mode too.</P>
+<P><IMG SRC="manual_html_m33642ea5.png" NAME="Grafik10" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>To
 deactivate pause mode do the above steps again. You will see
 BlueProximity reconnecting to your phone and work again.</P>
 <H3 CLASS="western">Stopping the software</H3>
 <P>If you would like to stop the software (for whatever reason that
 might be) you should right click on the tray icon 
 </P>
-<P><IMG SRC="manual_html_255afcfc.png" NAME="Grafik9" ALIGN=LEFT WIDTH=173 HEIGHT=111 BORDER=0><BR CLEAR=LEFT><BR><BR>
-</P>
-<P>and select <KBD>close</KBD> in that menu. It may take up to three
-seconds to shutdown the software.</P>
+<P><IMG SRC="manual_html_20077f87.png" NAME="Grafik9" ALIGN=LEFT BORDER=0><BR CLEAR=LEFT>and
+select <KBD>close</KBD> in that menu. It may take up to three seconds
+to shutdown the software.</P>
 <H3 CLASS="western">FAQ</H3>
 <P><EM>Q:</EM> I can't see my mobile phone when scanning.</P>
 <P><EM>A:</EM> You need to activate bluetooth and disable
@@ -210,7 +231,61 @@ quit BlueProximity for the time connecting. Pause mode should be
 prefered, of course :-).</P>
 <P><BR><BR>
 </P>
+<P><EM>Q: </EM>My Device (either computer or phone) always asks for a
+password or pin. How can I change that?</P>
+<P><EM>A: </EM>Most likely your devices are not paired yet. Please
+install the gnome-bluetooth applet if that is not there yet. With
+Ubuntu the package's name is bluez-gnome.</P>
+<P>After starting the applet (bluetooth-applet) you should configure
+your computer as laptop and visible to others. (Right click on the
+new Bluetooth icon and click on Preferences/Einstellungen)</P>
+<P>Afterwards take your phone and do something similar to these
+steps: (I have a nokia 6230)</P>
+<P>0. If BlueProximity is running, rightclick on its icon and select
+&quot;Pause&quot;</P>
+<P>1. Take the phone and enter the BT menu</P>
+<P>2. Move to &quot;Paired Devices&quot; (Gekoppelte Ger&auml;te)</P>
+<P>3. Select Options-&gt;&quot;Pair new device&quot; (Neues Ger&auml;t
+koppeln)</P>
+<P>The phone should look for unpaired bluetooth devices in reach. It
+should then show at least your notebooks name (as found in the
+bluetooth applets settings)</P>
+<P>4. Select your notebook and it should ask you for your pin. Now
+enter the pin from /etc/bluetooth/pin.</P>
+<P>5. The bluetooth applet should now state that it trusts your
+mobile (created bonding).</P>
+<P>6. You should now change the settings for the notebook on your
+phone, so select the notebook</P>
+<P>7. Select Options-&gt;connect without confirmation (Automatische
+Verbindung ohne Best&auml;tigung) and set that to Yes.</P>
+<P>Now you are ready to use BlueProximity. Please note again that the
+above steps are only valid on a nokia 6230 - if your phone is
+different, you should adopt the above procedure to your phones menu
+setup.</P>
+<P>If BlueProximity is still in Pause mode click on Pause again. It
+should now connect without any hassle.</P>
 <P><BR><BR>
 </P>
+<P><EM>Q: </EM>The locking or unlocking doesn't feel right – it
+takes too long to get it locked or locks to early or unlocks too
+late.</P>
+<P><EM>A: </EM>Use this algorithm to get good results: </P>
+<P>Set the lock distance up a bit and increase lock duration even
+more. (I am using 7/10.) Your milage may vary since it all depends on
+the hardware and the environment. The distance control is done by
+measuring the rssi (signal strength indicator) which is not
+deterministic. Sometimes it goes up to a certain value for no reason
+and will go back normal soon, so you should set the lock distance to
+that level and since it won't stay there long set the lock duration
+value something to like 10.</P>
+<P>For unlocking you should select a value of about half of the lock
+distance but a very small unlock duration. That makes sure you are
+around and not just passing by but it should still unlock fast enough
+to use it after you sat down. (4/1 is my value pair here). Note that
+the distance value is calculated and never does big in-/decrements.
+so if you come back and the first measured value is 8, it will
+probably go down one by one per second so the 1 second unlock
+duration still feels quite long. If there is too much time passing
+you should increase the unlock distance by one and test it again.</P>
 </BODY>
 </HTML>
