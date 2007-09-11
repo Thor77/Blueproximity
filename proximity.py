@@ -103,7 +103,7 @@ class ProximityGUI:
         #Get the Main Window, and connect the "destroy" event
         self.window = self.wTree.get_widget("MainWindow")
         if (self.window):
-            self.window.connect("destroy", self.btnClose_clicked)
+            self.window.connect("delete_event", self.btnClose_clicked)
         self.window.set_icon(gtk.gdk.pixbuf_new_from_file(dist_path + icon_base))
         self.proxi = proximityObject
         self.minDist = -255
@@ -298,6 +298,7 @@ class ProximityGUI:
 
     def btnClose_clicked(self,widget, data = None):
         self.Close()
+        return 1
 
     def btnSelect_clicked(self,widget, data = None):
         #Takes the selected entry in the mac/name table and enters its mac in the MAC field

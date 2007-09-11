@@ -3,6 +3,7 @@ Changelog for BlueProximity
 1.2 "call me HIG" - to be released
 - fixed: unlock command was always executed at startup
 - fixed: MAC address is now being saved even if nothing else changed (Bug #1781579)
+- fixed: preferences window may now be closed using the X button of the window manager (thx to Zsolt Mazolt)
 - added: lock/unlock commands now can be changed via gui (notebook tab 'Locking')
 - added: logging functions to log to syslog or file
 - added: proximity command which will be fired at given interval while proximity is detected (possible use: never activate screensaver while near)
@@ -10,6 +11,7 @@ Changelog for BlueProximity
 - added: language French (Claude - f5pbl@users.sourceforge.net)
 - added: language Farsi (Ali Sattari - ali.sattari@gmail.com)
 - added: language Spanish (César Palma - cesarpalma80@gmail.com)
+- added: language Swedish (Daniel Nylander - dnylander@users.sourceforge.net)
 - modified: scanning now shows by message and watch cursor (Bug #1776732)
 - modified: every control directly accessable via keyboard (Bug #1776732)
 - modified: layout optimized by Tobias Jakobs (Bug #1776732)
