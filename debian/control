@@ -1,0 +1,22 @@
+Source: blueproximity
+Section: utils
+Priority: extra
+Maintainer: Lars Friedrichs <LarsFriedrichs@gmx.de>
+Build-Depends: cdbs, cdbs, debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: blueproximity
+Architecture: all
+Depends: python, bluez-utils, python-configobj, python-bluez, python-gtk2, python-glade2, python-gobject
+Description: automatic screenlocking depending on bluetooth dev proximity
+ Leave your PC - it's locked automatically, come back and it's back too...
+ This software helps you add a little more security to your desktop. It does
+ so by detecting one of your bluetooth devices, most likely your mobile 
+ phone, and keeping track of its distance. If you move away from your 
+ computer and the distance is above a certain level (no measurement in 
+ meters is possible) for a given time, it automatically locks your desktop 
+ (or starts any other shell command you want).
+ .
+ Once away your computer awaits its master back - if you are nearer than a 
+ given level for a set time your computer unlocks magically without any 
+ interaction (or starts any other shell command you want).

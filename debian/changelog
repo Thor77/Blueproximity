@@ -1,0 +1,64 @@
+blueproximity (1.2) feisty; urgency=low
+
+  * fixed: unlock command was always executed at startup
+  * fixed: MAC address is now being saved even if nothing else changed
+    (Bug #1781579)
+  * fixed: preferences window may now be closed using the X button of
+    the window manager (thx to Zsolt Mazolt)
+  * added: lock/unlock commands now can be changed via gui (notebook tab
+    'Locking')
+  * added: logging functions to log to syslog or file
+  * added: proximity command which will be fired at given interval while
+    proximity is detected (possible use: never activate screensaver
+    while near)
+  * added: we are now multilingual - see the .pot file. English and
+    German in included (thx to Mark Mruss and www.learningpython.com)
+    (Bug #1772603)
+  * added: language French (Claude - f5pbl@users.sourceforge.net)
+  * added: language Farsi (Ali Sattari - ali.sattari@gmail.com)
+  * added: language Spanish (César Palma - cesarpalma80@gmail.com)
+    )
+  * added: language Swedish (Daniel Nylander -
+    dnylander@users.sourceforge.net)
+  * modified: scanning now shows by message and watch cursor (Bug
+    #1776732)
+  * modified: every control directly accessable via keyboard (Bug
+    #1776732)
+  * modified: layout optimized by Tobias Jakobs (Bug #1776732)
+  * modified: control range optimized to possible value range (Bug
+    #1776732)
+  * modified: gnome screensaver now locks the screen no matter what its
+    settings say (Bug #1778306)
+  * modified: new program info dialog accessable via icon's context menu
+    (Bug #1776732)
+  * modified: preferences dialog now has a proper icon (Bug #1776732)
+  * modified: preferences dialog now accessable via 'preferences' entry
+    in icon's context menu (Bug #1776732)
+  * modified: preferences dialog now does autosave and autoactivate
+    values - changes are active immediately (Bug #1776732)
+  * modified: info replaces old apply button which was no longer needed
+    (Bug #1776732)
+  * modified: switched to new, scalable iconset by Tobias and me
+  * modified: changed allowed settings for ranges and durations to
+    limits given by the gui.
+
+ -- Lars Friedrichs <LarsFriedrichs@gmx.de>  Tue, 11 Sep 2007 23:48:55 +0200
+
+blueproximity (1.1-1) feisty; urgency=low
+
+  * the "see what's coming" release
+  * fixed: icon shows connecting process
+  * fixed: no window flicker on startup (Bug #1772241) 
+  * fixed: first window not displaced at upper left corner (Bug #1772241)
+  * fixed: wrong set MAC when no config file exists, now shows correctly "not configured" in icon tooltip
+  * added: startup script start_proximity.sh to be run from anywhere (link it in your session startup)
+  * added: automatically show settings screen on first startup (Feature #1772589)
+  * added: pause mode via icon's context menu (Feature #1776527)
+  * added: Ubuntu Feisty package (Feature #1772590)
+  * modified: some aspects regarding easier packaging
+  * modified: logo
+  * modified: switching most bt functions to pybluez, only rssi detection relies on hcitool
+  
+
+ -- Lars Friedrichs <LarsFriedrichs@gmx.de>  Sat, 18 Aug 2007 11:38:49 +0200
+
