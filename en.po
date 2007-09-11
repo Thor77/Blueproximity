@@ -5,16 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: BlueProximity 1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-31 20:48+0200\n"
-"PO-Revision-Date: 2007-08-31 20:49+0200\n"
+"PO-Revision-Date: 2007-09-11 17:25+0100\n"
 "Last-Translator: Lars Friedrichs <LarsFriedrichs@gmx.de>\n"
-"Language-Team: English\n"
+"Language-Team: Lars Friedrichs <LarsFriedrichs@gmx.de>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: proximity.py:115
 msgid "MAC"
@@ -39,15 +40,12 @@ msgstr "Leave it - it's locked, come back - it's back too..."
 #: proximity.py:185
 msgid ""
 "\n"
-"        BlueProximity is free software; you can redistribute it and/or "
-"modify it \n"
-"        under the terms of the GNU General Public License as published by "
-"the \n"
+"        BlueProximity is free software; you can redistribute it and/or modify it \n"
+"        under the terms of the GNU General Public License as published by the \n"
 "        Free Software Foundation; either version 2 of the License, or \n"
 "        (at your option) any later version.\n"
 "\n"
-"        BlueProximity is distributed in the hope that it will be useful, "
-"but \n"
+"        BlueProximity is distributed in the hope that it will be useful, but \n"
 "        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
 "        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
 "        See the GNU General Public License for more details.\n"
@@ -61,15 +59,12 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        BlueProximity is free software; you can redistribute it and/or "
-"modify it \n"
-"        under the terms of the GNU General Public License as published by "
-"the \n"
+"        BlueProximity is free software; you can redistribute it and/or modify it \n"
+"        under the terms of the GNU General Public License as published by the \n"
 "        Free Software Foundation; either version 2 of the License, or \n"
 "        (at your option) any later version.\n"
 "\n"
-"        BlueProximity is distributed in the hope that it will be useful, "
-"but \n"
+"        BlueProximity is distributed in the hope that it will be useful, but \n"
 "        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
 "        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
 "        See the GNU General Public License for more details.\n"
@@ -106,7 +101,8 @@ msgstr " state: "
 msgid "Pause Mode - not connected"
 msgstr "Pause Mode - not connected"
 
-#: proximity.py:360 proximity.py:630
+#: proximity.py:360
+#: proximity.py:630
 msgid "active"
 msgstr "active"
 
@@ -146,7 +142,10 @@ msgstr "Could not open '"
 msgid "' for writing."
 msgstr "' for writing."
 
-#: proximity.py:462 proximity.py:616 proximity.py:626 proximity.py:640
+#: proximity.py:462
+#: proximity.py:616
+#: proximity.py:626
+#: proximity.py:640
 msgid "gone"
 msgstr "gone"
 
@@ -191,10 +190,8 @@ msgid "<b>Unlocking</b>"
 msgstr "<b>Unlocking</b>"
 
 #: proximity.glade.h:6
-msgid ""
-"<i><small>Please note that the device should already be paired!</small></i>"
-msgstr ""
-"<i><small>Please note that the device should already be paired!</small></i>"
+msgid "<i><small>Please note that the device should already be paired!</small></i>"
+msgstr "<i><small>Please note that the device should already be paired!</small></i>"
 
 #: proximity.glade.h:7
 msgid "BlueProximity Preferences"
@@ -341,3 +338,4 @@ msgstr "min: - max: - state: -"
 #: proximity.glade.h:46
 msgid "~/blueproximity.log"
 msgstr "~/blueproximity.log"
+

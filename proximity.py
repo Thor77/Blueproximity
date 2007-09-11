@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # blueproximity
-SW_VERSION = '1.1.9'
+SW_VERSION = '1.2'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -184,7 +184,16 @@ class ProximityGUI:
         copyright = u"""Copyright (c) 2007 Lars Friedrichs"""
         people = [
             u"Lars Friedrichs <LarsFriedrichs@gmx.de>",
-            u"Tobias Jakobs"]
+            u"Tobias Jakobs",
+            u"Zsolt Mazolt"]
+        translators = [
+            u"de Lars Friedrichs <LarsFriedrichs@gmx.de>",
+            u"en Lars Friedrichs <LarsFriedrichs@gmx.de>",
+            u"es César Palma <cesarpalma80@gmail.com>",
+            u"fa Ali Sattari <ali.sattari@gmail.com>",
+            u"fr Claude <f5pbl@users.sourceforge.net>",
+            u"sv Alexander Jönsson <tp-sv@listor.tp-sv.se>",
+            u" "]
         license = _("""
         BlueProximity is free software; you can redistribute it and/or modify it 
         under the terms of the GNU General Public License as published by the 
@@ -680,7 +689,7 @@ if __name__=='__main__':
         langs += language.split(":")
     """Now add on to the back of the list the translations that we
     know that we have, our defaults"""
-    langs += ["de", "en_US"]
+    langs += ["en"]
 
     """Now langs is a list of all of the languages that we are going
     to try to use.  First we check the default, then what the system
