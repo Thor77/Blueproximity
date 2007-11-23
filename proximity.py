@@ -131,6 +131,7 @@ class ProximityGUI:
             "on_btnResetMinMax_clicked" : self.btnResetMinMax_clicked,
             "on_settings_changed" : self.event_settings_changed,
             "on_settings_changed_reconnect" : self.event_settings_changed_reconnect,
+            "on_treeScanChannelResult_changed" : self.event_scanChannelResult_changed,
             "on_MainWindow_destroy" : self.btnClose_clicked }
         self.wTree.signal_autoconnect(dic)
 
@@ -361,6 +362,13 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
         if self.gone_live:
             self.writeSettings()
         pass
+
+    def event_scanChannelResult_changed(self,widget, data = None):
+        # Put selected channel in channel entry field
+        selection = self.wTree.get_widget("treeScanChannelResult").get_selection()
+        (model, iter) = selection.get_selected()
+        value = model.get_value(iter, 0)
+        self.wTree.get_widget("entryChannel").set_value(int(value))
 
     def btnClose_clicked(self,widget, data = None):
         self.Close()

@@ -535,6 +535,7 @@ Must be an open channel, if in doubt please use the scan button.</property>
 			  <property name="fixed_height_mode">False</property>
 			  <property name="hover_selection">False</property>
 			  <property name="hover_expand">False</property>
+			  <signal name="cursor_changed" handler="on_treeScanChannelResult_changed" last_modification_time="Fri, 23 Nov 2007 01:36:01 GMT"/>
 			</widget>
 		      </child>
 		    </widget>
