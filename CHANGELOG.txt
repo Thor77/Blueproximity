@@ -1,5 +1,12 @@
 Changelog for BlueProximity
 
+1.2.1 "I'll be back" - released 2007-11-22
+- fixed: proximity command now only executes if proximity detected and not paused (Bug #1835488)
+- added: some tooltips should help the initial user
+- added: new channel setting via gui (Bug #1772585)
+- added: scan for usable channels on a device (Bug #1772585)
+- added: more error messages if external packages are missing
+
 1.2 "call me HIG" - released 2007-09-11
 - fixed: unlock command was always executed at startup
 - fixed: MAC address is now being saved even if nothing else changed (Bug #1781579)

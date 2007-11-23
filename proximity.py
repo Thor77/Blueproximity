@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # blueproximity
-SW_VERSION = '1.2'
+SW_VERSION = '1.2.1'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -20,32 +20,63 @@ SW_VERSION = '1.2'
 # ToDo List can be found on sourceforge
 # follow http://blueproximity.sourceforge.net
 
+APP_NAME="blueproximity"
+
+# system includes
 import os
 import sys
 import time
 import threading
-import gobject
 import signal
-from configobj import ConfigObj
-from validate import Validator
-import bluetooth
-import _bluetooth as bluez
 import syslog
 import locale
 import gettext
-APP_NAME="blueproximity"
-
+# now the imports from external packages
+try:
+    import gobject
+except:
+    print _("The program cannot import the module gobject.")
+    print _("Please make sure the GObject bindings for python are installed.")
+    print _("e.g. with Ubuntu Linux, type")
+    print _(" sudo apt-get install python-gobject")
+    sys.exit(1)
+try:
+    from configobj import ConfigObj
+    from validate import Validator
+except:
+    print _("The program cannot import the module ConfigObj or Validator.")
+    print _("Please make sure the ConfigObject package for python is installed.")
+    print _("e.g. with Ubuntu Linux, type")
+    print _(" sudo apt-get install python-configobj")
+    sys.exit(1)
+try:
+    import bluetooth
+    import _bluetooth as bluez
+except:
+    print _("The program cannot import the module bluetooth.")
+    print _("Please make sure the bluetooth bindings for python as well as bluez are installed.")
+    print _("e.g. with Ubuntu Linux, type")
+    print _(" sudo apt-get install python-bluez")
+    sys.exit(1)
 try:
     import pygtk
     pygtk.require("2.0")
-except:
-    sys.exit(1)
-
-try:
     import gtk
+except:
+    print _("The program cannot import the module pygtk.")
+    print _("Please make sure the GTK2 bindings for python are installed.")
+    print _("e.g. with Ubuntu Linux, type")
+    print _(" sudo apt-get install python-gtk2")
+    sys.exit(1)
+try:
     import gtk.glade
 except:
+    print _("The program cannot import the module glade.")
+    print _("Please make sure the Glade2 bindings for python are installed.")
+    print _("e.g. with Ubuntu Linux, type")
+    print _(" sudo apt-get install python-glade2")
     sys.exit(1)
+
 
 # Setup config file specs and defaults
 conf_specs = [
@@ -95,9 +126,11 @@ class ProximityGUI:
         dic = { "on_btnInfo_clicked" : self.aboutPressed,
             "on_btnClose_clicked" : self.btnClose_clicked,
             "on_btnScan_clicked" : self.btnScan_clicked,
+            "on_btnScanChannel_clicked" : self.btnScanChannel_clicked,
             "on_btnSelect_clicked" : self.btnSelect_clicked,
             "on_btnResetMinMax_clicked" : self.btnResetMinMax_clicked,
             "on_settings_changed" : self.event_settings_changed,
+            "on_settings_changed_reconnect" : self.event_settings_changed_reconnect,
             "on_MainWindow_destroy" : self.btnClose_clicked }
         self.wTree.signal_autoconnect(dic)
 
@@ -111,6 +144,7 @@ class ProximityGUI:
         self.maxDist = 0
         self.pauseMode = False
         self.lastMAC = ''
+        self.scanningChannels = False
 
         #Prepare the mac/name table
         self.model = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING)
@@ -121,6 +155,19 @@ class ProximityGUI:
         colLabel.set_sort_column_id(0)
         self.tree.append_column(colLabel)
         colLabel=gtk.TreeViewColumn(_('Name'), gtk.CellRendererText(), text=1)
+        colLabel.set_resizable(True)
+        colLabel.set_sort_column_id(1)
+        self.tree.append_column(colLabel)
+        
+        #Prepare the channel/state table
+        self.modelScan = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING)
+        self.tree = self.wTree.get_widget("treeScanChannelResult")
+        self.tree.set_model(self.modelScan)
+        colLabel=gtk.TreeViewColumn(_('Channel'), gtk.CellRendererText(), text=0)
+        colLabel.set_resizable(True)
+        colLabel.set_sort_column_id(0)
+        self.tree.append_column(colLabel)
+        colLabel=gtk.TreeViewColumn(_('State'), gtk.CellRendererText(), text=1)
         colLabel.set_resizable(True)
         colLabel.set_sort_column_id(1)
         self.tree.append_column(colLabel)
@@ -257,6 +304,7 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
     def readSettings(self):
         #Updates the controls to show the actual configuration of the running proximity
         self.wTree.get_widget("entryMAC").set_text(self.proxi.dev_mac)
+        self.wTree.get_widget("entryChannel").set_value(self.proxi.dev_channel)
         self.wTree.get_widget("hscaleLockDist").set_value(-self.proxi.gone_limit)
         self.wTree.get_widget("hscaleLockDur").set_value(self.proxi.gone_duration)
         self.wTree.get_widget("hscaleUnlockDist").set_value(-self.proxi.active_limit)
@@ -273,11 +321,13 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
     def writeSettings(self):
         #Updates the running proximity and the config file with the new settings from the controls
         self.proxi.dev_mac = self.wTree.get_widget("entryMAC").get_text()
+        self.proxi.dev_channel = int(self.wTree.get_widget("entryChannel").get_value())
         self.proxi.gone_limit = -self.wTree.get_widget("hscaleLockDist").get_value()
         self.proxi.gone_duration = self.wTree.get_widget("hscaleLockDur").get_value()
         self.proxi.active_limit = -self.wTree.get_widget("hscaleUnlockDist").get_value()
         self.proxi.active_duration = self.wTree.get_widget("hscaleUnlockDur").get_value()
         self.config['device_mac'] = str(self.proxi.dev_mac)
+        self.config['device_channel'] = str(self.proxi.dev_channel)
         self.config['lock_distance'] = int(-self.proxi.gone_limit)
         self.config['lock_duration'] = int(self.proxi.gone_duration)
         self.config['unlock_distance'] = int(-self.proxi.active_limit)
@@ -300,9 +350,15 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
 
     def event_settings_changed(self,widget, data = None):
         #Don't react if we are still initializing (were we set the values)
-        #print "on_settings_changed reached"
         if self.gone_live:
-            #print "so writing the settings"
+            self.writeSettings()
+        pass
+
+    def event_settings_changed_reconnect(self,widget, data = None):
+        #Don't react if we are still initializing (were we set the values)
+        #but do kill the existing connection
+        self.proxi.kill_connection()
+        if self.gone_live:
             self.writeSettings()
         pass
 
@@ -331,6 +387,37 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
         self.window.window.set_cursor(None)
         
         
+    def btnScanChannel_clicked(self,widget, data = None):
+        # scan the selected device for possibly usable channels
+        if self.scanningChannels:
+            self.wTree.get_widget("labelBtnScanChannel").set_label(_("Sca_n channels on device"))
+            self.wTree.get_widget("channelScanWindow").hide_all()
+            self.scanningChannels = False
+            self.scanner.doStop()
+        else:
+            mac = self.proxi.dev_mac
+            if self.pauseMode:
+                mac = self.lastMAC
+                was_paused = True
+            else:
+                self.pausePressed(None)
+                was_paused = False
+            self.wTree.get_widget("labelBtnScanChannel").set_label(_("Stop sca_nning"))
+            self.wTree.get_widget("channelScanWindow").show_all()
+            self.scanningChannels = True
+            dialog = gtk.MessageDialog(message_format=_("The scanning process tries to connect to each of the 30 possible ports. This will take some time and you should watch your bluetooth device for any actions to be taken. If possible click on accept/connect. If you are asked for a pin your device was not paired properly before, see the manual on how to fix this."),buttons=gtk.BUTTONS_OK)
+            dialog.connect("response", lambda x,y: dialog.destroy())
+            dialog.run()
+            self.scanner = ScanDevice(mac,self.modelScan,was_paused,self.btnScanChannel_done)
+        return 0
+    
+    def btnScanChannel_done(self,was_paused):
+        self.wTree.get_widget("labelBtnScanChannel").set_label(_("Sca_n channels on device"))
+        self.scanningChannels = False
+        if not was_paused:
+            self.pausePressed(None)
+            self.proxi.Simulate = True
+
     def btnScan_clicked(self,widget, data = None):
         # scan the area for bluetooth devices and show the results
         watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
@@ -388,7 +475,8 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
         
     def proximityCommand(self):
         #This is the proximity command callback called asynchronously as the updateState above
-        ret_val = os.popen(self.config['proximity_command']).readlines()
+        if self.proxi.State == _('active') and not self.proxi.Simulate:
+            ret_val = os.popen(self.config['proximity_command']).readlines()
         self.timer2 = gobject.timeout_add(1000*self.config['proximity_interval'],self.proximityCommand)
 
 class Logger:
@@ -466,6 +554,43 @@ class Logger:
                 self.enable_filelogging(config['log_filelog_filename'])
 
 
+class ScanDevice():
+    # this class scans a device for open ports
+    def __init__(self,device_mac,model,was_paused,callback):
+        self.mac = device_mac
+        self.model = model
+        self.stopIt = False
+        self.port = 1
+        self.timer = gobject.timeout_add(500,self.runStep)
+        self.model.clear()
+        self.was_paused = was_paused
+        self.callback = callback
+
+    def scanPortResult(self,port):
+    # here we scan exactly one port and give a textual result
+        _sock = bluez.btsocket()
+        sock = bluetooth.BluetoothSocket( bluetooth.RFCOMM , _sock )
+        try:
+            sock.connect((self.mac, port))
+            sock.close
+            return _("usable")
+        except:
+            return _("closed or denied")
+
+
+    def runStep(self):
+    # here the scanning of all ports is done
+        self.model.append([str(self.port), self.scanPortResult(self.port)])
+        self.port = self.port + 1
+        if not self.port > 30 and not self.stopIt:
+            self.timer = gobject.timeout_add(500,self.runStep)
+        else:
+            self.callback(self.was_paused)
+
+    def doStop(self):
+        self.stopIt = True
+
+
 class Proximity (threading.Thread):
     # this class does 'all the magic'
     def __init__(self,config):
@@ -478,6 +603,7 @@ class Proximity (threading.Thread):
         self.Stop = False
         self.procid = 0
         self.dev_mac = self.config['device_mac']
+        self.dev_channel = self.config['device_channel']
         self.ringbuffer_size = self.config['buffer_size']
         self.ringbuffer = [-254] * self.ringbuffer_size
         self.ringbuffer_pos = 0
@@ -573,7 +699,7 @@ class Proximity (threading.Thread):
             ret_val = ret_val[0].split(':')[1].strip(' ')
         return int(ret_val)
 
-    def get_connection(self,dev_mac):
+    def get_connection(self,dev_mac,dev_channel):
         # fire up a connection
         # don't forget to set up your phone not to ask for a connection
         # (at least for this computer)
@@ -584,7 +710,7 @@ class Proximity (threading.Thread):
             self.procid = 1
             _sock = bluez.btsocket()
             self.sock = bluetooth.BluetoothSocket( bluetooth.RFCOMM , _sock )
-            self.sock.connect((dev_mac, self.config['device_channel']))
+            self.sock.connect((dev_mac, dev_channel))
             #print str(_sock.getsockid())
         except:
             self.procid = 0
@@ -594,7 +720,7 @@ class Proximity (threading.Thread):
         #time.sleep(5)
         return self.procid
 
-    def run_cycle(self,dev_mac):
+    def run_cycle(self,dev_mac,dev_channel):
         # reads the distance and averages it over the ringbuffer
         self.ringbuffer_pos = (self.ringbuffer_pos + 1) % self.ringbuffer_size
         self.ringbuffer[self.ringbuffer_pos] = self.get_proximity_once(dev_mac)
@@ -605,7 +731,7 @@ class Proximity (threading.Thread):
             self.ErrorMsg = _("No connection found, trying to establish one...")
             #print "I can't find my master. Will try again..."
             self.kill_connection()
-            self.get_connection(dev_mac)
+            self.get_connection(dev_mac,dev_channel)
         return int(ret_val / self.ringbuffer_size)
 
     def go_active(self):
@@ -633,7 +759,7 @@ class Proximity (threading.Thread):
             try:
                 if self.dev_mac != "":
                     self.ErrorMsg = _("running...")
-                    dist = self.run_cycle(self.dev_mac)
+                    dist = self.run_cycle(self.dev_mac,self.dev_channel)
                 else:
                     dist = -255
                     self.ErrorMsg = "No bluetooth device configured..."
