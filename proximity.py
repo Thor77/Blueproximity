@@ -78,7 +78,8 @@ except:
     sys.exit(1)
 
 
-# Setup config file specs and defaults
+## Setup config file specs and defaults
+# This is the ConfigObj's syntax
 conf_specs = [
     'device_mac=string(max=17,default="")',
     'device_channel=integer(1,30,default=7)',
@@ -98,22 +99,33 @@ conf_specs = [
     ]
     
 
-# set this value to './' for svn version
+## This value gives us the base directory for language files and icons.
+# Set this value to './' for svn version
 # or to '/usr/share/blueproximity/' for packaged version
 dist_path = './' 
 
+## The icon used at normal operation and in the info dialog.
 icon_base = 'blueproximity_base.svg'
+## The icon used at distances greater than the unlock distance.
 icon_att = 'blueproximity_attention.svg'
+## The icon used if no proximity is detected.
 icon_away = 'blueproximity_nocon.svg'
+## The icon used during connection processes and with connection errors.
 icon_con = 'blueproximity_error.svg'
+## The icon shown if we are in pause mode.
 icon_pause = 'blueproximity_pause.svg'
 
 
+## This class represents the main configuration window and
+# updates the config file after changes made are saved
 class ProximityGUI:
-    # this class represents the main configuration window and
-    # updates the config file after changes made are saved
+
+    ## Constructor sets up the GUI and reads the current config
+    # @param proximityObject A proximity object representing the detection mechanism
+    # @param configobj A ConfigObj object representing the configuration of the proximity object
+    # @param show_window_on_start Set to True to show the config screen immediately after the start.
+    # This is true if no prior config file has been detected (initial start).
     def __init__(self,proximityObject,configobj,show_window_on_start):
-        #Constructor sets up the GUI and reads the current config
         
         #This is to block events from firing a config write because we initialy set a value
         self.gone_live = False
@@ -188,6 +200,7 @@ class ProximityGUI:
         self.icon.set_tooltip(_("BlueProximity starting..."))
         self.icon.set_from_file(dist_path + icon_con)
         
+        #Setup the popup menu and associated callbacks
         self.popupmenu = gtk.Menu()
         menuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
         menuItem.connect('activate', self.showWindow)
@@ -213,6 +226,7 @@ class ProximityGUI:
         self.gone_live = True
         self.proxi.logger.log_line(_('started.'))
 
+    ## Callback to show the pop-up menu if icon is right-clicked.
     def popupMenu(self, widget, button, time, data = None):
         if button == 3:
             if data:
@@ -220,6 +234,7 @@ class ProximityGUI:
                 data.popup(None, None, None, 3, time)
         pass
 
+    ## Callback to show and hide the config dialog.
     def showWindow(self, widget, data = None):
         if self.window.get_property("visible"):
             self.Close()
@@ -227,6 +242,7 @@ class ProximityGUI:
             self.window.show()
             self.proxi.Simulate = True
 
+    ## Callback to create and show the info dialog.
     def aboutPressed(self, widget, data = None):
         logo = gtk.gdk.pixbuf_new_from_file(dist_path + icon_base)
         description = _("Leave it - it's locked, come back - it's back too...")
@@ -274,6 +290,8 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
         about.connect('response', lambda widget, response: widget.destroy())
         about.show()
 
+    ## Callback to activate and deactivate pause mode.
+    # This is actually done by removing the proximity object'smac address.
     def pausePressed(self, widget, data = None):
         if self.pauseMode:
             self.pauseMode = False
@@ -287,8 +305,12 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
             self.proxi.Simulate = True
             self.proxi.kill_connection()
 
+
+    ## helper function to set a ComboBox's value to value if that exists in the Combo's list
+    # The value is not changed if the new value is not member of the list.
+    # @param widget a gtkComboBox object
+    # @param value the value the gtkComboBox should be set to.    
     def setComboValue(self, widget, value):
-        #helper to set a ComboBox's value to value if that exists in the Combo's list
         model = widget.get_model()
         for row in model:
             if row[0] == value:
@@ -296,12 +318,13 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
                 break
         
 
+    ## helper function to get a ComboBox's value
     def getComboValue(self, widget):
-        #helper to get a ComboBox's value
         model = widget.get_model()
         iter = widget.get_active_iter()
         return model.get_value(iter, 0)
 
+    ## Reads the config settings and sets all GUI components accordingly.
     def readSettings(self):
         #Updates the controls to show the actual configuration of the running proximity
         self.wTree.get_widget("entryMAC").set_text(self.proxi.dev_mac)
@@ -319,6 +342,7 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
         self.wTree.get_widget("checkFile").set_active(self.config['log_to_file'])
         self.wTree.get_widget("entryFile").set_text(self.config['log_filelog_filename'])
 
+    ## Reads the current settings from the GUI and stores them in the configobj object.
     def writeSettings(self):
         #Updates the running proximity and the config file with the new settings from the controls
         self.proxi.dev_mac = self.wTree.get_widget("entryMAC").get_text()
@@ -344,20 +368,27 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
         self.proxi.logger.configureFromConfig(self.config)
         self.config.write()
 
+    ## Callback for resetting the values for the min/max viewer.
     def btnResetMinMax_clicked(self,widget, data = None):
-        #Resets the values for the min/max viewer
         self.minDist = -255
         self.maxDist = 0
 
+    ## Callback called by almost all GUI elements if their values are changed.
+    # We don't react if we are still initializing (self.gone_live==False)
+    # because setting the values of the elements would already fire their change events.
+    # @see gone_live
     def event_settings_changed(self,widget, data = None):
-        #Don't react if we are still initializing (were we set the values)
         if self.gone_live:
             self.writeSettings()
         pass
 
+    ## Callback called by certain GUI elements if their values are changed.
+    # We don't react if we are still initializing (self.gone_live==False)
+    # because setting the values of the elements would already fire their change events.
+    # But in any case we kill a possibly existing connection. 
+    # Changing the rfcomm channel e.g. fires this event instead of event_settings_changed.
+    # @see event_settings_changed
     def event_settings_changed_reconnect(self,widget, data = None):
-        #Don't react if we are still initializing (were we set the values)
-        #but do kill the existing connection
         self.proxi.kill_connection()
         if self.gone_live:
             self.writeSettings()
@@ -487,11 +518,19 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
             ret_val = os.popen(self.config['proximity_command']).readlines()
         self.timer2 = gobject.timeout_add(1000*self.config['proximity_interval'],self.proximityCommand)
 
+
+## This class creates all logging information in the desired form.
+# We may log to syslog with a given syslog facility, while the severety is always info.
+# We may also log a simple file.
 class Logger:
+    ## Constructor does nothing special.
     def __init__(self):
         self.disable_syslogging()
         self.disable_filelogging()
         
+    ## helper function to convert a string (given by a ComboBox) to the corresponding
+    # syslog module facility constant.
+    # @param facility One of the 8 "localX" facilities or "user".
     def getFacilityFromString(self, facility):
         #Returns the correct constant value for the given facility
         dict = {
@@ -507,11 +546,13 @@ class Logger:
         }
         return dict[facility]
 
+    ## Activates the logging to the syslog server.
     def enable_syslogging(self, facility):
         self.syslog_facility = self.getFacilityFromString(facility)
         syslog.openlog('blueproximity',syslog.LOG_PID)
         self.syslogging = True
         
+    ## Deactivates the logging to the syslog server.
     def disable_syslogging(self):
         self.syslogging = False
         self.syslog_facility = None
@@ -561,9 +602,18 @@ class Logger:
             elif not self.filelogging:
                 self.enable_filelogging(config['log_filelog_filename'])
 
-
+## ScanDevice is a helper class used for scanning for open rfcomm channels
+# on a given device. It uses asynchronous calls via gobject.timeout_add to
+# not block the main process. It updates a given model after every scanned port
+# and calls a callback function after finishing the scanning process.
 class ScanDevice():
-    # this class scans a device for open ports
+    ## Constructor which sets up and immediately starts the scanning process.
+    # Note that the bluetooth device should not be connected while scanning occurs.
+    # @param device_mac MAC address of the bluetooth device to be scanned.
+    # @param was_paused A parameter to be passed to the finishing callback function.
+    # This is to automatically put the GUI in simulation mode if it has been before scanning. (dirty hack)
+    # @param callback A callback function to be called after scanning has been done. 
+    # It takes one parameter which is preset by the was_paused parameter.
     def __init__(self,device_mac,model,was_paused,callback):
         self.mac = device_mac
         self.model = model
@@ -599,10 +649,15 @@ class ScanDevice():
         self.stopIt = True
 
 
+## This class does 'all the magic' like regular device detection and decision making
+# whether a device is known as present or away. Here is where all the bluetooth specific
+# part takes place. It is build to be run a a seperate thread and would run perfectly without any GUI.
+# Please note that the present-command is issued by the GUI whereas the locking and unlocking
+# is called by this class. This is inconsitent and to be changed in a future release.
 class Proximity (threading.Thread):
-    # this class does 'all the magic'
+    ## Constructor to setup our local variables and initialize threading.
+    # @param config a ConfigObj object that stores all our settings
     def __init__(self,config):
-        # setup our local variables
         threading.Thread.__init__(self, name="WorkerThread")
         self.config = config
         self.Dist = -255
@@ -801,8 +856,8 @@ class Proximity (threading.Thread):
                 break
         self.kill_connection()
 
+
 if __name__=='__main__':
-    
     
     #Translation stuff
 
