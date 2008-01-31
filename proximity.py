@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # blueproximity
-SW_VERSION = '1.2.1'
+SW_VERSION = '1.2.2'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -22,6 +22,12 @@ SW_VERSION = '1.2.1'
 
 APP_NAME="blueproximity"
 
+## This value gives us the base directory for language files and icons.
+# Set this value to './' for svn version
+# or to '/usr/share/blueproximity/' for packaged version
+dist_path = './' 
+
+
 # system includes
 import os
 import sys
@@ -30,7 +36,45 @@ import threading
 import signal
 import syslog
 import locale
+
+
+#Translation stuff
 import gettext
+
+#Get the local directory since we are not installing anything
+local_path = dist_path + 'LANG/'
+# Init the list of languages to support
+langs = []
+#Check the default locale
+lc, encoding = locale.getdefaultlocale()
+if (lc):
+    #If we have a default, it's the first in the list
+    langs = [lc]
+    # Now lets get all of the supported languages on the system
+language = os.environ.get('LANGUAGE', None)
+if (language):
+    """langage comes back something like en_CA:en_US:en_GB:en
+    on linuxy systems, on Win32 it's nothing, so we need to
+    split it up into a list"""
+    langs += language.split(":")
+"""Now add on to the back of the list the translations that we
+know that we have, our defaults"""
+langs += ["en"]
+
+"""Now langs is a list of all of the languages that we are going
+to try to use.  First we check the default, then what the system
+told us, and finally the 'known' list"""
+
+gettext.bindtextdomain(APP_NAME, local_path)
+gettext.textdomain(APP_NAME)
+# Get the language to use
+lang = gettext.translation(APP_NAME, local_path, languages=langs, fallback = True)
+"""Install the language, map _() (which we marked our
+strings to translate with) to self.lang.gettext() which will
+translate them."""
+_ = lang.gettext    
+
+
 # now the imports from external packages
 try:
     import gobject
@@ -99,11 +143,6 @@ conf_specs = [
     ]
     
 
-## This value gives us the base directory for language files and icons.
-# Set this value to './' for svn version
-# or to '/usr/share/blueproximity/' for packaged version
-dist_path = './' 
-
 ## The icon used at normal operation and in the info dialog.
 icon_base = 'blueproximity_base.svg'
 ## The icon used at distances greater than the unlock distance.
@@ -163,6 +202,7 @@ class ProximityGUI:
         self.model = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING)
         self.tree = self.wTree.get_widget("treeScanResult")
         self.tree.set_model(self.model)
+	self.tree.get_selection().set_mode(gtk.SELECTION_SINGLE)
         colLabel=gtk.TreeViewColumn(_('MAC'), gtk.CellRendererText(), text=0)
         colLabel.set_resizable(True)
         colLabel.set_sort_column_id(0)
@@ -174,16 +214,16 @@ class ProximityGUI:
         
         #Prepare the channel/state table
         self.modelScan = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING)
-        self.tree = self.wTree.get_widget("treeScanChannelResult")
-        self.tree.set_model(self.modelScan)
+        self.treeChan = self.wTree.get_widget("treeScanChannelResult")
+        self.treeChan.set_model(self.modelScan)
         colLabel=gtk.TreeViewColumn(_('Channel'), gtk.CellRendererText(), text=0)
         colLabel.set_resizable(True)
         colLabel.set_sort_column_id(0)
-        self.tree.append_column(colLabel)
+        self.treeChan.append_column(colLabel)
         colLabel=gtk.TreeViewColumn(_('State'), gtk.CellRendererText(), text=1)
         colLabel.set_resizable(True)
         colLabel.set_sort_column_id(1)
-        self.tree.append_column(colLabel)
+        self.treeChan.append_column(colLabel)
         
         #Show the current settings
         self.config = configobj
@@ -408,6 +448,7 @@ sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
     def btnSelect_clicked(self,widget, data = None):
         #Takes the selected entry in the mac/name table and enters its mac in the MAC field
         selection = self.tree.get_selection()
+	selection.set_mode(gtk.SELECTION_SINGLE)
         model, selection_iter = selection.get_selected()
         if (selection_iter):
             mac = self.model.get_value(selection_iter, 0)
@@ -858,43 +899,9 @@ class Proximity (threading.Thread):
 
 
 if __name__=='__main__':
-    
-    #Translation stuff
-
-    #Get the local directory since we are not installing anything
-    local_path = dist_path + 'LANG/'
-    # Init the list of languages to support
-    langs = []
-    #Check the default locale
-    lc, encoding = locale.getdefaultlocale()
-    if (lc):
-        #If we have a default, it's the first in the list
-        langs = [lc]
-    # Now lets get all of the supported languages on the system
-    language = os.environ.get('LANGUAGE', None)
-    if (language):
-        """langage comes back something like en_CA:en_US:en_GB:en
-        on linuxy systems, on Win32 it's nothing, so we need to
-        split it up into a list"""
-        langs += language.split(":")
-    """Now add on to the back of the list the translations that we
-    know that we have, our defaults"""
-    langs += ["en"]
-
-    """Now langs is a list of all of the languages that we are going
-    to try to use.  First we check the default, then what the system
-    told us, and finally the 'known' list"""
-
-    gettext.bindtextdomain(APP_NAME, local_path)
-    gettext.textdomain(APP_NAME)
-    # Get the language to use
-    lang = gettext.translation(APP_NAME, local_path, languages=langs, fallback = True)
-    """Install the language, map _() (which we marked our
-    strings to translate with) to self.lang.gettext() which will
-    translate them."""
-    _ = lang.gettext    
     gtk.glade.bindtextdomain(APP_NAME, local_path)
     gtk.glade.textdomain(APP_NAME)
+
     
     # react on ^C
     signal.signal(signal.SIGINT, signal.SIG_DFL)

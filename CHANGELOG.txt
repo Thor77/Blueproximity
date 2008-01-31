@@ -1,5 +1,9 @@
 Changelog for BlueProximity
 
+1.2.2 "fix it, fix it, fix it" - released 2008-01-31
+- fixed: errors during imports can now be translated and don't lead to an error (Bug #1881000)
+- fixed: now the "Use selected device" button works again - shame on me... (Bug #1878304)
+
 1.2.1 "I'll be back" - released 2007-11-22
 - fixed: proximity command now only executes if proximity detected and not paused (Bug #1835488)
 - added: some tooltips should help the initial user
