@@ -3,7 +3,7 @@
 # (c) 2007 Lars Friedrichs
 #
 # configure base variables
-VERSION=1.2.1
+VERSION=1.2.2
 VNAME=blueproximity
 DNAME=$VNAME-$VERSION
 export DEBFULLNAME="Lars Friedrichs"
@@ -12,6 +12,8 @@ export DEBEMAIL="LarsFriedrichs@gmx.de"
 export EMAIL=$DEBEMAIL
 
 # build the source tar-ball
+echo First we create the locales
+./create_translation.sh
 echo Now building the source tar-ball
 cd ..
 mkdir $DNAME
