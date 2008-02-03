@@ -3,7 +3,8 @@ Version: 1.2
 Section: utils
 Priority: extra
 Architecture: all
-Depends: python, bluez-utils, python-configobj, python-bluez, python-gtk2, python-glade2, python-gobject
+Depends: python (>=2.5), bluez-utils (>=2.18), python-configobj (>=4.3.1), python-bluez (>=0.8), python-gtk2 (>=2.10), python-glade2 (>=2.10), python-gobject (>=2.10)
+Recommends: gnome-bluetooth
 Installed-Size: 1364
 Maintainer: Lars Friedrichs <LarsFriedrichs@gmx.de>
 Description: automatic screenlocking depending on bluetooth dev proximity

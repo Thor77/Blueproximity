@@ -7,7 +7,8 @@ Standards-Version: 3.7.2
 
 Package: blueproximity
 Architecture: all
-Depends: python, bluez-utils, python-configobj, python-bluez, python-gtk2, python-glade2, python-gobject
+Depends: python (>=2.5), bluez-utils (>=2.18), python-configobj (>=4.3.1), python-bluez (>=0.8), python-gtk2 (>=2.10), python-glade2 (>=2.10), python-gobject (>=2.10)
+Recommends: gnome-bluetooth
 Description: automatic screenlocking depending on bluetooth dev proximity
  Leave your PC - it's locked automatically, come back and it's back too...
  This software helps you add a little more security to your desktop. It does
