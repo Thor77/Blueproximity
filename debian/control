@@ -1,13 +1,15 @@
 Source: blueproximity
 Section: utils
-Priority: extra
-Maintainer: Lars Friedrichs <LarsFriedrichs@gmx.de>
-Build-Depends: cdbs, cdbs, debhelper (>= 5)
-Standards-Version: 3.7.2
+Priority: optional
+XSBC-Original-Maintainer: Lars Friedrichs <LarsFriedrichs@gmx.de>
+Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
+Build-Depends: cdbs (>= 0.4.49), debhelper (>= 5)
+Build-Depends-Indep: python-support (>= 0.5.3)
+Standards-Version: 3.7.3
 
 Package: blueproximity
 Architecture: all
-Depends: python (>=2.5), bluez-utils (>=2.18), python-configobj (>=4.3.1), python-bluez (>=0.8), python-gtk2 (>=2.10), python-glade2 (>=2.10), python-gobject (>=2.10)
+Depends: ${python:Depends}, python (>=2.5), bluez-utils (>=2.18), python-configobj (>=4.3.1), python-bluez (>=0.8), python-gtk2 (>=2.10), python-glade2 (>=2.10), python-gobject (>=2.10)
 Recommends: gnome-bluetooth
 Description: automatic screenlocking depending on bluetooth dev proximity
  Leave your PC - it's locked automatically, come back and it's back too...
@@ -21,3 +23,4 @@ Description: automatic screenlocking depending on bluetooth dev proximity
  Once away your computer awaits its master back - if you are nearer than a 
  given level for a set time your computer unlocks magically without any 
  interaction (or starts any other shell command you want).
+ Homepage: http://blueproximity.sourceforge.net

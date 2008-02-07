@@ -6,10 +6,15 @@
 VERSION=1.2.2
 VNAME=blueproximity
 DNAME=$VNAME-$VERSION
+DISTRIB=hardy
 export DEBFULLNAME="Lars Friedrichs"
+#export DEBFULLNAME="Lars Friedrichs (Quattro-Scan GmbH)"
 export NAME=$DEBFULLNAME
 export DEBEMAIL="LarsFriedrichs@gmx.de"
+#export DEBEMAIL="l.friedrichs@qs.nitag.de"
 export EMAIL=$DEBEMAIL
+
+. /etc/lsb-release
 
 # build the source tar-ball
 echo First we create the locales
@@ -28,6 +33,9 @@ cp $VNAME/README.txt $DNAME
 cp $VNAME/CHANGELOG.txt $DNAME
 cp -r $VNAME/doc $DNAME
 
+echo . deleting subversion files
+find $DNAME -iname .svn -exec rm -rf \{\} \;
+
 echo . creating the .tar.gz file
 rm $VNAME/$DNAME.tar.gz 2> /dev/null
 tar czf $VNAME/$DNAME.tar.gz $DNAME
@@ -36,7 +44,7 @@ echo . removing temporary files
 rm -Rf $DNAME
 echo Done.
 
-# now build the debian/ubuntu package
+# now build the ubuntu package
 echo Now building the .deb package
 echo . unpacking the source
 tar xzf $VNAME/$DNAME.tar.gz
@@ -53,50 +61,60 @@ cp -r $VNAME/debian $DNAME
 echo . copying package addons
 cp $VNAME/debian-addons/* $DNAME
 
+echo . deleting subversion files
+find $DNAME -iname .svn -exec rm -rf \{\} \;
+
 echo . modify source for packaging
 rm $DNAME/start_proximity.sh
 cat $DNAME/proximity.py | sed -e "s#dist_path = './'#dist_path = '/usr/share/blueproximity/'#" > $DNAME/proximity2.py
 mv -f $DNAME/proximity2.py $DNAME/proximity.py
 chmod 755 $DNAME/proximity.py
 
-# now make a debian changelog from ours
+# now make a debian changelog entry for the new upstream version
 echo . now creating the debian changelog...
 cd $DNAME
-STARTED=0
-DCH_OPTS="-p -v $VERSION"
-cat CHANGELOG.txt |
-while read LINE
-do
-    FIRST_CHAR=`echo $LINE | cut -b 1`
-    if [ "$STARTED" == "0" ]; then
-        if [ "$FIRST_CHAR" == "-" ]; then
-            STARTED='1'
-        fi
-    fi
-    if [ "$STARTED" == "1" ]; then
-        if [ "$FIRST_CHAR" != "-" ]; then
-            STARTED='2'
-        fi
-    fi
-    if [ "$STARTED" == "1" ]; then
-	LOG_LINE=`echo $LINE | sed -e 's/^- //g'`
-	echo .. $LOG_LINE
-        dch $DCH_OPTS $LOG_LINE
-        DCH_OPTS=-a
-    fi
-done
+#STARTED=0
+#DCH_OPTS="-a -v $VERSION-0ubuntu1 -D $DISTRIB"
+DCH_OPTS="-a"
+#cat CHANGELOG.txt |
+#while read LINE
+#do
+#    FIRST_CHAR=`echo $LINE | cut -b 1`
+#    if [ "$STARTED" == "0" ]; then
+#        if [ "$FIRST_CHAR" == "-" ]; then
+#            STARTED='1'
+#        fi
+#    fi
+#    if [ "$STARTED" == "1" ]; then
+#        if [ "$FIRST_CHAR" != "-" ]; then
+#            STARTED='2'
+#        fi
+#    fi
+#    if [ "$STARTED" == "1" ]; then
+#	LOG_LINE=`echo $LINE | sed -e 's/^- //g'`
+#	echo .. $LOG_LINE
+#        dch $DCH_OPTS $LOG_LINE
+#        DCH_OPTS=-a
+#    fi
+#done
+dch $DCH_OPTS "New upstream version $VERSION packaged"
 cd ..
 
 echo . creating .deb file with debuild
 cd $DNAME
+echo ". we use debuild. If $DISTRIB is not your distribution you should also use pbuilder/pdebuild."
 debuild
+
+echo ". and now we create a source package for upload at REVU."
+debuild -S -sa
+
 cd ..
 echo Done.
 
 echo . copying the new debian-filestructure
-cp -rf $DNAME/debian $VNAME/debian-after-$VERSION
+#cp -rf $DNAME/debian $VNAME/debian-after-$VERSION
 
 echo . cleaning up
-rm -rf $DNAME
+#rm -rf $DNAME
 
 echo All done.

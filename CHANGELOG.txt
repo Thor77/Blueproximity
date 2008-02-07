@@ -3,6 +3,7 @@ Changelog for BlueProximity
 1.2.2 "fix it, fix it, fix it" - released 2008-01-31
 - fixed: errors during imports can now be translated and don't lead to an error (Bug #1881000)
 - fixed: now the "Use selected device" button works again - shame on me... (Bug #1878304)
+- added: now we have a (rather uninteresting) man page (Bug #1841869)
 
 1.2.1 "I'll be back" - released 2007-11-22
 - fixed: proximity command now only executes if proximity detected and not paused (Bug #1835488)
@@ -24,13 +25,13 @@ Changelog for BlueProximity
 - added: language Spanish (César Palma - cesarpalma80@gmail.com)
 - added: language Swedish (Daniel Nylander - dnylander@users.sourceforge.net)
 - modified: scanning now shows by message and watch cursor (Bug #1776732)
-- modified: every control directly accessable via keyboard (Bug #1776732)
+- modified: every control directly accessible via keyboard (Bug #1776732)
 - modified: layout optimized by Tobias Jakobs (Bug #1776732)
 - modified: control range optimized to possible value range (Bug #1776732)
 - modified: gnome screensaver now locks the screen no matter what its settings say (Bug #1778306)
-- modified: new program info dialog accessable via icon's context menu (Bug #1776732)
+- modified: new program info dialog accessible via icon's context menu (Bug #1776732)
 - modified: preferences dialog now has a proper icon (Bug #1776732)
-- modified: preferences dialog now accessable via 'preferences' entry in icon's context menu (Bug #1776732)
+- modified: preferences dialog now accessible via 'preferences' entry in icon's context menu (Bug #1776732)
 - modified: preferences dialog now does autosave and autoactivate values - changes are active immediately (Bug #1776732)
 - modified: info replaces old apply button which was no longer needed (Bug #1776732)
 - modified: switched to new, scalable iconset by Tobias and me
