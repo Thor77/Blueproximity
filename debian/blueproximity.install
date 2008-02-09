@@ -1,5 +1,5 @@
-*.py *.svg *.glade *.gladep *.txt usr/share/blueproximity
-doc/* usr/share/doc/blueproximity
+*.py *.svg *.glade *.gladep usr/share/blueproximity
+doc/* README ChangeLog usr/share/doc/blueproximity
 LANG usr/share/blueproximity
 *.desktop usr/share/applications
 blueproximity usr/bin

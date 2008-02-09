@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # blueproximity
-SW_VERSION = '1.2.2'
+SW_VERSION = '1.2.3'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -93,10 +93,23 @@ except:
     print _("e.g. with Ubuntu Linux, type")
     print _(" sudo apt-get install python-configobj")
     sys.exit(1)
+IMPORT_BT=0
 try:
     import bluetooth
-    import _bluetooth as bluez
+    IMPORT_BT = IMPORT_BT+1
 except:
+    pass
+try:
+    import _bluetooth as bluez
+    IMPORT_BT = IMPORT_BT+1
+except:
+    pass
+try:
+    import bluetooth._bluetooth as bluez
+    IMPORT_BT = IMPORT_BT+1
+except:
+    pass
+if (IMPORT_BT!=2):
     print _("The program cannot import the module bluetooth.")
     print _("Please make sure the bluetooth bindings for python as well as bluez are installed.")
     print _("e.g. with Ubuntu Linux, type")

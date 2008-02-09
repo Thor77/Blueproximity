@@ -9,5 +9,6 @@ Section: Apps/Tools
 
 Format: HTML
 Index: /usr/share/doc/blueproximity/manual.html
-Files: /usr/share/doc/blueproximity/*.[html|png]
+Files: /usr/share/doc/blueproximity/*.html
+ /usr/share/doc/blueproximity/*.png
 

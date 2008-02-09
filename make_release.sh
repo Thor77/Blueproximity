@@ -3,7 +3,7 @@
 # (c) 2007 Lars Friedrichs
 #
 # configure base variables
-VERSION=1.2.2
+VERSION=1.2.3
 VNAME=blueproximity
 DNAME=$VNAME-$VERSION
 DISTRIB=hardy
@@ -29,8 +29,8 @@ cp $VNAME/proximity.py $DNAME
 cp $VNAME/start_proximity.sh $DNAME
 cp $VNAME/bluepro*.svg $DNAME
 cp -r $VNAME/LANG $DNAME
-cp $VNAME/README.txt $DNAME
-cp $VNAME/CHANGELOG.txt $DNAME
+cp $VNAME/README $DNAME
+cp $VNAME/ChangeLog $DNAME
 cp -r $VNAME/doc $DNAME
 
 echo . deleting subversion files
@@ -58,16 +58,17 @@ rm -r $DNAME/debian
 echo . copying our preset debian dir
 cp -r $VNAME/debian $DNAME
 
-echo . copying package addons
-cp $VNAME/debian-addons/* $DNAME
+#step is done via patches
+#echo . copying package addons
+#cp $VNAME/debian-addons/* $DNAME
 
 echo . deleting subversion files
 find $DNAME -iname .svn -exec rm -rf \{\} \;
 
-echo . modify source for packaging
-rm $DNAME/start_proximity.sh
-cat $DNAME/proximity.py | sed -e "s#dist_path = './'#dist_path = '/usr/share/blueproximity/'#" > $DNAME/proximity2.py
-mv -f $DNAME/proximity2.py $DNAME/proximity.py
+#echo . modify source for packaging
+#rm $DNAME/start_proximity.sh
+#cat $DNAME/proximity.py | sed -e "s#dist_path = './'#dist_path = '/usr/share/blueproximity/'#" > $DNAME/proximity2.py
+#mv -f $DNAME/proximity2.py $DNAME/proximity.py
 chmod 755 $DNAME/proximity.py
 
 # now make a debian changelog entry for the new upstream version
@@ -118,3 +119,7 @@ echo . cleaning up
 #rm -rf $DNAME
 
 echo All done.
+echo You can now 
+echo .  cd ..
+echo .  dput $DNAME-0ubuntu1_source.changes
+echo to upload the package to REVU
