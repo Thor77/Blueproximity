@@ -310,6 +310,7 @@ es César Palma <cesarpalma80@gmail.com>
 fa Ali Sattari <ali.sattari@gmail.com>
 fr Claude <f5pbl@users.sourceforge.net>
 sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
+ru Alexey Lubimov
             """
         license = _("""
         BlueProximity is free software; you can redistribute it and/or modify it 

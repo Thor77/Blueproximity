@@ -1,0 +1,492 @@
+# Russian translation of blueproximity.
+# Copyright (C) 2008 THE blueproximity'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the blueproximity package.
+# avl <avl@l14.ru>, 2008.
+# , fuzzy
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: blueproximity 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-02-09 00:13+0300\n"
+"PO-Revision-Date: 2008-02-09 01:33+0300\n"
+"Last-Translator: avl <avl@l14.ru>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit"
+
+#: proximity.py:82
+msgid "The program cannot import the module gobject."
+msgstr "Программа не может загрузить модуль gobject."
+
+#: proximity.py:83
+msgid "Please make sure the GObject bindings for python are installed."
+msgstr "Убедитесь, что питон-привязка к GObject·установлена."
+
+#: proximity.py:84 proximity.py:93 proximity.py:102 proximity.py:112
+#: proximity.py:120
+msgid "e.g. with Ubuntu Linux, type"
+msgstr "для дистрибутивов Ubuntu или Fedora core·,·наберите"
+
+#: proximity.py:85
+msgid " sudo apt-get install python-gobject"
+msgstr "·sudo·apt-get·install·python-gobject или yum install python-gobject"
+
+#: proximity.py:91
+msgid "The program cannot import the module ConfigObj or Validator."
+msgstr "Программа не может загрузить·модуль·ConfigObj·или Валидатор."
+
+#: proximity.py:92
+msgid "Please make sure the ConfigObject package for python is installed."
+msgstr "Убедитесь, что пакет ConfigObject для питона установлен."
+
+#: proximity.py:94
+msgid " sudo apt-get install python-configobj"
+msgstr "·sudo·apt-get·install·python-configobj"
+
+#: proximity.py:100
+msgid "The program cannot import the module bluetooth."
+msgstr "Программа не может загрузить·модуль·bluetooth."
+
+#: proximity.py:101
+msgid ""
+"Please make sure the bluetooth bindings for python as well as bluez are "
+"installed."
+msgstr "Убедитесь, что питон-привязка для bluetooth и сам bluez установлены"
+
+#: proximity.py:103
+msgid " sudo apt-get install python-bluez"
+msgstr "·sudo·apt-get·install·python-bluez"
+
+#: proximity.py:110
+msgid "The program cannot import the module pygtk."
+msgstr "Программа не может загрузить модуль·pygtk."
+
+#: proximity.py:111
+msgid "Please make sure the GTK2 bindings for python are installed."
+msgstr "Убедитесь, что питон привязка к GTK2 установлена."
+
+#: proximity.py:113
+msgid " sudo apt-get install python-gtk2"
+msgstr "·sudo·apt-get·install·python-gtk2"
+
+#: proximity.py:118
+msgid "The program cannot import the module glade."
+msgstr "Программа не может загрузить модуль glade."
+
+#: proximity.py:119
+msgid "Please make sure the Glade2 bindings for python are installed."
+msgstr "Убедитесь, что питон-привязка к Glade2 установлена."
+
+#: proximity.py:121
+msgid " sudo apt-get install python-glade2"
+msgstr "·sudo·apt-get·install·python-glade2"
+
+#: proximity.py:206
+msgid "MAC"
+msgstr "МАК"
+
+#: proximity.py:210
+msgid "Name"
+msgstr "Имя"
+
+#: proximity.py:219
+msgid "Channel"
+msgstr "Канал"
+
+#: proximity.py:223
+msgid "State"
+msgstr "Состояние"
+
+#: proximity.py:240
+msgid "BlueProximity starting..."
+msgstr "BlueProximity запускается..."
+
+#: proximity.py:267
+msgid "started."
+msgstr "стартовал."
+
+#: proximity.py:288
+msgid "Leave it - it's locked, come back - it's back too..."
+msgstr "Ушел - заблокировал, вернулся - он тоже разблокировался обратно"
+
+#: proximity.py:301
+msgid ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or "
+"modify it \n"
+"        under the terms of the GNU General Public License as published by "
+"the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, "
+"but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+msgstr ""
+"\n"
+"········BlueProximity·является свободным программным обеспечением;·вы можете распостранять и/или модифицировать его\n"
+"········под условиями лицензии·GNU·General·Public·License·как она опубликована·\n"
+"········Free·Software·Foundation;·или версии·2·данной лицензии,·или·\n"
+"········(на ваш выбор)·любой более поздней версии.\n"
+"\n"
+"········BlueProximity·распостраняется в надежде, что она будет полезна, но\n"
+"········БЕЗО ВСЯКИХ ГАРАНТИЙ;·\n"
+"········Подробности см.·GNU·General·Public·License.\n"
+"\n"
+"········Вы должны получить копиюGNU·General·Public·License·\n"
+"········вместе с программой;·если этого не произошло, напишите по адресу\n"
+"\n"
+"········Free·Software·Foundation,·Inc.,·\n"
+"········59·Temple·Place,·Suite·330,·\n"
+"········Boston,·MA··02111-1307··USA\n"
+"········"
+
+#: proximity.py:473 proximity.py:495 proximity.glade.h:23
+msgid "Sca_n channels on device"
+msgstr "Сканировать каналы устройства"
+
+#: proximity.py:485
+msgid "Stop sca_nning"
+msgstr "Остановить сканирование"
+
+#: proximity.py:488
+msgid ""
+"The scanning process tries to connect to each of the 30 possible ports. This "
+"will take some time and you should watch your bluetooth device for any "
+"actions to be taken. If possible click on accept/connect. If you are asked "
+"for a pin your device was not paired properly before, see the manual on how "
+"to fix this."
+msgstr "В процессе сканирования, программа попытается соединиться с 30-ю возможными портами. Эта процедура потребует некоторого времени и вам стоит следить за своим bluetooth устройством на предмет возможных действий, которые оно потребует. Если это возможно, щелкайте на кнопку \"приянть/cjtlbybnm\". Если устройство запрашивает пин-код, устройство не было ранее связано, см руководство пользователя на предмет разрешения данной проблемы."
+
+#: proximity.py:506
+msgid "Now scanning..."
+msgstr "Сканирую..."
+
+#: proximity.py:517
+msgid "stopped."
+msgstr "Остановлено"
+
+#: proximity.py:529
+msgid "min: "
+msgstr "мин: "
+
+#: proximity.py:530
+msgid " max: "
+msgstr " макс: "
+
+#: proximity.py:530
+msgid " state: "
+msgstr " состояние: "
+
+#: proximity.py:536
+msgid "Pause Mode - not connected"
+msgstr "Режим паузы - не подключен"
+
+#: proximity.py:541 proximity.py:558 proximity.py:874
+msgid "active"
+msgstr "активно"
+
+#: proximity.py:549
+msgid ""
+"\n"
+"Simulation Mode (locking disabled)"
+msgstr ""
+"\n"
+"Тестовый режим (блокировка отключена)"
+
+#: proximity.py:552
+msgid "Detected Distance: "
+msgstr "Определена дистанция: "
+
+#: proximity.py:552
+msgid ""
+"\n"
+"Current State: "
+msgstr ""
+"\n"
+"Текущее состояние: "
+
+#: proximity.py:552
+msgid ""
+"\n"
+"Status: "
+msgstr ""
+"\n"
+"Статус: "
+
+#: proximity.py:613
+msgid "Could not open '"
+msgstr "Невозможно открыть '"
+
+#: proximity.py:613
+msgid "' for writing."
+msgstr "'·для записи."
+
+#: proximity.py:675
+msgid "usable"
+msgstr "используемо"
+
+#: proximity.py:677
+msgid "closed or denied"
+msgstr "закрыт или запрещен"
+
+#: proximity.py:705 proximity.py:860 proximity.py:870 proximity.py:884
+msgid "gone"
+msgstr "ушел"
+
+#: proximity.py:718
+msgid "Initialized..."
+msgstr "Инициализация..."
+
+#: proximity.py:835
+msgid "No connection found, trying to establish one..."
+msgstr "Соединение не обнаружено, попытка установить..."
+
+#: proximity.py:846
+msgid "screen is unlocked"
+msgstr "экран заблокирован"
+
+#: proximity.py:854
+msgid "screen is locked"
+msgstr "экран заблокирован"
+
+#: proximity.py:865
+msgid "running..."
+msgstr "работает...."
+
+#: proximity.glade.h:1
+msgid "<b>Action commands</b>"
+msgstr "<b>Действия</b>"
+
+#: proximity.glade.h:2
+msgid "<b>Locking</b>"
+msgstr "<b>Блокировка</b>"
+
+#: proximity.glade.h:3
+msgid "<b>Logging</b>"
+msgstr "<b>Логировать</b>"
+
+#: proximity.glade.h:4
+msgid "<b>Measured atm</b>"
+msgstr "<b>Измеренный·atm</b>"
+
+#: proximity.glade.h:5
+msgid "<b>Unlocking</b>"
+msgstr "<b>Разблокирование</b>"
+
+#: proximity.glade.h:6
+msgid ""
+"<i><small>Please note that the device should already be paired!</small></i>"
+msgstr ""
+"<i><small>Обратите внимание, что устройство должно быть уже связано!</small></i>"
+
+#: proximity.glade.h:7
+msgid ""
+"All detected visible Bluetooth devices in reach. Use the scan button to "
+"populate or refresh the list."
+msgstr "Все обнаруженые в радиусе видимости Bluetooth устройства. Используйте кнопку \"сканировать\" для обновления списка."
+
+#: proximity.glade.h:9
+msgid ""
+"All rfcomm channels that are usable. Use the scan channel button above to "
+"populate or refresh this list. Click on an entry to select this channel."
+msgstr "Все rfcomm каналы могут быть использованы. Используйте кнопку сканирования каналов для обновления списка. Щелчок по элементу этого списка выбирает данный канал."
+
+#: proximity.glade.h:10
+msgid "BlueProximity Preferences"
+msgstr "BlueProximity·настройки"
+
+#: proximity.glade.h:11
+msgid ""
+"Command _interval:\n"
+"(sec.)"
+msgstr ""
+"Интервал между коммандами:\n"
+"(сек.)"
+
+#: proximity.glade.h:13
+msgid "D_istance:"
+msgstr "Д_истанция:"
+
+#: proximity.glade.h:14
+msgid "D_uration (sec.):"
+msgstr "Продолжительность·(сек.):"
+
+#: proximity.glade.h:15
+msgid "Distance:"
+msgstr "Дистанция:"
+
+#: proximity.glade.h:16
+msgid "Dur_ation (sec.):"
+msgstr "Продолжительность (сек.)"
+
+#: proximity.glade.h:17
+msgid "F_acility"
+msgstr "F_acility"
+
+#: proximity.glade.h:18
+msgid "File_name"
+msgstr "Имя_файла"
+
+#: proximity.glade.h:19
+msgid "L_ocking command:"
+msgstr "Команда закрытия:"
+
+#: proximity.glade.h:20
+msgid "MAC _Address"
+msgstr "МАК адрес"
+
+#: proximity.glade.h:21
+msgid "Pro_ximity command:"
+msgstr "Pro_ximity·комманда:"
+
+#: proximity.glade.h:22
+msgid "RFCOMM C_hannel"
+msgstr "RFCOMM·канал"
+
+#: proximity.glade.h:25
+msgid ""
+"Scan for visible Bluetooth devices within reach. Show them in the list above."
+msgstr "Сканировать видимые Bluetooth устройства.·Отобразть выше в списке."
+
+#: proximity.glade.h:26
+msgid ""
+"Scan the selected device (MAC Address field) for available rfcomm channels."
+msgstr "Сканировать доступные каналы на отмеченом устройстве (поле МАК  адреса)."
+
+#: proximity.glade.h:27
+msgid "Select from _detected devices:"
+msgstr "Выбрать из обнаруженых устройств:"
+
+#: proximity.glade.h:29
+msgid ""
+"The MAC address of your bluetooth device (e.g. mobile phone or headset) in "
+"the format XX:XX:XX:XX:XX:XX"
+msgstr "МАК адрес·устройства bluetooth·(например, мобильного телефона или гарнитуры)·в·"
+"формате·XX:XX:XX:XX:XX:XX"
+
+#: proximity.glade.h:31
+msgid ""
+"The filename of the file to be logged to. Please make sure this file is "
+"writable by the user that started BlueProximity."
+msgstr "Имя файла для ведения лога. Убедитесь, что этот файл доступен на запись пользователю, от которого запускается BlueProximity."
+
+#: proximity.glade.h:33
+msgid ""
+"The rfcomm channel where BlueProximity connects to your device.\n"
+"Must be an open channel, if in doubt please use the scan button."
+msgstr "Канал RFCOMM на вашем устройстве, к которому подсоединяется BlueProximity.\n"
+"Это должен быть открытый канал, если вы не уверены, используйте кнопку сканирования."
+
+#: proximity.glade.h:36
+msgid ""
+"Transfer the MAC address of the selected bluetooth device above into the "
+"address field below."
+msgstr "Перенести МАК адрес отмеченого выше bluetooth устройства в поле адреса."
+
+#: proximity.glade.h:37
+msgid "_Bluetooth Device"
+msgstr "_Bluetooth·устройство"
+
+#: proximity.glade.h:38
+msgid "_Distance:"
+msgstr "_Дистанция"
+
+#: proximity.glade.h:39
+msgid "_File"
+msgstr "_Файл"
+
+#: proximity.glade.h:40
+msgid "_Locking"
+msgstr "Блокировка"
+
+#: proximity.glade.h:41
+msgid "_Proximity Details"
+msgstr "_Proximity подробности"
+
+#: proximity.glade.h:42
+msgid "_Reset Min/Max"
+msgstr "_Сбросить·Мин/Макс"
+
+#: proximity.glade.h:43
+msgid "_Scan for devices"
+msgstr "_Сканировать устройства"
+
+#: proximity.glade.h:44
+msgid "_Syslog"
+msgstr "_Сислог"
+
+#: proximity.glade.h:45
+msgid "_Unlocking command:"
+msgstr "_Команда разблокировки"
+
+#: proximity.glade.h:46
+msgid "_Use selected device"
+msgstr "Использовать отмеченое устройство"
+
+#: proximity.glade.h:47
+msgid ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+msgstr "gnome-screensaver-command·-d\n"
+"xscreensaver-command·-d"
+
+#: proximity.glade.h:49
+msgid ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+msgstr ""
+"gnome-screensaver-command·-l\n"
+"xscreensaver-command·-l"
+
+#: proximity.glade.h:51
+msgid ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+msgstr ""
+"gnome-screensaver-command·-p\n"
+"xscreensaver-command·-p"
+
+#: proximity.glade.h:53
+msgid ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+msgstr ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+
+#: proximity.glade.h:62
+msgid "min: - max: - state: -"
+msgstr "мин:·-·макс:·-·состояние:·-"
+
+#: proximity.glade.h:63
+msgid "~/blueproximity.log"
+msgstr "~/blueproximity.log"
+
