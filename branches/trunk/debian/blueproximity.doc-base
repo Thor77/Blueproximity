@@ -1,0 +1,14 @@
+Document: blueproximity
+Title: BlueProximity Manual
+Author: Lars Friedrichs
+Abstract: This manual describes what BlueProximity can
+ do and how to setup a connection to your phone. 
+ How to get reasonable settings and how the whole system
+ can be used efficiently.
+Section: Apps/Tools
+
+Format: HTML
+Index: /usr/share/doc/blueproximity/manual.html
+Files: /usr/share/doc/blueproximity/*.html
+ /usr/share/doc/blueproximity/*.png
+

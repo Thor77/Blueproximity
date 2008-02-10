@@ -1,0 +1,18 @@
+diff -Nur -x '*.orig' -x '*~' blueproximity/proximity.py blueproximity.new/proximity.py
+--- blueproximity/proximity.py	2008-02-08 23:16:03.000000000 +0000
++++ blueproximity.new/proximity.py	2008-02-08 23:18:16.000000000 +0000
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/python
+ # coding: utf-8
+ 
+ # blueproximity
+@@ -25,7 +25,7 @@
+ ## This value gives us the base directory for language files and icons.
+ # Set this value to './' for svn version
+ # or to '/usr/share/blueproximity/' for packaged version
+-dist_path = './' 
++dist_path = '/usr/share/blueproximity/' 
+ 
+ 
+ # system includes

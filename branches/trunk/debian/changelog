@@ -1,0 +1,5 @@
+blueproximity (1.2.3-0ubuntu1) hardy; urgency=low
+
+  * Initial Packaging (LP: #137339)
+
+ -- Lars Friedrichs <LarsFriedrichs@gmx.de>  Thu, 07 Feb 2008 14:25:20 +0000

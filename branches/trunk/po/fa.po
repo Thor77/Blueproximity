@@ -1,0 +1,474 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: BlueProximity 1.2\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-02-02 21:19+0330\n"
+"Last-Translator: Ali Sattari <ali.sattari@gmail.com>\n"
+"Language-Team: Persian <ali.sattari@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Persian\n"
+"X-Poedit-Country: IRAN, ISLAMIC REPUBLIC OF\n"
+
+#: proximity.py:82
+msgid "The program cannot import the module gobject."
+msgstr "برنامه قادر به واردکردن ماژول gobject نیست."
+
+#: proximity.py:83
+msgid "Please make sure the GObject bindings for python are installed."
+msgstr "لطفا اطمینان حاصل کنید که ملزومات GObject برای python نصب شده‌اند."
+
+#: proximity.py:84
+#: proximity.py:93
+#: proximity.py:102
+#: proximity.py:112
+#: proximity.py:120
+msgid "e.g. with Ubuntu Linux, type"
+msgstr "برای نمونه، با امثال لینوکس اوبونتو"
+
+#: proximity.py:85
+msgid " sudo apt-get install python-gobject"
+msgstr " sudo apt-get install python-gobject"
+
+#: proximity.py:91
+msgid "The program cannot import the module ConfigObj or Validator."
+msgstr "برنامه قادر به واردکردن ماژول ConfigObj یا Validatorنیست."
+
+#: proximity.py:92
+msgid "Please make sure the ConfigObject package for python is installed."
+msgstr "لطفا اطمینان حاصل کنید که بسته ConfigObject برای python نصب شده است."
+
+#: proximity.py:94
+msgid " sudo apt-get install python-configobj"
+msgstr " sudo apt-get install python-configobj"
+
+#: proximity.py:100
+msgid "The program cannot import the module bluetooth."
+msgstr "برنامه قادر به واردکردن ماژول bluetoothنیست."
+
+#: proximity.py:101
+msgid "Please make sure the bluetooth bindings for python as well as bluez are installed."
+msgstr "لطفا اطمینان حاصل کنید که ملزومات bluetooth برای python به همراه bluez نصب شده‌اند."
+
+#: proximity.py:103
+msgid " sudo apt-get install python-bluez"
+msgstr " sudo apt-get install python-bluez"
+
+#: proximity.py:110
+msgid "The program cannot import the module pygtk."
+msgstr "برنامه قادر به واردکردن ماژول pygtk نیست."
+
+#: proximity.py:111
+msgid "Please make sure the GTK2 bindings for python are installed."
+msgstr "لطفا اطمینان حاصل کنید که ملزومات GTK2 برای python نصب شده‌اند."
+
+#: proximity.py:113
+msgid " sudo apt-get install python-gtk2"
+msgstr " sudo apt-get install python-gtk2"
+
+#: proximity.py:118
+msgid "The program cannot import the module glade."
+msgstr "برنامه قادر به واردکردن ماژول glade نیست."
+
+#: proximity.py:119
+msgid "Please make sure the Glade2 bindings for python are installed."
+msgstr "لطفا اطمینان حاصل کنید که ملزومات Glade2 برای python نصب شده‌اند."
+
+#: proximity.py:121
+msgid " sudo apt-get install python-glade2"
+msgstr " sudo apt-get install python-glade2"
+
+#: proximity.py:206
+msgid "MAC"
+msgstr "MAC"
+
+#: proximity.py:210
+msgid "Name"
+msgstr "نام"
+
+#: proximity.py:219
+msgid "Channel"
+msgstr "کانال"
+
+#: proximity.py:223
+msgid "State"
+msgstr "وضعیت"
+
+#: proximity.py:240
+msgid "BlueProximity starting..."
+msgstr "BlueProximity در حال اجرست..."
+
+#: proximity.py:267
+msgid "started."
+msgstr "اجرا شد."
+
+#: proximity.py:288
+msgid "Leave it - it's locked, come back - it's back too..."
+msgstr "ترکش کن - قفل شده، برگرد - اینهم برگشته..."
+
+#: proximity.py:301
+msgid ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or modify it \n"
+"        under the terms of the GNU General Public License as published by the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+msgstr ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or modify it \n"
+"        under the terms of the GNU General Public License as published by the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+
+#: proximity.py:473
+#: proximity.py:495
+#: proximity.glade.h:23
+msgid "Sca_n channels on device"
+msgstr "_پویش کانالهای دستگاه"
+
+#: proximity.py:485
+msgid "Stop sca_nning"
+msgstr "توقف پوی_ش"
+
+#: proximity.py:488
+msgid "The scanning process tries to connect to each of the 30 possible ports. This will take some time and you should watch your bluetooth device for any actions to be taken. If possible click on accept/connect. If you are asked for a pin your device was not paired properly before, see the manual on how to fix this."
+msgstr "پروسه‌ پویش تلاش میکند تا با 30 درگاه موجود ارتباط برقرار کند. این مقداری زمان میبرد و شما باید به دستگاه bluetooth خود توجه کنید تا در صورت لزوم اقدام لازم را انجام دهید. در صورت نیاز accept/connect را انتخاب کنید. اگر از شما برای pin سوال شد دستگاه شما قبلا به خوبی جفت نشده است، برای حل این موضوع راهنما را بخوانید."
+
+#: proximity.py:506
+msgid "Now scanning..."
+msgstr "در حال پویش..."
+
+#: proximity.py:517
+msgid "stopped."
+msgstr "متوقف شد."
+
+#: proximity.py:529
+msgid "min: "
+msgstr "حداقل:"
+
+#: proximity.py:530
+msgid " max: "
+msgstr "حداکثر:"
+
+#: proximity.py:530
+msgid " state: "
+msgstr "حالت:"
+
+#: proximity.py:536
+msgid "Pause Mode - not connected"
+msgstr "حالت وقفه - متصل نیست"
+
+#: proximity.py:541
+#: proximity.py:558
+#: proximity.py:874
+msgid "active"
+msgstr "فعال"
+
+#: proximity.py:549
+msgid ""
+"\n"
+"Simulation Mode (locking disabled)"
+msgstr ""
+"\n"
+"حالت شبیه‌سازی (قفل کردن غیر فعال است)"
+
+#: proximity.py:552
+msgid "Detected Distance: "
+msgstr "فاصله کشف شده:"
+
+#: proximity.py:552
+msgid ""
+"\n"
+"Current State: "
+msgstr ""
+"\n"
+"حال فعلی:"
+
+#: proximity.py:552
+msgid ""
+"\n"
+"Status: "
+msgstr ""
+"\n"
+"وضعیت:"
+
+#: proximity.py:613
+msgid "Could not open '"
+msgstr "امکان باز کردن '"
+
+#: proximity.py:613
+msgid "' for writing."
+msgstr "' برای نوشتن نیست."
+
+#: proximity.py:675
+msgid "usable"
+msgstr "قابل استفاده"
+
+#: proximity.py:677
+msgid "closed or denied"
+msgstr "بسته شده یا رد شده"
+
+#: proximity.py:705
+#: proximity.py:860
+#: proximity.py:870
+#: proximity.py:884
+msgid "gone"
+msgstr "رفته"
+
+#: proximity.py:718
+msgid "Initialized..."
+msgstr "ارزش‌گذاری اولیه شد..."
+
+#: proximity.py:835
+msgid "No connection found, trying to establish one..."
+msgstr "اتصالی پیدا نشد، در تلاش برای برقرارى ارتباط..."
+
+#: proximity.py:846
+msgid "screen is unlocked"
+msgstr "صفحه آزاد شده"
+
+#: proximity.py:854
+msgid "screen is locked"
+msgstr "صفحه قفل شده"
+
+#: proximity.py:865
+msgid "running..."
+msgstr "در حال اجرا..."
+
+#: proximity.glade.h:1
+msgid "<b>Action commands</b>"
+msgstr "<b>دستورات اعمال</b>"
+
+#: proximity.glade.h:2
+msgid "<b>Locking</b>"
+msgstr "<b>قفل شدن</b>"
+
+#: proximity.glade.h:3
+msgid "<b>Logging</b>"
+msgstr "<b>گزارش کردن</b>"
+
+#: proximity.glade.h:4
+msgid "<b>Measured atm</b>"
+msgstr "<b>فاصله اندازه گیری شده</b>"
+
+#: proximity.glade.h:5
+msgid "<b>Unlocking</b>"
+msgstr "<b>آزاد کردن</b>"
+
+#: proximity.glade.h:6
+msgid "<i><small>Please note that the device should already be paired!</small></i>"
+msgstr "<i><small>لطفا توجه داشته باشید که دستگاه‌ باید قبلا جفت شده باشد!</small></i>"
+
+#: proximity.glade.h:7
+msgid "All detected visible Bluetooth devices in reach. Use the scan button to populate or refresh the list."
+msgstr "تمام دستگاه‌های bluetooth قابل روئیتِ در دسترس. برای تازه کردن فهرست از دکمه پویش استفاده کنید."
+
+#: proximity.glade.h:9
+msgid "All rfcomm channels that are usable. Use the scan channel button above to populate or refresh this list. Click on an entry to select this channel."
+msgstr "تمامی کانالهای rfcomm قابل استفاده. از دکمه پویش کانال برای تازه کردن فهرست استفاده کنید. برای انتخاب هر کانال روی آن کلیک کنید."
+
+#: proximity.glade.h:10
+msgid "BlueProximity Preferences"
+msgstr "ترجیحات BlueProximity"
+
+#: proximity.glade.h:11
+msgid ""
+"Command _interval:\n"
+"(sec.)"
+msgstr ""
+"وقفه دستور:\n"
+"(ثانیه)"
+
+#: proximity.glade.h:13
+msgid "D_istance:"
+msgstr "ف_اصله:"
+
+#: proximity.glade.h:14
+msgid "D_uration (sec.):"
+msgstr "م_دت (ثانیه):"
+
+#: proximity.glade.h:15
+msgid "Distance:"
+msgstr "فاصله:"
+
+#: proximity.glade.h:16
+msgid "Dur_ation (sec.):"
+msgstr "مدـت (ثانیه):"
+
+#: proximity.glade.h:17
+msgid "F_acility"
+msgstr "وـسیله"
+
+#: proximity.glade.h:18
+msgid "File_name"
+msgstr "نام ف_ایل"
+
+#: proximity.glade.h:19
+msgid "L_ocking command:"
+msgstr "د_ستور قفل کردن:"
+
+#: proximity.glade.h:20
+msgid "MAC _Address"
+msgstr "_نشانی MAC"
+
+#: proximity.glade.h:21
+msgid "Pro_ximity command:"
+msgstr "دستور فا_صله:"
+
+#: proximity.glade.h:22
+msgid "RFCOMM C_hannel"
+msgstr "ک_انال RFCOMM"
+
+#: proximity.glade.h:25
+msgid "Scan for visible Bluetooth devices within reach. Show them in the list above."
+msgstr "پویش برای دستگاه‌های bluetooth قابل روئیتِ در دسترس. در فهرست بالا نمایش داده میشود."
+
+#: proximity.glade.h:26
+msgid "Scan the selected device (MAC Address field) for available rfcomm channels."
+msgstr "پویش دستگاه انتخاب شده (کادر نشانی MAC) برای کانالهای موجود rfcomm."
+
+#: proximity.glade.h:27
+msgid "Select from _detected devices:"
+msgstr "از بین دستگاه‌های پیدا شده انتخاب کنید:"
+
+#: proximity.glade.h:29
+msgid "The MAC address of your bluetooth device (e.g. mobile phone or headset) in the format XX:XX:XX:XX:XX:XX"
+msgstr "نشانی MAC دستگاه bluetooth شما (مثلا تلفن همراه یا headset) در قالب XX:XX:XX:XX:XX:XX"
+
+#: proximity.glade.h:31
+msgid "The filename of the file to be logged to. Please make sure this file is writable by the user that started BlueProximity."
+msgstr "نام فایل برای گزارشها. لطفا اطمینان حاصل کنید که این فایل توسط کاربری که BlueProximity را اجرا کرده قابل نوشتن است."
+
+#: proximity.glade.h:33
+msgid ""
+"The rfcomm channel where BlueProximity connects to your device.\n"
+"Must be an open channel, if in doubt please use the scan button."
+msgstr ""
+"کانال rfcommی که BlueProximity به دستگاه شما متصل میشود.\n"
+"باید یک کانالِ باز باشد، اگر شک دارید از دکمه پویش استفاده کنید."
+
+#: proximity.glade.h:36
+msgid "Transfer the MAC address of the selected bluetooth device above into the address field below."
+msgstr "انتقال نشانی MAC دستگاه bluetooth انتخاب شده در بالا به کادر نشانی زیر."
+
+#: proximity.glade.h:37
+msgid "_Bluetooth Device"
+msgstr "_دستگاه بلوتوث"
+
+#: proximity.glade.h:38
+msgid "_Distance:"
+msgstr "_فاصله:"
+
+#: proximity.glade.h:39
+msgid "_File"
+msgstr "_فایل"
+
+#: proximity.glade.h:40
+msgid "_Locking"
+msgstr "_قفل کردن"
+
+#: proximity.glade.h:41
+msgid "_Proximity Details"
+msgstr "_جزئیات فاصله"
+
+#: proximity.glade.h:42
+msgid "_Reset Min/Max"
+msgstr "_بازنشانی حداقل/حداکثر"
+
+#: proximity.glade.h:43
+msgid "_Scan for devices"
+msgstr "_پویش برای دستگاه"
+
+#: proximity.glade.h:44
+msgid "_Syslog"
+msgstr "_گزارش سیستم"
+
+#: proximity.glade.h:45
+msgid "_Unlocking command:"
+msgstr "_دستور زمان بازشدن قفل:"
+
+#: proximity.glade.h:46
+msgid "_Use selected device"
+msgstr "_استفاده از دسنگاه انتخاب شده"
+
+#: proximity.glade.h:47
+msgid ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+msgstr ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+
+#: proximity.glade.h:49
+msgid ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+msgstr ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+
+#: proximity.glade.h:51
+msgid ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+msgstr ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+
+#: proximity.glade.h:53
+msgid ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+msgstr ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+
+#: proximity.glade.h:62
+msgid "min: - max: - state: -"
+msgstr "حداقل: - حداکثر: - حالت: -"
+
+#: proximity.glade.h:63
+msgid "~/blueproximity.log"
+msgstr "~/blueproximity.log"
+
