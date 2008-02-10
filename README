@@ -1,4 +1,4 @@
-blueproximity v1.2
+blueproximity v1.2.4
 
 This software helps you add a little more security to your
 desktop. It does so by detecting one of your bluetooth devices, 
@@ -8,6 +8,7 @@ If you move away from your computer and the distance is above
 a certain level (no measurement in meters is possible) for a 
 given time, it automatically locks your desktop 
 (or starts any other shell command you want).
+See end of this file for interesting commands.
 
 Once away your computer awaits its master back - if you are 
 nearer than a given level for a set time your computer unlocks 
@@ -28,3 +29,10 @@ Here's a list on contributors to the source:
  - Tobias Jakobs (GUI optimizations)
  - Zsolt Mazolt (GUI and KDE stuff)
 
+Interesting commands:
+ * Un-/Locking gnome-screenserver
+    gnome-screensaver-command -l
+    gnome-screensaver-command -d
+ * Telling GAIM your status
+    gaim-remote "irc:setstatus?status=away&message=BlueProximity thinks I am away"
+    gaim-remote "irc:setstatus?status=available"

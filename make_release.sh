@@ -3,7 +3,7 @@
 # (c) 2007 Lars Friedrichs
 #
 # configure base variables
-VERSION=1.2.3
+VERSION=1.2.4
 VNAME=blueproximity
 DNAME=$VNAME-$VERSION
 DISTRIB=hardy

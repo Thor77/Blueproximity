@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # blueproximity
-SW_VERSION = '1.2.3'
+SW_VERSION = '1.2.4'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -304,13 +304,19 @@ class ProximityGUI:
             u"Lars Friedrichs <LarsFriedrichs@gmx.de>",
             u"Tobias Jakobs",
             u"Zsolt Mazolt"]
-        translators = """de Lars Friedrichs <LarsFriedrichs@gmx.de>
-en Lars Friedrichs <LarsFriedrichs@gmx.de>
-es César Palma <cesarpalma80@gmail.com>
-fa Ali Sattari <ali.sattari@gmail.com>
-fr Claude <f5pbl@users.sourceforge.net>
-sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
-ru Alexey Lubimov
+        translators = """Translators:
+   de Lars Friedrichs <LarsFriedrichs@gmx.de>
+   en Lars Friedrichs <LarsFriedrichs@gmx.de>
+   es César Palma <cesarpalma80@gmail.com>
+   fa Ali Sattari <ali.sattari@gmail.com>
+   it e633 <e633@users.sourceforge.net>
+   ru Alexey Lubimov
+   sv Jan Braunisch <x@r6.se>
+   th Maythee Anegboonlap & pFz <null@llun.info>
+Former translators:
+   fr Claude <f5pbl@users.sourceforge.net>
+   sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
+   sv Daniel Nylander <dnylander@users.sourceforge.net>
             """
         license = _("""
         BlueProximity is free software; you can redistribute it and/or modify it 

@@ -1,0 +1,476 @@
+# Thai translations for PACKAGE package.
+msgid ""
+msgstr ""
+"Project-Id-Version: BlueProximity 1.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-31 11:29+0100\n"
+"PO-Revision-Date: 2008-02-09 17:53+0700\n"
+"Last-Translator: Maythee Anegboonlap <null@llun.info> & pFz from irc://freenode.org/ubuntu-th\n"
+"Language-Team: Lars Friedrichs <LarsFriedrichs@gmx.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: proximity.py:82
+msgid "The program cannot import the module gobject."
+msgstr "โปรแกรมไม่สามารถนำเข้าโมดูล gobject"
+
+#: proximity.py:83
+msgid "Please make sure the GObject bindings for python are installed."
+msgstr "กรุณาตรวจสอบว่า GObject bindins สำหรับไพธอนถูกติดตั้งแล้ว"
+
+#: proximity.py:84
+#: proximity.py:93
+#: proximity.py:102
+#: proximity.py:112
+#: proximity.py:120
+msgid "e.g. with Ubuntu Linux, type"
+msgstr "เช่น ด้วยลินุกซ์ Ubuntu"
+
+#: proximity.py:85
+msgid " sudo apt-get install python-gobject"
+msgstr " sudo apt-get install python-gobject"
+
+#: proximity.py:91
+msgid "The program cannot import the module ConfigObj or Validator."
+msgstr "โปรแกรมไม่สามารถตรวจสอบหรือนำเข้าโมดูล ConfigObj"
+
+#: proximity.py:92
+msgid "Please make sure the ConfigObject package for python is installed."
+msgstr "กรุณาตรวจสอบว่าแพคเกจ ConfigObject สำหรับไพธอนถูกติดตั้งแล้ว"
+
+#: proximity.py:94
+msgid " sudo apt-get install python-configobj"
+msgstr " sudo apt-get install python-configobj"
+
+#: proximity.py:100
+msgid "The program cannot import the module bluetooth."
+msgstr "โปรแกรมไม่สามารถนำเข้าโมดูล bluetooth"
+
+#: proximity.py:101
+msgid "Please make sure the bluetooth bindings for python as well as bluez are installed."
+msgstr "กรุณาตรวจสอบว่าแพคเกจ bluetooth bindings สำหรับไพธอนและ bluez ติดตั้งแล้ว"
+
+#: proximity.py:103
+msgid " sudo apt-get install python-bluez"
+msgstr " sudo apt-get install python-bluez"
+
+#: proximity.py:110
+msgid "The program cannot import the module pygtk."
+msgstr "โปรแกรมไม่สามารถนำเข้าโมดูล pygtk"
+
+#: proximity.py:111
+msgid "Please make sure the GTK2 bindings for python are installed."
+msgstr "กรุณาตรวจสอบว่า GTK2 bindings สำหรับไพธอนถูกติดตั้งแล้ว"
+
+#: proximity.py:113
+msgid " sudo apt-get install python-gtk2"
+msgstr " sudo apt-get install python-gtk2"
+
+#: proximity.py:118
+msgid "The program cannot import the module glade."
+msgstr "โปรแกรมไม่สามารถนำเข้าโมดูล glade"
+
+#: proximity.py:119
+msgid "Please make sure the Glade2 bindings for python are installed."
+msgstr "กรุณาตรวจสอบว่า Glade2 bindings สำหรับไพธอนถูกติดตั้งแล้ว"
+
+#: proximity.py:121
+msgid " sudo apt-get install python-glade2"
+msgstr " sudo apt-get install python-glade2"
+
+#: proximity.py:206
+msgid "MAC"
+msgstr "MAC"
+
+#: proximity.py:210
+msgid "Name"
+msgstr "ชื่อ"
+
+#: proximity.py:219
+msgid "Channel"
+msgstr "ช่องสัญญาณ"
+
+#: proximity.py:223
+msgid "State"
+msgstr "สถานะ"
+
+#: proximity.py:240
+msgid "BlueProximity starting..."
+msgstr "กำลังเริ่ม BlueProximity ..."
+
+#: proximity.py:267
+msgid "started."
+msgstr "เริ่มแล้ว"
+
+#: proximity.py:288
+msgid "Leave it - it's locked, come back - it's back too..."
+msgstr "ปล่อยไว้ - ล็อคเรียบร้อย - ปลดล็อคแล้ว"
+
+#: proximity.py:301
+msgid ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or modify it \n"
+"        under the terms of the GNU General Public License as published by the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+msgstr ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or modify it \n"
+"        under the terms of the GNU General Public License as published by the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+
+#: proximity.py:473
+#: proximity.py:495
+#: proximity.glade.h:23
+msgid "Sca_n channels on device"
+msgstr "_สแกนช่องสัญญาณของอุปกรณ์"
+
+#: proximity.py:485
+msgid "Stop sca_nning"
+msgstr "หยุด_สแกน"
+
+#: proximity.py:488
+msgid "The scanning process tries to connect to each of the 30 possible ports. This will take some time and you should watch your bluetooth device for any actions to be taken. If possible click on accept/connect. If you are asked for a pin your device was not paired properly before, see the manual on how to fix this."
+msgstr "ขั้นตอนในการตรวจสอบจะสแกนประมาณ 30 พอร์ตซึ่งจะใช้เวลาอยู่ซักครู่ กรุณาตรวจสอบอุปกรณ์บลูธูทของท่านหากต้องการการกระทำใด ๆ เพื่อรับการติดต่อ ถ้ามีการถามถึงรหัส สามารถดูจากคู่มือว่าจะทำอย่างไร"
+
+#: proximity.py:506
+msgid "Now scanning..."
+msgstr "กำลังแสกน..."
+
+#: proximity.py:517
+msgid "stopped."
+msgstr "หยุด"
+
+#: proximity.py:529
+msgid "min: "
+msgstr "น้อยที่สุด: "
+
+#: proximity.py:530
+msgid " max: "
+msgstr " มากที่สุด: "
+
+#: proximity.py:530
+msgid " state: "
+msgstr " สถานะ: "
+
+#: proximity.py:536
+msgid "Pause Mode - not connected"
+msgstr "หยุดชั่วคราว - ไม่ได้เชื่อมต่อ"
+
+#: proximity.py:541
+#: proximity.py:558
+#: proximity.py:874
+msgid "active"
+msgstr "ทำงานอยู่"
+
+#: proximity.py:549
+msgid ""
+"\n"
+"Simulation Mode (locking disabled)"
+msgstr ""
+"\n"
+"สถานะจำลอง(คำสั่งล็อคเครื่องถูกปิด)"
+
+#: proximity.py:552
+msgid "Detected Distance: "
+msgstr "ระยะห่างของอุปกรณ์:"
+
+#: proximity.py:552
+msgid ""
+"\n"
+"Current State: "
+msgstr ""
+"\n"
+"สถานะปัจจุบัน: "
+
+#: proximity.py:552
+msgid ""
+"\n"
+"Status: "
+msgstr ""
+"\n"
+"สถานะ: "
+
+#: proximity.py:613
+msgid "Could not open '"
+msgstr "ไม่สามารถเปิดได้ '"
+
+#: proximity.py:613
+msgid "' for writing."
+msgstr "' สำหรับเขียน"
+
+#: proximity.py:675
+msgid "usable"
+msgstr "ใช้งานได้"
+
+#: proximity.py:677
+msgid "closed or denied"
+msgstr "ปิดหรือยกเลิก"
+
+#: proximity.py:705
+#: proximity.py:860
+#: proximity.py:870
+#: proximity.py:884
+msgid "gone"
+msgstr "ไม่พบ"
+
+#: proximity.py:718
+msgid "Initialized..."
+msgstr "ทำงานแล้ว..."
+
+#: proximity.py:835
+msgid "No connection found, trying to establish one..."
+msgstr "ไม่พบการติดต่อ กำลังพยายามค้นหาอยู่..."
+
+#: proximity.py:846
+msgid "screen is unlocked"
+msgstr "หน้าจอถูกปลดล็อคแล้ว"
+
+#: proximity.py:854
+msgid "screen is locked"
+msgstr "หน้าจอถูกล็อคแล้ว"
+
+#: proximity.py:865
+msgid "running..."
+msgstr "ทำงานอยู่..."
+
+#: proximity.glade.h:1
+msgid "<b>Action commands</b>"
+msgstr "<b>คำสั่งในกิจกรรมต่างๆ</b>"
+
+#: proximity.glade.h:2
+msgid "<b>Locking</b>"
+msgstr "<b>กำลังล็อค</b>"
+
+#: proximity.glade.h:3
+msgid "<b>Logging</b>"
+msgstr "<b>บันทึก</b>"
+
+#: proximity.glade.h:4
+msgid "<b>Measured atm</b>"
+msgstr "<b>สัญญาณ"
+
+#: proximity.glade.h:5
+msgid "<b>Unlocking</b>"
+msgstr "<b>กำลังปลดล็อค</b>"
+
+#: proximity.glade.h:6
+msgid "<i><small>Please note that the device should already be paired!</small></i>"
+msgstr "<i><small>อุปกรณ์ที่ติดต่อได้ต้องเคยเชื่อมมาก่อน!</small></i>"
+
+#: proximity.glade.h:7
+msgid "All detected visible Bluetooth devices in reach. Use the scan button to populate or refresh the list."
+msgstr "อุปกรณ์บลูธูททั้งหมดที่พบ กดปุ่มสแกนอีกครั้งเพื่อค้นหาใหม่"
+
+#: proximity.glade.h:9
+msgid "All rfcomm channels that are usable. Use the scan channel button above to populate or refresh this list. Click on an entry to select this channel."
+msgstr "ช่องสัญญาณ rfcomm ทั้งหมดที่ใช้ได้ กดปุ่มสแกนช่องสัญญาณข้างบนอีกครั้งเพื่อค้นหาใหม่ เลือกรายการใดๆ เพื่อใช้ช่องสัญญาณนั้น"
+
+#: proximity.glade.h:10
+msgid "BlueProximity Preferences"
+msgstr "ตั้งค่า BlueProximity"
+
+#: proximity.glade.h:11
+msgid ""
+"Command _interval:\n"
+"(sec.)"
+msgstr ""
+"คำสั่ง _interval:\n"
+"(วินาที)"
+
+#: proximity.glade.h:13
+msgid "D_istance:"
+msgstr "ระยะห่า_ง:"
+
+#: proximity.glade.h:14
+msgid "D_uration (sec.):"
+msgstr "_รอเป็นเวลา(วินาที):"
+
+#: proximity.glade.h:15
+msgid "Distance:"
+msgstr "ระยะห่าง:"
+
+#: proximity.glade.h:16
+msgid "Dur_ation (sec.):"
+msgstr "ร_อเป็นเวลา(วินาที):"
+
+#: proximity.glade.h:17
+msgid "F_acility"
+msgstr "ช่อง_ทาง"
+
+#: proximity.glade.h:18
+msgid "File_name"
+msgstr "_ชื่อไฟล์"
+
+#: proximity.glade.h:19
+msgid "L_ocking command:"
+msgstr "คำสั่งสำหรับล็_อคเครื่อง:"
+
+#: proximity.glade.h:20
+msgid "MAC _Address"
+msgstr "ร_หัส MAC"
+
+#: proximity.glade.h:21
+msgid "Pro_ximity command:"
+msgstr "คำสั่งสำหรับแสดงว่าค้_นหา:"
+
+#: proximity.glade.h:22
+msgid "RFCOMM C_hannel"
+msgstr "ช่_องสัญญาณ RFCOMM"
+
+#: proximity.glade.h:25
+msgid "Scan for visible Bluetooth devices within reach. Show them in the list above."
+msgstr "ค้นหาอุปกรณ์บลูธูทในระยะ อุปกรณ์ที่พบจะแสดงในรายการด้านบน"
+
+#: proximity.glade.h:26
+msgid "Scan the selected device (MAC Address field) for available rfcomm channels."
+msgstr "ค้นหาช่องสัญญาณ rfcomm ของอุปกรณ์ที่เลือก (จากช่องที่อยู่อุปกรณ์)"
+
+#: proximity.glade.h:27
+msgid "Select from _detected devices:"
+msgstr "เลือกจากอุปกรณ์ที่_พบ:"
+
+#: proximity.glade.h:29
+msgid "The MAC address of your bluetooth device (e.g. mobile phone or headset) in the format XX:XX:XX:XX:XX:XX"
+msgstr "รหัสอุปกรณ์บลูธูท(เช่น มือถือ หรือ หูฟัง) จะอยู่ในรูป XX:XX:XX:XX:XX:XX"
+
+#: proximity.glade.h:31
+msgid "The filename of the file to be logged to. Please make sure this file is writable by the user that started BlueProximity."
+msgstr "ชื่อไฟล์ที่จะบันทึกการทำงานต่างๆ กรุณาตรวจสอบว่าไฟล์นี้สามารถเขียนได้โดยผู้ใช้ที่เริ่มโปรแกรมนี้"
+
+#: proximity.glade.h:33
+msgid ""
+"The rfcomm channel where BlueProximity connects to your device.\n"
+"Must be an open channel, if in doubt please use the scan button."
+msgstr ""
+"ช่องสัญญาณ rfcomm ที่ BlueProximity ใช้ในการติดต่อกับอุปกรณ์ของคุณ\n"
+"ต้องเป็นช่องสัญญาณเปิด ถ้าไม่ทราบว่าช่องไหนกรุณากดปุ่มค้นหาช่องสัญญาณ"
+
+#: proximity.glade.h:36
+msgid "Transfer the MAC address of the selected bluetooth device above into the address field below."
+msgstr "นำรหัสอุปกรณ์ที่เลือกไว้จากรายการด้านบนใส่ไปยังช่องที่อยู่ด้านล่าง"
+
+#: proximity.glade.h:37
+msgid "_Bluetooth Device"
+msgstr "อุปกรณ์_บลูธูท"
+
+#: proximity.glade.h:38
+msgid "_Distance:"
+msgstr "ระยะ_ห่าง:"
+
+#: proximity.glade.h:39
+msgid "_File"
+msgstr "ไ_ฟล์"
+
+#: proximity.glade.h:40
+msgid "_Locking"
+msgstr "กำลัง_ล็อค:"
+
+#: proximity.glade.h:41
+msgid "_Proximity Details"
+msgstr "รายละเอียดการค้_นหา"
+
+#: proximity.glade.h:42
+msgid "_Reset Min/Max"
+msgstr "ยกเลิกค่า มากสุด/น้อยสุด"
+
+#: proximity.glade.h:43
+msgid "_Scan for devices"
+msgstr "_ค้นหาอุปกรณ์:"
+
+#: proximity.glade.h:44
+msgid "_Syslog"
+msgstr "_Syslog"
+
+#: proximity.glade.h:45
+msgid "_Unlocking command:"
+msgstr "คำสั่ง_ปลดล็อค:"
+
+#: proximity.glade.h:46
+msgid "_Use selected device"
+msgstr "ใช้_อุปกรณ์ที่เลือกไว้"
+
+#: proximity.glade.h:47
+msgid ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+msgstr ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+
+#: proximity.glade.h:49
+msgid ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+msgstr ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+
+#: proximity.glade.h:51
+msgid ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+msgstr ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+
+#: proximity.glade.h:53
+msgid ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+msgstr ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+
+#: proximity.glade.h:62
+msgid "min: - max: - state: -"
+msgstr "น้อยสุด: - มากสุด: - สถานะ: -"
+
+#: proximity.glade.h:63
+msgid "~/blueproximity.log"
+msgstr "~/blueproximity.log"
+

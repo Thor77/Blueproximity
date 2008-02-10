@@ -110,7 +110,7 @@ msgstr "стартовал."
 
 #: proximity.py:288
 msgid "Leave it - it's locked, come back - it's back too..."
-msgstr "Ушел - заблокировал, вернулся - он тоже разблокировался обратно"
+msgstr "Ушел - компьютер заблокировался, вернулся - компьютер тоже разблокировался обратно"
 
 #: proximity.py:301
 msgid ""
@@ -233,7 +233,7 @@ msgstr "Невозможно открыть '"
 
 #: proximity.py:613
 msgid "' for writing."
-msgstr "'·для записи."
+msgstr "' для записи."
 
 #: proximity.py:675
 msgid "usable"
@@ -257,7 +257,7 @@ msgstr "Соединение не обнаружено, попытка уста�
 
 #: proximity.py:846
 msgid "screen is unlocked"
-msgstr "экран заблокирован"
+msgstr "экран разблокирован"
 
 #: proximity.py:854
 msgid "screen is locked"
@@ -277,11 +277,11 @@ msgstr "<b>Блокировка</b>"
 
 #: proximity.glade.h:3
 msgid "<b>Logging</b>"
-msgstr "<b>Логировать</b>"
+msgstr "<b>Вести лог</b>"
 
 #: proximity.glade.h:4
 msgid "<b>Measured atm</b>"
-msgstr "<b>Измеренный·atm</b>"
+msgstr "<b>Текущий, измеренный</b>"
 
 #: proximity.glade.h:5
 msgid "<b>Unlocking</b>"
@@ -314,12 +314,12 @@ msgid ""
 "Command _interval:\n"
 "(sec.)"
 msgstr ""
-"Интервал между коммандами:\n"
+"Пауза между командами:\n"
 "(сек.)"
 
 #: proximity.glade.h:13
 msgid "D_istance:"
-msgstr "Д_истанция:"
+msgstr "Расстояние:"
 
 #: proximity.glade.h:14
 msgid "D_uration (sec.):"
@@ -327,7 +327,7 @@ msgstr "Продолжительность·(сек.):"
 
 #: proximity.glade.h:15
 msgid "Distance:"
-msgstr "Дистанция:"
+msgstr "Расстояние:"
 
 #: proximity.glade.h:16
 msgid "Dur_ation (sec.):"
@@ -335,11 +335,11 @@ msgstr "Продолжительность (сек.)"
 
 #: proximity.glade.h:17
 msgid "F_acility"
-msgstr "F_acility"
+msgstr "Уровень доступа"
 
 #: proximity.glade.h:18
 msgid "File_name"
-msgstr "Имя_файла"
+msgstr "Имя файла"
 
 #: proximity.glade.h:19
 msgid "L_ocking command:"
@@ -351,7 +351,7 @@ msgstr "МАК адрес"
 
 #: proximity.glade.h:21
 msgid "Pro_ximity command:"
-msgstr "Pro_ximity·комманда:"
+msgstr "Команда:"
 
 #: proximity.glade.h:22
 msgid "RFCOMM C_hannel"
@@ -360,7 +360,7 @@ msgstr "RFCOMM·канал"
 #: proximity.glade.h:25
 msgid ""
 "Scan for visible Bluetooth devices within reach. Show them in the list above."
-msgstr "Сканировать видимые Bluetooth устройства.·Отобразть выше в списке."
+msgstr "Сканировать видимые Bluetooth устройства и отобразть их затем в списке."
 
 #: proximity.glade.h:26
 msgid ""
@@ -403,7 +403,7 @@ msgstr "_Bluetooth·устройство"
 
 #: proximity.glade.h:38
 msgid "_Distance:"
-msgstr "_Дистанция"
+msgstr "Расстояние:"
 
 #: proximity.glade.h:39
 msgid "_File"
@@ -415,23 +415,23 @@ msgstr "Блокировка"
 
 #: proximity.glade.h:41
 msgid "_Proximity Details"
-msgstr "_Proximity подробности"
+msgstr "Настройки"
 
 #: proximity.glade.h:42
 msgid "_Reset Min/Max"
-msgstr "_Сбросить·Мин/Макс"
+msgstr "Сбросить·мин/макс"
 
 #: proximity.glade.h:43
 msgid "_Scan for devices"
-msgstr "_Сканировать устройства"
+msgstr "Сканировать устройства"
 
 #: proximity.glade.h:44
 msgid "_Syslog"
-msgstr "_Сислог"
+msgstr "Сислог"
 
 #: proximity.glade.h:45
 msgid "_Unlocking command:"
-msgstr "_Команда разблокировки"
+msgstr "Команда разблокировки"
 
 #: proximity.glade.h:46
 msgid "_Use selected device"
