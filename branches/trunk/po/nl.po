@@ -1,0 +1,480 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-01-31 11:29+0100\n"
+"PO-Revision-Date: 2008-02-10 19:58+0100\n"
+"Last-Translator: Prosper <prosper.nl@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Dutch\n"
+"X-Poedit-Country: BELGIUM\n"
+
+#: proximity.py:82
+msgid "The program cannot import the module gobject."
+msgstr "Kon de module GObject niet laden."
+
+#: proximity.py:83
+msgid "Please make sure the GObject bindings for python are installed."
+msgstr "Installeer de GObject-bindingen voor Python."
+
+#: proximity.py:84
+#: proximity.py:93
+#: proximity.py:102
+#: proximity.py:112
+#: proximity.py:120
+msgid "e.g. with Ubuntu Linux, type"
+msgstr "bvb in Ubuntu, tik in de terminal"
+
+#: proximity.py:85
+msgid " sudo apt-get install python-gobject"
+msgstr " sudo apt-get install python-gobject"
+
+#: proximity.py:91
+msgid "The program cannot import the module ConfigObj or Validator."
+msgstr "Kon de modules ConfigObj en/of Validator niet laden."
+
+#: proximity.py:92
+msgid "Please make sure the ConfigObject package for python is installed."
+msgstr "Installeer het pakket ConfigObject voor Python."
+
+#: proximity.py:94
+msgid " sudo apt-get install python-configobj"
+msgstr " sudo apt-get install python-configobj"
+
+#: proximity.py:100
+msgid "The program cannot import the module bluetooth."
+msgstr "Kon de module bluetooth niet laden."
+
+#: proximity.py:101
+msgid "Please make sure the bluetooth bindings for python as well as bluez are installed."
+msgstr "Installeer de bluetooth-bindingen voor Python en het pakket bluez."
+
+#: proximity.py:103
+msgid " sudo apt-get install python-bluez"
+msgstr " sudo apt-get install python-bluez"
+
+#: proximity.py:110
+msgid "The program cannot import the module pygtk."
+msgstr "Kon de module pygtk niet laden."
+
+#: proximity.py:111
+msgid "Please make sure the GTK2 bindings for python are installed."
+msgstr "Installeer de GTK2-bindingen voor Python."
+
+#: proximity.py:113
+msgid " sudo apt-get install python-gtk2"
+msgstr " sudo apt-get install python-gtk2"
+
+#: proximity.py:118
+msgid "The program cannot import the module glade."
+msgstr "Kon de module glade niet laden."
+
+#: proximity.py:119
+msgid "Please make sure the Glade2 bindings for python are installed."
+msgstr "Installeer de Glade2-bindingen voor Python."
+
+#: proximity.py:121
+msgid " sudo apt-get install python-glade2"
+msgstr " sudo apt-get install python-glade2"
+
+#: proximity.py:206
+msgid "MAC"
+msgstr "MAC"
+
+#: proximity.py:210
+msgid "Name"
+msgstr "Naam"
+
+#: proximity.py:219
+msgid "Channel"
+msgstr "Kanaal"
+
+#: proximity.py:223
+msgid "State"
+msgstr "Status"
+
+#: proximity.py:240
+msgid "BlueProximity starting..."
+msgstr "BlueProximity start..."
+
+#: proximity.py:267
+msgid "started."
+msgstr "Opgestart."
+
+#: proximity.py:288
+msgid "Leave it - it's locked, come back - it's back too..."
+msgstr "Verlaat het - 't is vergrendeld,  kom terug - en 't is ook terug..."
+
+#: proximity.py:301
+msgid ""
+"\n"
+"        BlueProximity is free software; you can redistribute it and/or modify it \n"
+"        under the terms of the GNU General Public License as published by the \n"
+"        Free Software Foundation; either version 2 of the License, or \n"
+"        (at your option) any later version.\n"
+"\n"
+"        BlueProximity is distributed in the hope that it will be useful, but \n"
+"        WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
+"        See the GNU General Public License for more details.\n"
+"\n"
+"        You should have received a copy of the GNU General Public License \n"
+"        along with Envy; if not, write to the \n"
+"\n"
+"        Free Software Foundation, Inc., \n"
+"        59 Temple Place, Suite 330, \n"
+"        Boston, MA  02111-1307  USA\n"
+"        "
+msgstr ""
+"\n"
+"     BlueProximity is vrije software.  U mag deze verdelen en/of veranderen \n"
+"     volgens de voorwaarden van de GNU General Public License zoals gepubliceerd door de \n"
+"     Free Software Foundation,; ofwel versie 2 van deze Licentie of \n"
+"     (naar uw keuze) gelijk welke latere versie.\n"
+"\n"
+"     BlueProximity wordt verdeeld in de hoop dat het nuttig zal zijn, maar \n"
+"     ZONDER ENIGE GARANTIE; zonder zelfs de veronderstelde garantie van \n"
+"     VERHANDELBAARHEID of GESCHIKTHEID VOOR EEN BEPAALD GEBRUIK. \n"
+"     Zie de GNU General Public License voor meer details.\n"
+"\n"
+"     U zou een kopie van de GNU General Public License moeten ontvangen \n"
+"     hebben samen met BlueProximity.  Indien niet, schrijf naar \n"
+"\n"
+"     Free Software Foundation, Inc., \n"
+"     59 Temple Place, Suite 330, \n"
+"     Boston, MA  02111-1307  USA\n"
+
+#: proximity.py:473
+#: proximity.py:495
+#: proximity.glade.h:23
+msgid "Sca_n channels on device"
+msgstr "Sca_n de kanalen op het toestel."
+
+#: proximity.py:485
+msgid "Stop sca_nning"
+msgstr "Stop met sca_nnen."
+
+#: proximity.py:488
+msgid "The scanning process tries to connect to each of the 30 possible ports. This will take some time and you should watch your bluetooth device for any actions to be taken. If possible click on accept/connect. If you are asked for a pin your device was not paired properly before, see the manual on how to fix this."
+msgstr "De computer probeert nu verbinding te maken met elk van de 30 mogelijke poorten.  Dit kan enige tijd in beslag nemen.  Let op uw bluetooth-toestel om te weten of u enige actie moet ondernemen.  Indien mogelijk, druk op aanvaarden/verbinden.  Als u om een code wordt gevraagd, was uw toestel voorheen niet juist verbonden.  Kijk in de handleiding om dit te verhelpen."
+
+#: proximity.py:506
+msgid "Now scanning..."
+msgstr "Scant..."
+
+#: proximity.py:517
+msgid "stopped."
+msgstr "Gestopt."
+
+#: proximity.py:529
+msgid "min: "
+msgstr "min:"
+
+#: proximity.py:530
+msgid " max: "
+msgstr "max:"
+
+#: proximity.py:530
+msgid " state: "
+msgstr "Status:"
+
+#: proximity.py:536
+msgid "Pause Mode - not connected"
+msgstr "Gepauzeerd - Niet Verbonden"
+
+#: proximity.py:541
+#: proximity.py:558
+#: proximity.py:874
+msgid "active"
+msgstr "actief"
+
+#: proximity.py:549
+msgid ""
+"\n"
+"Simulation Mode (locking disabled)"
+msgstr ""
+"\n"
+" Simulatie Modus (vergrendelen niet mogelijk)"
+
+#: proximity.py:552
+msgid "Detected Distance: "
+msgstr "Gemeten Afstand:"
+
+#: proximity.py:552
+msgid ""
+"\n"
+"Current State: "
+msgstr ""
+"\n"
+"Huidige Status:"
+
+#: proximity.py:552
+msgid ""
+"\n"
+"Status: "
+msgstr ""
+"\n"
+"Status"
+
+#: proximity.py:613
+msgid "Could not open '"
+msgstr "Kon '"
+
+#: proximity.py:613
+msgid "' for writing."
+msgstr "' niet openen om te schrijven"
+
+#: proximity.py:675
+msgid "usable"
+msgstr "bruikbaar"
+
+#: proximity.py:677
+msgid "closed or denied"
+msgstr "gesloten of afgewezen"
+
+#: proximity.py:705
+#: proximity.py:860
+#: proximity.py:870
+#: proximity.py:884
+msgid "gone"
+msgstr "verdwenen"
+
+#: proximity.py:718
+msgid "Initialized..."
+msgstr "ingesteld..."
+
+#: proximity.py:835
+msgid "No connection found, trying to establish one..."
+msgstr "Geen verbinding gevonden, probeer er een op te zetten..."
+
+#: proximity.py:846
+msgid "screen is unlocked"
+msgstr "scherm is vrijgegeven"
+
+#: proximity.py:854
+msgid "screen is locked"
+msgstr "scherm vergrendeld"
+
+#: proximity.py:865
+msgid "running..."
+msgstr "werkt..."
+
+#: proximity.glade.h:1
+msgid "<b>Action commands</b>"
+msgstr "<b>Actie commando's</b>"
+
+#: proximity.glade.h:2
+msgid "<b>Locking</b>"
+msgstr "<b>Wordt vergrendeld</b>"
+
+#: proximity.glade.h:3
+msgid "<b>Logging</b>"
+msgstr "<b>Schrijven naar Logboek</b>"
+
+#: proximity.glade.h:4
+msgid "<b>Measured atm</b>"
+msgstr "<b>Gemeten ATM</b>"
+
+#: proximity.glade.h:5
+msgid "<b>Unlocking</b>"
+msgstr "<b>Vrijgeven</b>"
+
+#: proximity.glade.h:6
+msgid "<i><small>Please note that the device should already be paired!</small></i>"
+msgstr "<i><small>Noteer dat het toestel reeds gepaard zou moeten zijn !</small></i>"
+
+#: proximity.glade.h:7
+msgid "All detected visible Bluetooth devices in reach. Use the scan button to populate or refresh the list."
+msgstr "Alle gedetecteerde Bluetooth toestellen binnen bereik.  Gebruik de Scan knop om de lijst te herladen."
+
+#: proximity.glade.h:9
+msgid "All rfcomm channels that are usable. Use the scan channel button above to populate or refresh this list. Click on an entry to select this channel."
+msgstr "Alle bruikbare rfcomm kanalen.  Gebruik de Scan Kanalen knop hierboven om de lijst te herladen.  Klik op een kanaal om het te selecteren."
+
+#: proximity.glade.h:10
+msgid "BlueProximity Preferences"
+msgstr "BlueProximity Voorkeuren"
+
+#: proximity.glade.h:11
+msgid ""
+"Command _interval:\n"
+"(sec.)"
+msgstr ""
+"Commando_interval:\n"
+"(sec.)"
+
+#: proximity.glade.h:13
+msgid "D_istance:"
+msgstr "Afstandsmet_ing:"
+
+#: proximity.glade.h:14
+msgid "D_uration (sec.):"
+msgstr "D_uur (sec.):"
+
+#: proximity.glade.h:15
+msgid "Distance:"
+msgstr "Afstand:"
+
+#: proximity.glade.h:16
+#, fuzzy
+msgid "Dur_ation (sec.):"
+msgstr "Dur_atie (sec.):"
+
+#: proximity.glade.h:17
+msgid "F_acility"
+msgstr "F_aciliteiten"
+
+#: proximity.glade.h:18
+msgid "File_name"
+msgstr "Bestands_naam"
+
+#: proximity.glade.h:19
+msgid "L_ocking command:"
+msgstr "L_ocking commando:"
+
+#: proximity.glade.h:20
+msgid "MAC _Address"
+msgstr "MAC _Adres"
+
+#: proximity.glade.h:21
+msgid "Pro_ximity command:"
+msgstr "Pro_ximity commando:"
+
+#: proximity.glade.h:22
+msgid "RFCOMM C_hannel"
+msgstr "RFCOMM C_hannel"
+
+#: proximity.glade.h:25
+msgid "Scan for visible Bluetooth devices within reach. Show them in the list above."
+msgstr "Scan naar aanwezige Bluetooth toestellen binnen bereik.  Toon ze in bovenstaande lijst."
+
+#: proximity.glade.h:26
+msgid "Scan the selected device (MAC Address field) for available rfcomm channels."
+msgstr "Scan het geselecteerde toestel (MAC adresveld) voor beschikbare rfcomm kanalen."
+
+#: proximity.glade.h:27
+msgid "Select from _detected devices:"
+msgstr "Kies uit de ge_detecteerde toestellen:"
+
+#: proximity.glade.h:29
+msgid "The MAC address of your bluetooth device (e.g. mobile phone or headset) in the format XX:XX:XX:XX:XX:XX"
+msgstr "Het MAC adres van uw bluetooth toestel (bvb GSM of koptelefoon) in de vorm XX:XX:XX:XX:XX:XX"
+
+#: proximity.glade.h:31
+msgid "The filename of the file to be logged to. Please make sure this file is writable by the user that started BlueProximity."
+msgstr "De naam van het bestand waarnaar gelogd wordt. Verifieer dat de gebruiker die Blueproximity opstartte hierop schrijfrechten heeft."
+
+#: proximity.glade.h:33
+msgid ""
+"The rfcomm channel where BlueProximity connects to your device.\n"
+"Must be an open channel, if in doubt please use the scan button."
+msgstr ""
+"Het rfcomm kanaal waarop BlueProximity verbinding maakt met uw toestel\n"
+"moet een open kanaal zijn.  Als u twijfelt, gebruik de scan knop."
+
+#: proximity.glade.h:36
+msgid "Transfer the MAC address of the selected bluetooth device above into the address field below."
+msgstr "Plaats het MAC adres van het geselecteerde bluetooth toestel bovenaan in het adresveld onderaan."
+
+#: proximity.glade.h:37
+msgid "_Bluetooth Device"
+msgstr "_Bluetooth Toestel"
+
+#: proximity.glade.h:38
+msgid "_Distance:"
+msgstr "Afstand_d"
+
+#: proximity.glade.h:39
+msgid "_File"
+msgstr "_File"
+
+#: proximity.glade.h:40
+msgid "_Locking"
+msgstr "Op S_lot"
+
+#: proximity.glade.h:41
+msgid "_Proximity Details"
+msgstr "_Proximity Details"
+
+#: proximity.glade.h:42
+msgid "_Reset Min/Max"
+msgstr "_Reset Min/Max"
+
+#: proximity.glade.h:43
+msgid "_Scan for devices"
+msgstr "_Scan voor toestellen"
+
+#: proximity.glade.h:44
+msgid "_Syslog"
+msgstr "_Systeem Logboek"
+
+#: proximity.glade.h:45
+msgid "_Unlocking command:"
+msgstr "_Unlocking command:"
+
+#: proximity.glade.h:46
+msgid "_Use selected device"
+msgstr "Gebr_uik geselecteerd toestel"
+
+#: proximity.glade.h:47
+msgid ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+msgstr ""
+"gnome-screensaver-command -d\n"
+"xscreensaver-command -d"
+
+#: proximity.glade.h:49
+msgid ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+msgstr ""
+"gnome-screensaver-command -l\n"
+"xscreensaver-command -l"
+
+#: proximity.glade.h:51
+msgid ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+msgstr ""
+"gnome-screensaver-command -p\n"
+"xscreensaver-command -p"
+
+#: proximity.glade.h:53
+msgid ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+msgstr ""
+"local0\n"
+"local1\n"
+"local2\n"
+"local3\n"
+"local4\n"
+"local5\n"
+"local6\n"
+"local7\n"
+"user"
+
+#: proximity.glade.h:62
+msgid "min: - max: - state: -"
+msgstr "min: - max: - status: -"
+
+#: proximity.glade.h:63
+msgid "~/blueproximity.log"
+msgstr "~/blueproximity.log"
+

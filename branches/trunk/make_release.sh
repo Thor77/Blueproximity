@@ -29,6 +29,7 @@ cp $VNAME/proximity.py $DNAME
 cp $VNAME/start_proximity.sh $DNAME
 cp $VNAME/bluepro*.svg $DNAME
 cp -r $VNAME/LANG $DNAME
+cp $VNAME/COPYING $DNAME
 cp $VNAME/README $DNAME
 cp $VNAME/ChangeLog $DNAME
 cp -r $VNAME/doc $DNAME

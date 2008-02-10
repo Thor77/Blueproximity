@@ -310,6 +310,7 @@ class ProximityGUI:
    es César Palma <cesarpalma80@gmail.com>
    fa Ali Sattari <ali.sattari@gmail.com>
    it e633 <e633@users.sourceforge.net>
+   Prosper <prosper.nl@gmail.com>
    ru Alexey Lubimov
    sv Jan Braunisch <x@r6.se>
    th Maythee Anegboonlap & pFz <null@llun.info>
