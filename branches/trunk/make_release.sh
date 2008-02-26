@@ -3,8 +3,8 @@
 # (c) 2007 Lars Friedrichs
 #
 # configure base variables
-VERSION=1.2.4
-VNAME=blueproximity
+VERSION=1.2.5
+VNAME=`pwd`
 DNAME=$VNAME-$VERSION
 DISTRIB=hardy
 export DEBFULLNAME="Lars Friedrichs"
@@ -32,6 +32,7 @@ cp -r $VNAME/LANG $DNAME
 cp $VNAME/COPYING $DNAME
 cp $VNAME/README $DNAME
 cp $VNAME/ChangeLog $DNAME
+cp -r $VNAME/debian-addons $DNAME/addons
 cp -r $VNAME/doc $DNAME
 
 echo . deleting subversion files

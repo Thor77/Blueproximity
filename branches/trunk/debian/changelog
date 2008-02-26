@@ -1,5 +1,6 @@
-blueproximity (1.2.3-0ubuntu1) hardy; urgency=low
+blueproximity (1.2.4-0ubuntu1) hardy; urgency=low
 
   * Initial Packaging (LP: #137339)
 
- -- Lars Friedrichs <LarsFriedrichs@gmx.de>  Thu, 07 Feb 2008 14:25:20 +0000
+ -- Lars Friedrichs <LarsFriedrichs@gmx.de>  Sun, 10 Feb 2008 22:42:32 +0000
+
