@@ -1,12 +1,15 @@
 Change log for BlueProximity
 
 1.2.5 "double kill, multi kill, monster kill, rampage!" - to be released
-- fixme: logfile handling is wrong for multiple config files
+- fixme: adding a new configuration is not done
+- fixme: renaming a configuration is not done
+- fixme: deleting a configuration is not done
 - fixme: proximity command should be moved into Proximity class
-- fixme: check if scanning works while being connected, otherwise change cb_btnScan_clicked
-- fixme: don't let the config file change during both scan types
+- fixed: correct inheriting of classes from 'object' (Bug #1892724)
+- fixed: you are now told if your config files are broken (at least on the console) (Bug #1781957)
 - added: support for multiple config files via *.conf files in ~/.blueproximity
 - modified: old config file is gone, it should now reside in directory ~/.blueproximity
+- modified: much more Doxygen documentation in the source
 
 1.2.4 "keep releasing" - released 2008-02-09
 - added: support for russian language - thanks Alexey

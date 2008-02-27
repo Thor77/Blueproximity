@@ -170,7 +170,7 @@ icon_pause = 'blueproximity_pause.svg'
 
 ## This class represents the main configuration window and
 # updates the config file after changes made are saved
-class ProximityGUI:
+class ProximityGUI (object):
 
     ## Constructor sets up the GUI and reads the current config
     # @param configs A list of lists of name, ConfigObj object, proximity object
@@ -290,6 +290,21 @@ class ProximityGUI:
 	for config in self.configs:
             config[2].logger.log_line(_('started.'))
 
+    ## Helper function to enable or disable the change or creation of the config files
+    # This is called during non blockable functions that rely on the config not
+    # being changed over the process like scanning for devices or channels
+    # @param activate set to True to activate buttons, False to disable
+    def setSensitiveConfigManagement(self,activate):
+        # get the widget
+        combo = self.wTree.get_widget("comboConfig")
+        combo.set_sensitive(activate)
+        button = self.wTree.get_widget("btnNew")
+        button.set_sensitive(activate)
+        button = self.wTree.get_widget("btnRename")
+        button.set_sensitive(activate)
+        button = self.wTree.get_widget("btnDelete")
+        button.set_sensitive(activate)
+
     ## Helper function to populate the list of configurations.
     def fillConfigCombo(self):
         # get the widget
@@ -333,6 +348,9 @@ class ProximityGUI:
 
     ## Callback to create a new config file for editing.
     def btnNew_clicked(self, widget, data = None):
+        # get the widget
+        window = self.wTree.get_widget("createNewWindow")
+	window.show()
         pass
 
     ## Callback to delete aconfig file.
@@ -528,26 +546,45 @@ Former translators:
             self.writeSettings()
         pass
 
+    ## Callback called when one clicks into the channel scan results.
+    # It sets the 'selected channel' field to the selected channel
     def event_scanChannelResult_changed(self,widget, data = None):
         # Put selected channel in channel entry field
         selection = self.wTree.get_widget("treeScanChannelResult").get_selection()
         (model, iter) = selection.get_selected()
         value = model.get_value(iter, 0)
         self.wTree.get_widget("entryChannel").set_value(int(value))
+        self.writeSettings()
 
+    ## Callback to just close and not destroy the main window 
     def btnClose_clicked(self,widget, data = None):
         self.Close()
         return 1
 
+    ## Callback called when one clicks on the 'use selected address' button
+    # it copies the MAC address of the selected device into the mac address field.
     def btnSelect_clicked(self,widget, data = None):
         #Takes the selected entry in the mac/name table and enters its mac in the MAC field
         selection = self.tree.get_selection()
-	selection.set_mode(gtk.SELECTION_SINGLE)
+        selection.set_mode(gtk.SELECTION_SINGLE)
         model, selection_iter = selection.get_selected()
         if (selection_iter):
             mac = self.model.get_value(selection_iter, 0)
             self.wTree.get_widget("entryMAC").set_text(mac)
+            self.writeSettings()
         
+    ## Callback that is executed when the scan for devices button is clicked
+    # actually it starts the scanning asynchronously to have the gui redraw nicely before hanging :-)
+    def btnScan_clicked(self,widget, data = None):
+        # scan the area for bluetooth devices and show the results
+        watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
+        self.window.window.set_cursor(watch)
+        self.model.clear()
+        self.model.append(['...', _('Now scanning...')])
+        self.setSensitiveConfigManagement(False)
+        gobject.idle_add(self.cb_btnScan_clicked)
+        
+    ## Asynchronous callback function to do the actual device discovery scan
     def cb_btnScan_clicked(self):
         #Idle callback to show the watch cursor while scanning (HIG)
         tmpMac = self.proxi.dev_mac
@@ -559,8 +596,11 @@ Former translators:
         for mac in macs:
             self.model.append([mac[0], mac[1]])
         self.window.window.set_cursor(None)
+        self.setSensitiveConfigManagement(True)
         
-        
+    ## Callback that is executed when the scan channels button is clicked.
+    # It starts an asynchronous scan fpor the channels via initiating a ScanDevice object.
+    # That object does the magic, updates the gui and afterwards calls the callback function btnScanChannel_done        .
     def btnScanChannel_clicked(self,widget, data = None):
         # scan the selected device for possibly usable channels
         if self.scanningChannels:
@@ -568,7 +608,9 @@ Former translators:
             self.wTree.get_widget("channelScanWindow").hide_all()
             self.scanningChannels = False
             self.scanner.doStop()
+            self.setSensitiveConfigManagement(True)
         else:
+            self.setSensitiveConfigManagement(False)
             mac = self.proxi.dev_mac
             if self.pauseMode:
                 mac = self.lastMAC
@@ -585,21 +627,18 @@ Former translators:
             self.scanner = ScanDevice(mac,self.modelScan,was_paused,self.btnScanChannel_done)
         return 0
     
+    ## The callback that is called by the ScanDevice object that scans for a device's usable rfcomm channels.
+    # It is called after all channels have been scanned.
+    # @param was_paused informs this function about the pause state before the scan started.
+    # That state will be reconstructed by the function.
     def btnScanChannel_done(self,was_paused):
         self.wTree.get_widget("labelBtnScanChannel").set_label(_("Sca_n channels on device"))
         self.scanningChannels = False
+        self.setSensitiveConfigManagement(True)
         if not was_paused:
             self.pausePressed(None)
             self.proxi.Simulate = True
 
-    def btnScan_clicked(self,widget, data = None):
-        # scan the area for bluetooth devices and show the results
-        watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
-        self.window.window.set_cursor(watch)
-        self.model.clear()
-        self.model.append(['...', _('Now scanning...')])
-        gobject.idle_add(self.cb_btnScan_clicked)
-        
 
     def Close(self):
 	#Hide the settings window
@@ -617,6 +656,8 @@ Former translators:
         time.sleep(2)
         gtk.main_quit()
 
+    ## Updates the GUI (values, icon, tooltip) with the latest values
+    # is always called via gobject.timeout_add call to run asynchronously without a seperate thread.
     def updateState(self):
         # update the display with newest measurement values (once per second)
         newVal = int(self.proxi.Dist) # Values are negative!
@@ -657,7 +698,6 @@ Former translators:
                 simu = ''
             self.icon.set_from_file(dist_path + con_icons[connection_state])
             self.icon.set_tooltip(con_info + '\n' + simu)
-        
         self.timer = gobject.timeout_add(1000,self.updateState)
         
     def proximityCommand(self):
@@ -670,7 +710,7 @@ Former translators:
 ## This class creates all logging information in the desired form.
 # We may log to syslog with a given syslog facility, while the severety is always info.
 # We may also log a simple file.
-class Logger:
+class Logger(object):
     ## Constructor does nothing special.
     def __init__(self):
         self.disable_syslogging()
@@ -704,7 +744,11 @@ class Logger:
     def disable_syslogging(self):
         self.syslogging = False
         self.syslog_facility = None
-        
+
+    ## Activates the logging to the given file.
+    # Actually tries to append to that file first, afterwards tries to write to it.
+    # If both don't work it gives an error message on stdout and does not activate the logging.
+    # @param filename The complete filename where to log to        
     def enable_filelogging(self, filename):
         self.filename = filename
         try:
@@ -717,9 +761,10 @@ class Logger:
                 self.flog = file(filename,'w')
                 self.filelogging = True
             except:
-                print _("Could not open '") + filename +  _("' for writing.")
+                print _("Could not open logfile '%s' for writing." % filename)
                 self.disable_filelogging
 
+    ## Deactivates logging to a file.
     def disable_filelogging(self):
         try:
             self.flog.close()
@@ -728,6 +773,8 @@ class Logger:
         self.filelogging = False
         self.filename = ''
 
+    ## Outputs a line to the logs. Takes care of where to put the line.
+    # @param line A string that is printed in the logs. The string is unparsed and not sanatized by any means.
     def log_line(self, line):
         if self.syslogging:
             syslog.syslog(self.syslog_facility | syslog.LOG_NOTICE, line)
@@ -738,6 +785,8 @@ class Logger:
             except:
                 self.disable_filelogging()
     
+    ## Activate the logging mechanism that are requested by the given configuration.
+    # @param config A ConfigObj object containing the needed settings.
     def configureFromConfig(self, config):
         if config['log_to_syslog']:
             self.enable_syslogging(config['log_syslog_facility'])
@@ -754,7 +803,7 @@ class Logger:
 # on a given device. It uses asynchronous calls via gobject.timeout_add to
 # not block the main process. It updates a given model after every scanned port
 # and calls a callback function after finishing the scanning process.
-class ScanDevice():
+class ScanDevice(object):
     ## Constructor which sets up and immediately starts the scanning process.
     # Note that the bluetooth device should not be connected while scanning occurs.
     # @param device_mac MAC address of the bluetooth device to be scanned.
@@ -772,6 +821,9 @@ class ScanDevice():
         self.was_paused = was_paused
         self.callback = callback
 
+    ## Checks whether a certain port on the given mac address is reachable.
+    # @param port An integer from 1 to 30 giving the rfcomm channel number to try to reach.
+    # The function does not return True/False but the actual translated strings.
     def scanPortResult(self,port):
     # here we scan exactly one port and give a textual result
         _sock = bluez.btsocket()
@@ -783,7 +835,8 @@ class ScanDevice():
         except:
             return _("closed or denied")
 
-
+    ## Asynchronous working thread.
+    # It scans a single port at a time and reruns with the next one in the next loop.
     def runStep(self):
     # here the scanning of all ports is done
         self.model.append([str(self.port), self.scanPortResult(self.port)])
@@ -828,21 +881,23 @@ class Proximity (threading.Thread):
         self.logger = Logger()
         self.logger.configureFromConfig(self.config)
     
+    ## Returns all active bluetooth devices found. This is a blocking call.
     def get_device_list(self):
-        # returns all active bluetooth devices found
         ret_tab = list()
         nearby_devices = bluetooth.discover_devices()
         for bdaddr in nearby_devices:
             ret_tab.append([str(bdaddr),str(bluetooth.lookup_name( bdaddr ))])
         return ret_tab
 
+    ## Kills the rssi detection connection.
     def kill_connection(self):
-        # kills the rssi detection connection
         if self.sock != None:
             self.sock.close()
         self.sock = None
-        return 0 #ret_val if popen used
+        return 0
 
+    ## This function is NOT IN USE. It is a try to create a python only way to 
+    # get the rssi values for a connected device. It does not work at this time.
     def get_proximity_by_mac(self,dev_mac):
         sock = bluez.hci_open_dev(dev_id)
         old_filter = sock.getsockopt( bluez.SOL_HCI, bluez.HCI_FILTER, 14)
@@ -894,9 +949,10 @@ class Proximity (threading.Thread):
         return results
 
 
+    ## Returns the rssi value of a connection to the given mac address.
+    # @param dev_mac mac address of the device to check.
+    # This should also be removed but I still have to find a way to read the rssi value from python
     def get_proximity_once(self,dev_mac):
-        # returns all active bluetooth devices found
-        # this should also be removed but I still have to find a way to read the rssi value from python
         ret_val = os.popen("hcitool rssi " + dev_mac + " 2>/dev/null").readlines()
         if ret_val == []:
             ret_val = -255
@@ -904,10 +960,12 @@ class Proximity (threading.Thread):
             ret_val = ret_val[0].split(':')[1].strip(' ')
         return int(ret_val)
 
+    ## Fire up an rfcomm connection to a certain device on the given channel.
+    # Don't forget to set up your phone not to ask for a connection.
+    # (at least for this computer.)
+    # @param dev_mac mac address of the device to connect to.
+    # @param dev_channel rfcomm channel we want to connect to.
     def get_connection(self,dev_mac,dev_channel):
-        # fire up a connection
-        # don't forget to set up your phone not to ask for a connection
-        # (at least for this computer)
         try:
             self.procid = 1
             _sock = bluez.btsocket()
@@ -929,7 +987,6 @@ class Proximity (threading.Thread):
             ret_val = ret_val + val
         if self.ringbuffer[self.ringbuffer_pos] == -255:
             self.ErrorMsg = _("No connection found, trying to establish one...")
-            #print "I can't find my master. Will try again..."
             self.kill_connection()
             self.get_connection(dev_mac,dev_channel)
         return int(ret_val / self.ringbuffer_size)
