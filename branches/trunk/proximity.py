@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # blueproximity
-SW_VERSION = '1.2.4'
+SW_VERSION = '1.2.5-alpha1'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -173,11 +173,10 @@ icon_pause = 'blueproximity_pause.svg'
 class ProximityGUI:
 
     ## Constructor sets up the GUI and reads the current config
-    # @param proximityObject A proximity object representing the detection mechanism
-    # @param configobj A ConfigObj object representing the configuration of the proximity object
+    # @param configs A list of lists of name, ConfigObj object, proximity object
     # @param show_window_on_start Set to True to show the config screen immediately after the start.
     # This is true if no prior config file has been detected (initial start).
-    def __init__(self,proximityObject,configobj,show_window_on_start):
+    def __init__(self,configs,show_window_on_start):
         
         #This is to block events from firing a config write because we initialy set a value
         self.gone_live = False
@@ -189,6 +188,10 @@ class ProximityGUI:
         #Create our dictionary and connect it
         dic = { "on_btnInfo_clicked" : self.aboutPressed,
             "on_btnClose_clicked" : self.btnClose_clicked,
+            "on_btnNew_clicked" : self.btnNew_clicked,
+            "on_btnDelete_clicked" : self.btnDelete_clicked,
+            "on_btnRename_clicked" : self.btnRename_clicked,
+            "on_comboConfig_changed" : self.comboConfig_changed,
             "on_btnScan_clicked" : self.btnScan_clicked,
             "on_btnScanChannel_clicked" : self.btnScanChannel_clicked,
             "on_btnSelect_clicked" : self.btnSelect_clicked,
@@ -204,7 +207,7 @@ class ProximityGUI:
         if (self.window):
             self.window.connect("delete_event", self.btnClose_clicked)
         self.window.set_icon(gtk.gdk.pixbuf_new_from_file(dist_path + icon_base))
-        self.proxi = proximityObject
+        self.proxi = configs[0][2]
         self.minDist = -255
         self.maxDist = 0
         self.pauseMode = False
@@ -239,10 +242,16 @@ class ProximityGUI:
         self.treeChan.append_column(colLabel)
         
         #Show the current settings
-        self.config = configobj
+	self.configs = configs
+	self.configname = configs[0][0]
+        self.config = configs[0][1]
+        self.fillConfigCombo()
         self.readSettings()
+        #this is the gui timer
         self.timer = gobject.timeout_add(1000,self.updateState)
+        #fixme: this will execute the proximity command at the given interval - is now not working 
         self.timer2 = gobject.timeout_add(1000*self.config['proximity_interval'],self.proximityCommand)
+        
         
         #Only show if we started unconfigured
         if show_window_on_start:
@@ -277,7 +286,62 @@ class ProximityGUI:
         
         #now the control may fire change events
         self.gone_live = True
-        self.proxi.logger.log_line(_('started.'))
+        #log start in all config files
+	for config in self.configs:
+            config[2].logger.log_line(_('started.'))
+
+    ## Helper function to populate the list of configurations.
+    def fillConfigCombo(self):
+        # get the widget
+        combo = self.wTree.get_widget("comboConfig")
+        model = combo.get_model()
+        combo.set_model(None)
+        # delete the list
+        model.clear()
+        pos = 0
+        activePos = -1
+        # add all configurations we have, remember the index of the active one
+        for conf in self.configs:
+            model.append([conf[0]])
+            if (conf[0]==self.configname):
+                activePos = pos
+            pos = pos + 1
+        combo.set_model(model)
+        # let the comboBox show the active config entry
+        if (activePos != -1):
+            combo.set_active(activePos)
+
+    ## Callback to select a different config file for editing.
+    def comboConfig_changed(self, widget, data = None):
+        # get the widget
+        combo = self.wTree.get_widget("comboConfig")
+        model = combo.get_model()
+        name = combo.get_active_text()
+        # only continue if this is different to the former config
+        if (name != self.configname):
+            newconf = None
+            # let's find the new ConfigObj
+            for conf in self.configs:
+                if (name == conf[0]):
+                    newconf = conf
+            # if found set it as our active one and show it's settings in the GUI
+            if (newconf != None):
+                self.config = newconf[1]
+                self.configname = newconf[0]
+                self.proxi = newconf[2]
+                self.readSettings()
+
+    ## Callback to create a new config file for editing.
+    def btnNew_clicked(self, widget, data = None):
+        pass
+
+    ## Callback to delete aconfig file.
+    def btnDelete_clicked(self, widget, data = None):
+        pass
+
+    ## Callback to rename a config file.
+    def btnRename_clicked(self, widget, data = None):
+        pass
 
     ## Callback to show the pop-up menu if icon is right-clicked.
     def popupMenu(self, widget, button, time, data = None):
@@ -293,13 +357,14 @@ class ProximityGUI:
             self.Close()
         else:
             self.window.show()
-            self.proxi.Simulate = True
+            for config in self.configs:
+                config[2].Simulate = True
 
     ## Callback to create and show the info dialog.
     def aboutPressed(self, widget, data = None):
         logo = gtk.gdk.pixbuf_new_from_file(dist_path + icon_base)
         description = _("Leave it - it's locked, come back - it's back too...")
-        copyright = u"""Copyright (c) 2007 Lars Friedrichs"""
+        copyright = u"""Copyright (c) 2007,2008 Lars Friedrichs"""
         people = [
             u"Lars Friedrichs <LarsFriedrichs@gmx.de>",
             u"Tobias Jakobs",
@@ -331,7 +396,7 @@ Former translators:
         See the GNU General Public License for more details.
 
         You should have received a copy of the GNU General Public License 
-        along with Envy; if not, write to the 
+        along with BlueProximity; if not, write to the 
 
         Free Software Foundation, Inc., 
         59 Temple Place, Suite 330, 
@@ -352,19 +417,21 @@ Former translators:
         about.show()
 
     ## Callback to activate and deactivate pause mode.
-    # This is actually done by removing the proximity object'smac address.
+    # This is actually done by removing the proximity object's mac address.
     def pausePressed(self, widget, data = None):
         if self.pauseMode:
             self.pauseMode = False
-            self.proxi.dev_mac = self.lastMAC
-            self.proxi.Simulate = False
+            for config in configs:
+                config[2].dev_mac = config[2].lastMAC
+                config[2].Simulate = False
             self.icon.set_from_file(dist_path + icon_con)
         else:
             self.pauseMode = True
-            self.lastMAC = self.proxi.dev_mac
-            self.proxi.dev_mac = ''
-            self.proxi.Simulate = True
-            self.proxi.kill_connection()
+            for config in configs:
+                config[2].lastMAC = config[2].dev_mac
+                config[2].dev_mac = ''
+                config[2].Simulate = True
+                config[2].kill_connection()
 
 
     ## helper function to set a ComboBox's value to value if that exists in the Combo's list
@@ -388,12 +455,14 @@ Former translators:
     ## Reads the config settings and sets all GUI components accordingly.
     def readSettings(self):
         #Updates the controls to show the actual configuration of the running proximity
-        self.wTree.get_widget("entryMAC").set_text(self.proxi.dev_mac)
-        self.wTree.get_widget("entryChannel").set_value(self.proxi.dev_channel)
-        self.wTree.get_widget("hscaleLockDist").set_value(-self.proxi.gone_limit)
-        self.wTree.get_widget("hscaleLockDur").set_value(self.proxi.gone_duration)
-        self.wTree.get_widget("hscaleUnlockDist").set_value(-self.proxi.active_limit)
-        self.wTree.get_widget("hscaleUnlockDur").set_value(self.proxi.active_duration)
+        was_live = self.gone_live
+        self.gone_live = False
+        self.wTree.get_widget("entryMAC").set_text(self.config['device_mac'])
+        self.wTree.get_widget("entryChannel").set_value(int(self.config['device_channel']))
+        self.wTree.get_widget("hscaleLockDist").set_value(int(self.config['lock_distance']))
+        self.wTree.get_widget("hscaleLockDur").set_value(int(self.config['lock_duration']))
+        self.wTree.get_widget("hscaleUnlockDist").set_value(int(self.config['unlock_distance']))
+        self.wTree.get_widget("hscaleUnlockDur").set_value(int(self.config['unlock_duration']))
         self.wTree.get_widget("comboLock").child.set_text(self.config['lock_command'])
         self.wTree.get_widget("comboUnlock").child.set_text(self.config['unlock_command'])
         self.wTree.get_widget("comboProxi").child.set_text(self.config['proximity_command'])
@@ -402,10 +471,13 @@ Former translators:
         self.setComboValue(self.wTree.get_widget("comboFacility"), self.config['log_syslog_facility'])
         self.wTree.get_widget("checkFile").set_active(self.config['log_to_file'])
         self.wTree.get_widget("entryFile").set_text(self.config['log_filelog_filename'])
+        self.gone_live = was_live
 
     ## Reads the current settings from the GUI and stores them in the configobj object.
     def writeSettings(self):
         #Updates the running proximity and the config file with the new settings from the controls
+        was_live = self.gone_live
+        self.gone_live = False
         self.proxi.dev_mac = self.wTree.get_widget("entryMAC").get_text()
         self.proxi.dev_channel = int(self.wTree.get_widget("entryChannel").get_value())
         self.proxi.gone_limit = -self.wTree.get_widget("hscaleLockDist").get_value()
@@ -428,6 +500,7 @@ Former translators:
         self.config['log_filelog_filename'] = str(self.wTree.get_widget("entryFile").get_text())
         self.proxi.logger.configureFromConfig(self.config)
         self.config.write()
+        self.gone_live = was_live
 
     ## Callback for resetting the values for the min/max viewer.
     def btnResetMinMax_clicked(self,widget, data = None):
@@ -529,14 +602,18 @@ Former translators:
         
 
     def Close(self):
+	#Hide the settings window
         self.window.hide()
-        self.proxi.Simulate = False
+        #Disable simulation mode for all configs
+	for config in configs:
+            config[2].Simulate = False
 
     def quit(self, widget, data = None):
         #try to close everything correctly
         self.icon.set_from_file(dist_path + icon_att)
-        self.proxi.logger.log_line(_('stopped.'))
-        self.proxi.Stop = 1
+	for config in configs:
+           config[2].logger.log_line(_('stopped.'))
+           config[2].Stop = 1
         time.sleep(2)
         gtk.main_quit()
 
@@ -556,21 +633,30 @@ Former translators:
             self.icon.set_from_file(dist_path + icon_pause)
             self.icon.set_tooltip(_('Pause Mode - not connected'))
         else:
-            if self.proxi.ErrorMsg == "No connection found, trying to establish one...":
-                self.icon.set_from_file(dist_path + icon_con)
-            else:
-                if self.proxi.State != _('active'):
-                    self.icon.set_from_file(dist_path + icon_away)
+            # we have to show the 'worst case' since we only have one icon but many configs...
+            connection_state = 0
+            con_info = ''
+            con_icons = [icon_base, icon_att, icon_away, icon_con ]
+            for config in configs:
+                if config[2].ErrorMsg == "No connection found, trying to establish one...":
+                    connection_state = 3
                 else:
-                    if newVal < self.proxi.active_limit:
-                        self.icon.set_from_file(dist_path + icon_att)
+                    if config[2].State != _('active'):
+                        if (connection_state < 2):
+                            connection_state = 2
                     else:
-                        self.icon.set_from_file(dist_path + icon_base)
+                        if newVal < config[2].active_limit:
+                            if (connection_state < 1):
+                                connection_state = 1
+                if (con_info != ''):
+                    con_info = con_info + '\n\n'
+                con_info = con_info + config[0] + ': ' + _('Detected Distance: ') + str(-config[2].Dist) + '; ' + _("Current State: ") + config[2].State + '; ' + _("Status: ") + config[2].ErrorMsg
             if self.proxi.Simulate:
                 simu = _('\nSimulation Mode (locking disabled)')
             else:
                 simu = ''
-            self.icon.set_tooltip(_('Detected Distance: ') + str(-newVal) + _("\nCurrent State: ") + self.proxi.State + _("\nStatus: ") + self.proxi.ErrorMsg + simu)
+            self.icon.set_from_file(dist_path + con_icons[connection_state])
+            self.icon.set_tooltip(con_info + '\n' + simu)
         
         self.timer = gobject.timeout_add(1000,self.updateState)
         
@@ -745,10 +831,6 @@ class Proximity (threading.Thread):
     def get_device_list(self):
         # returns all active bluetooth devices found
         ret_tab = list()
-#        lines = os.popen("hcitool scan", "r").readlines()
-#        for line in lines:
-#            if line.startswith('\t'):
-#                ret_tab.append(line.strip('\t\n').split('\t'))
         nearby_devices = bluetooth.discover_devices()
         for bdaddr in nearby_devices:
             ret_tab.append([str(bdaddr),str(bluetooth.lookup_name( bdaddr ))])
@@ -756,8 +838,6 @@ class Proximity (threading.Thread):
 
     def kill_connection(self):
         # kills the rssi detection connection
-        #ret_val = os.popen("kill -2 " + str(self.procid), "r").readlines()
-        #self.procid = 0
         if self.sock != None:
             self.sock.close()
         self.sock = None
@@ -828,9 +908,6 @@ class Proximity (threading.Thread):
         # fire up a connection
         # don't forget to set up your phone not to ask for a connection
         # (at least for this computer)
-        #args = ["rfcomm", "connect" ,"1", dev_mac, str(self.config['device_channel']), ">/dev/null"]
-        #cmd = "/usr/bin/rfcomm"
-        #self.procid = os.spawnv(os.P_NOWAIT, cmd, args)
         try:
             self.procid = 1
             _sock = bluez.btsocket()
@@ -841,8 +918,6 @@ class Proximity (threading.Thread):
             self.procid = 0
             pass
 
-        # take some time to connect (only when using spawnv)
-        #time.sleep(5)
         return self.procid
 
     def run_cycle(self,dev_mac,dev_channel):
@@ -927,24 +1002,63 @@ if __name__=='__main__':
     # react on ^C
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     # read config if any
-    new_config = False
+    configs = []
+    new_config = True
+    conf_dir = os.path.join(os.getenv('HOME'),'.blueproximity')
     try:
-        config = ConfigObj(os.getenv('HOME') + '/.blueproximityrc',{'create_empty':False,'file_error':True,'configspec':conf_specs})
+        # check if config directory exists
+        os.mkdir(conf_dir)
+	print(_("Creating new config directory '%s'.") % conf_dir)
+        # we should now look for an old config file and try to move it to a better place...
+        os.rename(os.path.join(os.getenv('HOME'),'.blueproximityrc'),os.path.join(conf_dir,_("standard")+".conf"))
+	print(_("Moved old configuration to the new config directory."))
     except:
-        new_config = True
+        # we can't create it because it is already there...
+	pass
+
+    # now look for .conf files in there
+    vdt = Validator()
+    for filename in os.listdir(conf_dir):
+        if filename.endswith('.conf'):
+            try:
+		# add every valid .conf file to the array of configs
+                config = ConfigObj(os.path.join(conf_dir,filename),{'create_empty':False,'file_error':True,'configspec':conf_specs})
+                # first validate it
+                config.validate(vdt, copy=True)
+                # rewrite it in a secure manner
+                config.write()
+                # if everything worked add this config as functioning
+                configs.append ( [filename[:-5], config])
+                new_config = False
+		print(_("Using config file '%s'.") % filename)
+            except:
+                print(_("'%s' is not a valid config file.") % filename)
+
+    # no previous configuration could be found so let's create a new one
     if new_config:
-        config = ConfigObj(os.getenv('HOME') + '/.blueproximityrc',{'create_empty':True,'file_error':False,'configspec':conf_specs})
+        config = ConfigObj(os.path.join(conf_dir, _('standard') + '.conf'),{'create_empty':True,'file_error':False,'configspec':conf_specs})
         # next line fixes a problem with creating empty strings in default values for configobj
         config['device_mac'] = ''
-    vdt = Validator()
-    config.validate(vdt, copy=True)
-    config.write()
+        config.validate(vdt, copy=True)
+        # write it in a secure manner
+        config.write()
+        configs.append ( [_('standard'), config])
+        # we can't log these messages since logging is not yet configured, so we just print it to stdout
+	print(_("Creating new configuration."))
+	print(_("Using config file '%s'.") % _('standard'))
     
-    p = Proximity(config)
-    p.start()
-    pGui = ProximityGUI(p,config,new_config)
+    # now start the proximity detection for each configuration
+    for config in configs:
+        p = Proximity(config[1])
+        p.start()
+        config.append(p)
+    
+    # the idea behind 'configs' is an array containing the name, the configobj and the proximity object
+    pGui = ProximityGUI(configs,new_config)
 
     # make GTK threadable 
     gtk.gdk.threads_init()
+
+    # aaaaand action!
     gtk.main()
     
