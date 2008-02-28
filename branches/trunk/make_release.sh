@@ -4,9 +4,12 @@
 #
 # configure base variables
 VERSION=1.2.5
-VNAME=`pwd`
+# make sure that the source lies in a directory exactly named like $VNAME
+VNAME=blueproximity
 DNAME=$VNAME-$VERSION
-DISTRIB=hardy
+# change this to your distribution
+DISTRIB=feisty
+#DISTRIB=hardy
 export DEBFULLNAME="Lars Friedrichs"
 #export DEBFULLNAME="Lars Friedrichs (Quattro-Scan GmbH)"
 export NAME=$DEBFULLNAME
@@ -77,8 +80,8 @@ chmod 755 $DNAME/proximity.py
 echo . now creating the debian changelog...
 cd $DNAME
 #STARTED=0
-#DCH_OPTS="-a -v $VERSION-0ubuntu1 -D $DISTRIB"
-DCH_OPTS="-a"
+DCH_OPTS="-v $VERSION-0ubuntu1 -D $DISTRIB"
+#DCH_OPTS="-a"
 #cat CHANGELOG.txt |
 #while read LINE
 #do
