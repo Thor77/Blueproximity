@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # blueproximity
-SW_VERSION = '1.2.5-beta1'
+SW_VERSION = '1.2.5'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -724,11 +724,14 @@ Former translators:
         
     ## Asynchronous callback function to do the actual device discovery scan
     def cb_btnScan_clicked(self):
-        #Idle callback to show the watch cursor while scanning (HIG)
-        self.tmpMac = self.proxi.dev_mac
+        tmpMac = self.proxi.dev_mac
         self.proxi.dev_mac = ''
         self.proxi.kill_connection()
-        macs = self.proxi.get_device_list()
+        macs = []
+        try:
+            macs = self.proxi.get_device_list()
+        except:
+            macs = [['', _('Sorry, the bluetooth device is busy connecting.\nPlease enter a correct mac address or no address at all\nfor the config that is not connecting and try again later.')]]
         self.proxi.dev_mac = tmpMac
         self.model.clear()
         for mac in macs:
@@ -737,7 +740,7 @@ Former translators:
         self.setSensitiveConfigManagement(True)
         
     ## Callback that is executed when the scan channels button is clicked.
-    # It starts an asynchronous scan fpor the channels via initiating a ScanDevice object.
+    # It starts an asynchronous scan for the channels via initiating a ScanDevice object.
     # That object does the magic, updates the gui and afterwards calls the callback function btnScanChannel_done        .
     def btnScanChannel_clicked(self,widget, data = None):
         # scan the selected device for possibly usable channels
@@ -1018,6 +1021,9 @@ class Proximity (threading.Thread):
         self.ignoreFirstTransition = True
         self.logger = Logger()
         self.logger.configureFromConfig(self.config)
+        self.timeAct = 0
+        self.timeGone = 0
+        self.timeProx = 0
     
     ## Returns all active bluetooth devices found. This is a blocking call.
     def get_device_list(self):
@@ -1109,11 +1115,9 @@ class Proximity (threading.Thread):
             _sock = bluez.btsocket()
             self.sock = bluetooth.BluetoothSocket( bluetooth.RFCOMM , _sock )
             self.sock.connect((dev_mac, dev_channel))
-            #print str(_sock.getsockid())
         except:
             self.procid = 0
             pass
-
         return self.procid
 
     def run_cycle(self,dev_mac,dev_channel):
@@ -1135,7 +1139,13 @@ class Proximity (threading.Thread):
             self.ignoreFirstTransition = False
         else:
             self.logger.log_line(_('screen is unlocked'))
-            ret_val = os.popen(self.config['unlock_command']).readlines()
+            if (self.timeAct==0):
+                self.timeAct = time.time()
+                ret_val = os.popen(self.config['unlock_command']).readlines()
+                self.timeAct = 0
+            else:
+                self.logger.log_line(_('A command for %s has been skipped because the former command did not finish yet.') % _('unlocking'))
+                self.ErrorMsg = _('A command for %s has been skipped because the former command did not finish yet.') % _('unlocking')
 
     def go_gone(self):
         #The Doctor is out
@@ -1143,12 +1153,30 @@ class Proximity (threading.Thread):
             self.ignoreFirstTransition = False
         else:
             self.logger.log_line(_('screen is locked'))
-            ret_val = os.popen(self.config['lock_command']).readlines()
+            if (self.timeGone==0):
+                self.timeGone = time.time()
+                ret_val = os.popen(self.config['lock_command']).readlines()
+                self.timeGone = 0
+            else:
+                self.logger.log_line(_('A command for %s has been skipped because the former command did not finish yet.') % _('locking'))
+                self.ErrorMsg = _('A command for %s has been skipped because the former command did not finish yet.') % _('locking')
 
+    def go_proximity(self):
+        #The Doctor is still in
+        if (self.timeProx==0):
+            self.timeProx = time.time()
+            ret_val = os.popen(self.config['proximity_command']).readlines()
+            self.timeProx = 0
+        else:
+            self.logger.log_line(_('A command for %s has been skipped because the former command did not finish yet.') % _('proximity'))
+            self.ErrorMsg = _('A command for %s has been skipped because the former command did not finish yet.') % _('proximity')
+
+    ## This is the main loop of the proximity detection engine.
+    # It checks the rssi value against limits and invokes all commands.
     def run(self):
-    # this is the main loop
         duration_count = 0
         state = _("gone")
+        proxiCmdCounter = 0
         while not self.Stop:
             #print "tick"
             try:
@@ -1165,7 +1193,9 @@ class Proximity (threading.Thread):
                             state = _("active")
                             duration_count = 0
                             if not self.Simulate:
-                                self.go_active()
+                                # start the process asynchronously so we are not hanging here...
+                                timerAct = gobject.timeout_add(5,self.go_active)
+                                #self.go_active()
                     else:
                         duration_count = 0
                 else:
@@ -1173,16 +1203,25 @@ class Proximity (threading.Thread):
                         duration_count = duration_count + 1
                         if duration_count >= self.gone_duration:
                             state = _("gone")
+                            proxiCmdCounter = 0
                             duration_count = 0
                             if not self.Simulate:
-                                self.go_gone()
+                                # start the process asynchronously so we are not hanging here...
+                                timerGone = gobject.timeout_add(5,self.go_gone)
+                                #self.go_gone()
                     else:
-                        duration_count = 0                    
+                        duration_count = 0
+                        proxiCmdCounter = proxiCmdCounter + 1
                 if dist != self.Dist or state != self.State:
                     #print "Detected distance atm: " + str(dist) + "; state is " + state
                     pass
                 self.State = state
                 self.Dist = dist
+                # let's handle the proximity command
+                if (proxiCmdCounter >= self.config['proximity_interval']) and not self.Simulate and (self.config['proximity_command']!=''):
+                    proxiCmdCounter = 0
+                    # start the process asynchronously so we are not hanging here...
+                    timerProx = gobject.timeout_add(5,self.go_proximity)
                 time.sleep(1)
             except KeyboardInterrupt:
                 break
