@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # blueproximity
-SW_VERSION = '1.2.5-alpha2'
+SW_VERSION = '1.2.5-beta1'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -201,6 +201,8 @@ class ProximityGUI (object):
             "on_treeScanChannelResult_changed" : self.event_scanChannelResult_changed,
             "on_btnDlgNewDo_clicked" : self.dlgNewDo_clicked,
             "on_btnDlgNewCancel_clicked" : self.dlgNewCancel_clicked,
+            "on_btnDlgRenameDo_clicked" : self.dlgRenameDo_clicked,
+            "on_btnDlgRenameCancel_clicked" : self.dlgRenameCancel_clicked,
             "on_MainWindow_destroy" : self.btnClose_clicked }
         self.wTree.signal_autoconnect(dic)
 
@@ -220,6 +222,11 @@ class ProximityGUI (object):
         self.windowNew = self.wTree.get_widget("createNewWindow")
         if (self.windowNew):
             self.windowNew.connect("delete_event", self.dlgNewCancel_clicked)
+
+        #Get the Rename Config Window, and connect the "destroy" event
+        self.windowRename = self.wTree.get_widget("renameWindow")
+        if (self.windowRename):
+            self.windowRename.connect("delete_event", self.dlgRenameCancel_clicked)
 
 
         #Prepare the mac/name table
@@ -298,12 +305,58 @@ class ProximityGUI (object):
 	for config in self.configs:
             config[2].logger.log_line(_('started.'))
 
+    ## Callback to just close and not destroy the rename config window 
+    def dlgRenameCancel_clicked(self,widget, data = None):
+        self.windowRename.hide()
+        return 1
+
+    ## Callback to rename a config file.
+    def dlgRenameDo_clicked(self, widget, data = None):
+        newconfig = self.wTree.get_widget("entryRenameName").get_text()
+        # check if something has been entered
+        if (newconfig==''):
+            dlg = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, _("You must enter a name for the configuration."))
+            dlg.run()
+            dlg.destroy()
+            return 0
+        # now check if that config already exists
+        newname = os.path.join(os.getenv('HOME'),'.blueproximity',newconfig + ".conf")
+        try:
+            os.stat(newname)
+            dlg = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, _("A configuration file with the name '%s' already exists.") % newname)
+            dlg.run()
+            dlg.destroy()
+            return 0
+        except:
+            pass
+        config = None
+        for conf in self.configs:
+            if (conf[0]==self.configname):
+                config = conf
+        # change the path of the config file
+        oldfile = self.config.filename
+        self.config.filename = newname
+        # save it under the new name
+        self.config.write()
+        # delete the old file
+        try:
+            os.remove(oldfile)
+        except:
+            print _("The configfile '%s' could not be deleted.") % oldfile
+        # change the gui name
+        self.configname = newconfig
+        # update the configs array
+        config[0] = newconfig
+        # show changes
+        self.fillConfigCombo()
+        self.windowRename.hide()
+
     ## Callback to just close and not destroy the new config window 
     def dlgNewCancel_clicked(self,widget, data = None):
         self.windowNew.hide()
         return 1
 
-    ## Callback to rename a config file.
+    ## Callback to create a config file.
     def dlgNewDo_clicked(self, widget, data = None):
         newconfig = self.wTree.get_widget("entryNewName").get_text()
         # check if something has been entered
@@ -339,6 +392,7 @@ class ProximityGUI (object):
         self.configname = newconfig
         self.proxi = p
         self.readSettings()
+        self.configs.sort()
         self.fillConfigCombo()
         # close the new config dialog
         self.windowNew.hide()
@@ -369,7 +423,6 @@ class ProximityGUI (object):
         pos = 0
         activePos = -1
         # add all configurations we have, remember the index of the active one
-        self.configs.sort()
         for conf in self.configs:
             model.append([conf[0]])
             if (conf[0]==self.configname):
@@ -402,19 +455,49 @@ class ProximityGUI (object):
 
     ## Callback to create a new config file for editing.
     def btnNew_clicked(self, widget, data = None):
-        # get the widget
-        window = self.wTree.get_widget("createNewWindow")
+        # reset the entry widget
         self.wTree.get_widget("entryNewName").set_text('')
-	window.show()
-        pass
+	self.windowNew.show()
 
-    ## Callback to delete aconfig file.
+    ## Callback to delete a config file.
     def btnDelete_clicked(self, widget, data = None):
-        pass
+        # never delete the last config
+        if (len(self.configs)==1):
+            dlg = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, _("The last configuration file cannot be deleted."))
+            dlg.run()
+            dlg.destroy()
+            return 0
+        # security question
+        dlg = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR, gtk.BUTTONS_YES_NO, _("Do you really want to delete the configuration '%s'.") % self.configname)
+        retval = dlg.run()
+        dlg.destroy()
+        if (retval == gtk.RESPONSE_YES):
+            # ok, now stop the detection for that config
+            self.proxi.Stop = True
+            # save the filename
+            configfile = self.config.filename
+            # rip it out of our configs array
+            self.configs.remove([self.configname, self.config, self.proxi])
+            # change active config to the next one
+            self.configs.sort()
+            self.configname = configs[0][0]
+            self.config = configs[0][1]
+            self.proxi = configs[0][2]
+            # update gui
+            self.readSettings()
+            self.fillConfigCombo()
+            # now delete the file on the disk
+            try:
+                os.remove(configfile)
+            except:
+                # should this be a GUI message?
+                print _("The configfile '%s' could not be deleted.") % configfile
 
     ## Callback to rename a config file.
     def btnRename_clicked(self, widget, data = None):
-        pass
+        # set the entry widget
+        self.wTree.get_widget("entryRenameName").set_text(self.configname)
+	self.windowRename.show()
 
     ## Callback to show the pop-up menu if icon is right-clicked.
     def popupMenu(self, widget, button, time, data = None):
@@ -1165,6 +1248,7 @@ if __name__=='__main__':
         p.start()
         config.append(p)
     
+    configs.sort()
     # the idea behind 'configs' is an array containing the name, the configobj and the proximity object
     pGui = ProximityGUI(configs,new_config)
 
