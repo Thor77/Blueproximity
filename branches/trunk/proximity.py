@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # blueproximity
-SW_VERSION = '1.2.5-alpha1'
+SW_VERSION = '1.2.5-alpha2'
 # Add security to your desktop by automatically locking and unlocking 
 # the screen when you and your phone leave/enter the desk. 
 # Think of a proximity detector for your mobile phone via bluetooth.
@@ -199,6 +199,8 @@ class ProximityGUI (object):
             "on_settings_changed" : self.event_settings_changed,
             "on_settings_changed_reconnect" : self.event_settings_changed_reconnect,
             "on_treeScanChannelResult_changed" : self.event_scanChannelResult_changed,
+            "on_btnDlgNewDo_clicked" : self.dlgNewDo_clicked,
+            "on_btnDlgNewCancel_clicked" : self.dlgNewCancel_clicked,
             "on_MainWindow_destroy" : self.btnClose_clicked }
         self.wTree.signal_autoconnect(dic)
 
@@ -213,6 +215,12 @@ class ProximityGUI (object):
         self.pauseMode = False
         self.lastMAC = ''
         self.scanningChannels = False
+
+        #Get the New Config Window, and connect the "destroy" event
+        self.windowNew = self.wTree.get_widget("createNewWindow")
+        if (self.windowNew):
+            self.windowNew.connect("delete_event", self.dlgNewCancel_clicked)
+
 
         #Prepare the mac/name table
         self.model = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING)
@@ -290,6 +298,51 @@ class ProximityGUI (object):
 	for config in self.configs:
             config[2].logger.log_line(_('started.'))
 
+    ## Callback to just close and not destroy the new config window 
+    def dlgNewCancel_clicked(self,widget, data = None):
+        self.windowNew.hide()
+        return 1
+
+    ## Callback to rename a config file.
+    def dlgNewDo_clicked(self, widget, data = None):
+        newconfig = self.wTree.get_widget("entryNewName").get_text()
+        # check if something has been entered
+        if (newconfig==''):
+            dlg = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, _("You must enter a name for the new configuration."))
+            dlg.run()
+            dlg.destroy()
+            return 0
+        # now check if that config already exists
+        newname = os.path.join(os.getenv('HOME'),'.blueproximity',newconfig + ".conf")
+        try:
+            os.stat(newname)
+            dlg = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, _("A configuration file with the name '%s' already exists.") % newname)
+            dlg.run()
+            dlg.destroy()
+            return 0
+        except:
+            pass
+        # then let's get it on...
+        # create the new config
+        newconf = ConfigObj(self.config.dict())
+        newconf.filename = newname
+        # and save it to the new name
+        newconf.write()
+        # create the according Proximity object
+        p = Proximity(newconf)
+        p.Simulate = True
+        p.start()
+        # fill that into our list of active configs
+        self.configs.append([newconfig,newconf,p])
+        # now refresh the gui to take account of our new config
+        self.config = newconf
+        self.configname = newconfig
+        self.proxi = p
+        self.readSettings()
+        self.fillConfigCombo()
+        # close the new config dialog
+        self.windowNew.hide()
+
     ## Helper function to enable or disable the change or creation of the config files
     # This is called during non blockable functions that rely on the config not
     # being changed over the process like scanning for devices or channels
@@ -316,6 +369,7 @@ class ProximityGUI (object):
         pos = 0
         activePos = -1
         # add all configurations we have, remember the index of the active one
+        self.configs.sort()
         for conf in self.configs:
             model.append([conf[0]])
             if (conf[0]==self.configname):
@@ -350,6 +404,7 @@ class ProximityGUI (object):
     def btnNew_clicked(self, widget, data = None):
         # get the widget
         window = self.wTree.get_widget("createNewWindow")
+        self.wTree.get_widget("entryNewName").set_text('')
 	window.show()
         pass
 
@@ -587,7 +642,7 @@ Former translators:
     ## Asynchronous callback function to do the actual device discovery scan
     def cb_btnScan_clicked(self):
         #Idle callback to show the watch cursor while scanning (HIG)
-        tmpMac = self.proxi.dev_mac
+        self.tmpMac = self.proxi.dev_mac
         self.proxi.dev_mac = ''
         self.proxi.kill_connection()
         macs = self.proxi.get_device_list()
