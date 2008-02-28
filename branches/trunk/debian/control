@@ -4,7 +4,7 @@ Priority: optional
 XSBC-Original-Maintainer: Lars Friedrichs <LarsFriedrichs@gmx.de>
 Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
 Homepage: http://blueproximity.sourceforge.net
-Build-Depends: cdbs (>= 0.4.49), debhelper (>= 6)
+Build-Depends: cdbs (>= 0.4.49), debhelper (>= 5)
 Build-Depends-Indep: python-support (>= 0.5.3)
 Standards-Version: 3.7.3
 

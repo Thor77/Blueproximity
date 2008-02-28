@@ -1,6 +1,7 @@
 Change log for BlueProximity
 
 1.2.5 "double kill, multi kill, monster kill, rampage!" - 2008-02-28
+- info: This is an unstable release preparing 1.2.6 - it has incomplete translations too
 - fixed: No runtime errors on scanning while still connecting (Bug #1892724)
 - fixed: correct inheriting of classes from 'object' (Bug #1892724)
 - fixed: you are now told if your config files are broken (at least on the console) (Bug #1781957)
@@ -8,6 +9,7 @@ Change log for BlueProximity
 - added: log file notice on hanging commands
 - added: support for multiple config files via *.conf files in ~/.blueproximity
 - added: new configurations can be added, deleted, renamed via gui
+- added: new locale hu - thanks Kami
 - modified: old config file is gone, it should now reside in directory ~/.blueproximity
 - modified: much more Doxygen documentation in the source
 - modified: proximity command has moved into Proximity class
