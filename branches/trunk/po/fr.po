@@ -5,41 +5,145 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: BlueProximity 1.2\n"
+"Project-Id-Version: BlueProximity 1.2.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-31 20:48+0200\n"
-"PO-Revision-Date: 2008-01-31 11:31+0100\n"
-"Last-Translator: Lars Friedrichs <LarsFriedrichs@gmx.de>\n"
+"PO-Revision-Date: 2008-02-28 18:41+0100\n"
+"Last-Translator: Claude Terrier <f5pbl@users.sourceforge.net>\n"
 "Language-Team: Claude <f5pbl@users.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Language: French\n"
 
+#: proximity.py:82
+msgid "The program cannot import the module gobject."
+msgstr "Le programme ne peut pas importer le module gobject."
+
+#: proximity.py:83
+msgid "Please make sure the GObject bindings for python are installed."
+msgstr "Assurez-vous que les bindings GObject pour python sont installés."
+
+#: proximity.py:84
+#: proximity.py:93
 #: proximity.py:115
+#: proximity.py:125
+#: proximity.py:133
+msgid "e.g. with Ubuntu Linux, type"
+msgstr "par ex. sous Ubuntu, taper"
+
+#: proximity.py:85
+msgid " sudo apt-get install python-gobject"
+msgstr "sudo apt-get install python-gobject"
+
+#: proximity.py:91
+msgid "The program cannot import the module ConfigObj or Validator."
+msgstr "Le programme ne peut pas importer le module ConfigObj ou Validator."
+
+#: proximity.py:92
+msgid "Please make sure the ConfigObject package for python is installed."
+msgstr "Assurez-vous que le paquet ConfigObject pour python est installé."
+
+#: proximity.py:94
+msgid " sudo apt-get install python-configobj"
+msgstr " sudo apt-get install python-configobj"
+
+#: proximity.py:113
+msgid "The program cannot import the module bluetooth."
+msgstr "Le programme ne peut pas importer le module bluetooth."
+
+#: proximity.py:114
+msgid "Please make sure the bluetooth bindings for python as well as bluez are installed."
+msgstr "Assurez-vous que les bindings bluetooth pour python et bluez sont installés."
+
+#: proximity.py:116
+msgid " sudo apt-get install python-bluez"
+msgstr " sudo apt-get install python-bluez"
+
+#: proximity.py:123
+msgid "The program cannot import the module pygtk."
+msgstr "Le programme ne peut pas importer le module pygtk."
+
+#: proximity.py:124
+msgid "Please make sure the GTK2 bindings for python are installed."
+msgstr "Assurez-vous que les bindings GTK2 pour python sont installés."
+
+#: proximity.py:126
+msgid " sudo apt-get install python-gtk2"
+msgstr " sudo apt-get install python-gtk2"
+
+#: proximity.py:131
+msgid "The program cannot import the module glade."
+msgstr "Le programme ne peut pas importer le module glade."
+
+#: proximity.py:132
+msgid "Please make sure the Glade2 bindings for python are installed."
+msgstr "Assurez-vous que les bindings Glade2 pour python sont installés."
+
+#: proximity.py:134
+msgid " sudo apt-get install python-glade2"
+msgstr " sudo apt-get install python-glade2"
+
+#: proximity.py:237
 msgid "MAC"
 msgstr "MAC"
 
-#: proximity.py:119
+#: proximity.py:241
 msgid "Name"
 msgstr "Nom"
 
-#: proximity.py:136
+#: proximity.py:250
+msgid "Channel"
+msgstr "Canal"
+
+#: proximity.py:254
+msgid "State"
+msgstr "Etat"
+
+#: proximity.py:277
 msgid "BlueProximity starting..."
 msgstr "Démarrage de BlueProximity..."
 
-#: proximity.py:162
+#: proximity.py:306
 msgid "started."
 msgstr "démarré."
 
-#: proximity.py:180
-#, fuzzy
-msgid "Leave it - it's locked, come back - it's back too..."
-msgstr "Leave it - it's locked, come back - it's back too..."
+#: proximity.py:318
+msgid "You must enter a name for the configuration."
+msgstr "Vous devez entrer un nom pour la configuration."
 
-#: proximity.py:185
+#: proximity.py:326
+#: proximity.py:372
+#, python-format
+msgid "A configuration file with the name '%s' already exists."
+msgstr "Un fichier de configuration '%s' existe déjà."
+
+#: proximity.py:345
+#: proximity.py:494
+#, python-format
+msgid "The configfile '%s' could not be deleted."
+msgstr "Impossible de détruire le fichier '%s'"
+
+#: proximity.py:364
+msgid "You must enter a name for the new configuration."
+msgstr "Vous devez entrer un nom pour la nouvelle configuration."
+
+#: proximity.py:466
+msgid "The last configuration file cannot be deleted."
+msgstr "Le dernier fichier de configuration ne peut pas être détruit."
+
+#: proximity.py:471
+#, python-format
+msgid "Do you really want to delete the configuration '%s'."
+msgstr "Voulez-vous vraiment supprimer la configuration '%s'."
+
+#: proximity.py:522
+msgid "Leave it - it's locked, come back - it's back too..."
+msgstr "Vous partez - c'est vérouillé, vous revenez - c'est réactivé..."
+
+#: proximity.py:543
 msgid ""
 "\n"
 "        BlueProximity is free software; you can redistribute it and/or modify it \n"
@@ -53,7 +157,7 @@ msgid ""
 "        See the GNU General Public License for more details.\n"
 "\n"
 "        You should have received a copy of the GNU General Public License \n"
-"        along with Envy; if not, write to the \n"
+"        along with BlueProximity; if not, write to the \n"
 "\n"
 "        Free Software Foundation, Inc., \n"
 "        59 Temple Place, Suite 330, \n"
@@ -79,36 +183,73 @@ msgstr ""
 "        Boston, MA  02111-1307  USA\n"
 "        "
 
-#: proximity.py:325
+#: proximity.py:721
 msgid "Now scanning..."
 msgstr "En cours de recherche..."
 
-#: proximity.py:336
+#: proximity.py:734
+msgid ""
+"Sorry, the bluetooth device is busy connecting.\n"
+"Please enter a correct mac address or no address at all\n"
+"for the config that is not connecting and try again later."
+msgstr ""
+"Désolé, le périphérique bluetooth est en cours\n"
+"de connection. Veuillez saisir une adresse MAC valide\n"
+"ou pas d'adresse du tout et essayer à nouveau."
+
+#: proximity.py:748
+#: proximity.py:776
+#: proximity.glade.h:27
+msgid "Sca_n channels on device"
+msgstr "Recherche de périphériques"
+
+#: proximity.py:762
+msgid "Stop sca_nning"
+msgstr "Arrêt Sca_nning"
+
+#: proximity.py:765
+msgid "The scanning process tries to connect to each of the 30 possible ports. This will take some time and you should watch your bluetooth device for any actions to be taken. If possible click on accept/connect. If you are asked for a pin your device was not paired properly before, see the manual on how to fix this."
+msgstr "Le processus de recherche tente de se connecter à chacun des 30 ports. Ceci peut prendre un certain temps et vous devriez surveillez vos périphériques bluetooth. Si possible, cliquez sur accepter/connecter. Si un code pin est demandé c'est que le périphérique n'a pas été correctement couplé : veuillez consulter le manuel pour résoudre ce problème."
+
+#: proximity.py:795
 msgid "stopped."
 msgstr "stoppé."
 
-#: proximity.py:348
+#: proximity.py:809
 msgid "min: "
 msgstr "min: "
 
-#: proximity.py:349
+#: proximity.py:810
 msgid " max: "
 msgstr " max: "
 
-#: proximity.py:349
+#: proximity.py:810
 msgid " state: "
 msgstr " état: "
 
-#: proximity.py:355
+#: proximity.py:816
 msgid "Pause Mode - not connected"
 msgstr "En pause - non connecté"
 
-#: proximity.py:360
-#: proximity.py:630
+#: proximity.py:826
+#: proximity.py:846
+#: proximity.py:1193
 msgid "active"
 msgstr "actif"
 
-#: proximity.py:368
+#: proximity.py:835
+msgid "Detected Distance: "
+msgstr "Distance détectée: "
+
+#: proximity.py:835
+msgid "Current State: "
+msgstr "Etat actuel: "
+
+#: proximity.py:835
+msgid "Status: "
+msgstr "Etat: "
+
+#: proximity.py:837
 msgid ""
 "\n"
 "Simulation Mode (locking disabled)"
@@ -116,60 +257,101 @@ msgstr ""
 "\n"
 "Mode Simulation (verrouillage désactivé)"
 
-#: proximity.py:371
-msgid "Detected Distance: "
-msgstr "Distance détectée: "
+#: proximity.py:905
+#, python-format
+msgid "Could not open logfile '%s' for writing."
+msgstr "Impossible d'ouvrir le fichier '%s' en écriture."
 
-#: proximity.py:371
-msgid ""
-"\n"
-"Current State: "
-msgstr ""
-"\n"
-"Etat actuel: "
+#: proximity.py:975
+msgid "usable"
+msgstr "utilisable"
 
-#: proximity.py:371
-msgid ""
-"\n"
-"Status: "
-msgstr ""
-"\n"
-"Etat: "
+#: proximity.py:977
+msgid "closed or denied"
+msgstr "fermé ou refusé"
 
-#: proximity.py:421
-msgid "Could not open '"
-msgstr "Impossible d'ouvrir '"
-
-#: proximity.py:421
-msgid "' for writing."
-msgstr "' en écriture."
-
-#: proximity.py:462
-#: proximity.py:616
-#: proximity.py:626
-#: proximity.py:640
+#: proximity.py:1006
+#: proximity.py:1178
+#: proximity.py:1189
+#: proximity.py:1205
 msgid "gone"
 msgstr "parti"
 
-#: proximity.py:474
+#: proximity.py:1019
 msgid "Initialized..."
 msgstr "Initialisé..."
 
-#: proximity.py:591
+#: proximity.py:1131
 msgid "No connection found, trying to establish one..."
 msgstr "Aucune connexion trouvée, recherche en cours..."
 
-#: proximity.py:602
+#: proximity.py:1141
 msgid "screen is unlocked"
 msgstr "écran déverrouillé"
 
-#: proximity.py:610
+#: proximity.py:1147
+#: proximity.py:1148
+#: proximity.py:1161
+#: proximity.py:1162
+#: proximity.py:1171
+#: proximity.py:1172
+#, python-format
+msgid "A command for %s has been skipped because the former command did not finish yet."
+msgstr "Une commande pour %s n'a pas été lancée car la commande précédente n'est pas encore terminée."
+
+#: proximity.py:1147
+#: proximity.py:1148
+msgid "unlocking"
+msgstr "Déverrouillage"
+
+#: proximity.py:1155
 msgid "screen is locked"
 msgstr "écran verrouillé"
 
-#: proximity.py:621
+#: proximity.py:1161
+#: proximity.py:1162
+msgid "locking"
+msgstr "Verrouillage"
+
+#: proximity.py:1171
+#: proximity.py:1172
+msgid "proximity"
+msgstr "Proximité"
+
+#: proximity.py:1184
 msgid "running..."
 msgstr "en cours..."
+
+#: proximity.py:1245
+#, python-format
+msgid "Creating new config directory '%s'."
+msgstr "Création du nouveau répertoire '%s'."
+
+#: proximity.py:1247
+#: proximity.py:1273
+#: proximity.py:1279
+#: proximity.py:1282
+msgid "standard"
+msgstr "standard"
+
+#: proximity.py:1248
+msgid "Moved old configuration to the new config directory."
+msgstr "Ancienne configuration déplacée vers le nouveau répertoire."
+
+#: proximity.py:1267
+#: proximity.py:1282
+#, python-format
+msgid "Using config file '%s'."
+msgstr "Utilisation du fichier '%s'."
+
+#: proximity.py:1269
+#, python-format
+msgid "'%s' is not a valid config file."
+msgstr "'%s' n'est pas un fichier de config valide."
+
+#: proximity.py:1281
+msgid "Creating new configuration."
+msgstr "Création de la nouvelle configuration."
 
 #: proximity.glade.h:1
 msgid "<b>Action commands</b>"
@@ -196,116 +378,170 @@ msgid "<i><small>Please note that the device should already be paired!</small></
 msgstr "<i><small>Veuillez noter que le périphérique devrait déjà être associé !</small></i>"
 
 #: proximity.glade.h:7
+msgid "<small>Renaming the configuration will change the name of the config file on the disk.</small>"
+msgstr "<small>Renommer la configuration changera le nom du ficher de config sur disque.</small>"
+
+#: proximity.glade.h:8
+msgid "<small>The new configuration will be created as a copy of the current configuration. Please change the according values afterwards.</small>"
+msgstr "<small>La nouvelle configuration sera créée en tant que copie de l'actuelle. Veuillez effectuer ensuite vos changements.</small>"
+
+#: proximity.glade.h:9
+msgid "All detected visible Bluetooth devices in reach. Use the scan button to populate or refresh the list."
+msgstr "Tous les périphériques visibles sont à portée.Utiliser le bouton de scan pour mettre la liste à jour."
+
+#: proximity.glade.h:11
+msgid "All rfcomm channels that are usable. Use the scan channel button above to populate or refresh this list. Click on an entry to select this channel."
+msgstr "Tous les canaux rfcomm utilisables. Utiliser le bouton de scan de canaux pour mettre la liste à jour. Cliquer sur un nom pour sélectionner le canal."
+
+#: proximity.glade.h:12
 msgid "BlueProximity Preferences"
 msgstr "Préférences BlueProximity"
 
-#: proximity.glade.h:8
-#, fuzzy
+#: proximity.glade.h:13
 msgid ""
 "Command _interval:\n"
 "(sec.)"
 msgstr ""
-"Commande _interval:\n"
+"_Intervalle Commande :\n"
 "(sec.)"
 
-#: proximity.glade.h:10
+#: proximity.glade.h:15
+msgid "Create new configuration"
+msgstr "Créer une nouvelle configuration"
+
+#: proximity.glade.h:16
 msgid "D_istance:"
 msgstr "D_istance:"
 
-#: proximity.glade.h:11
+#: proximity.glade.h:17
 msgid "D_uration (sec.):"
-msgstr "D_urée (sec.):"
+msgstr "_Durée (sec.):"
 
-#: proximity.glade.h:12
+#: proximity.glade.h:18
 msgid "Distance:"
 msgstr "Distance:"
 
-#: proximity.glade.h:13
+#: proximity.glade.h:19
 msgid "Dur_ation (sec.):"
-msgstr "Dur_ée (sec.):"
+msgstr "D_urée (sec.):"
 
-#: proximity.glade.h:14
-#, fuzzy
+#: proximity.glade.h:20
 msgid "F_acility"
-msgstr "F_acility"
+msgstr "_Utilitaire"
 
-#: proximity.glade.h:15
+#: proximity.glade.h:21
 msgid "File_name"
 msgstr "Nom_Fichier"
 
-#: proximity.glade.h:16
+#: proximity.glade.h:22
 msgid "L_ocking command:"
-msgstr "Commande de V_errouillage:"
+msgstr "Commande de _Verrouillage:"
 
-#: proximity.glade.h:17
+#: proximity.glade.h:23
 msgid "MAC _Address"
 msgstr "_Adresse MAC"
 
-#: proximity.glade.h:18
+#: proximity.glade.h:24
 msgid "Pro_ximity command:"
 msgstr "Commande pro_ximité:"
 
-#: proximity.glade.h:19
+#: proximity.glade.h:25
+msgid "RFCOMM C_hannel"
+msgstr "_Canal RFCOMM"
+
+#: proximity.glade.h:26
+msgid "Rename configuration"
+msgstr "Renommer configuration"
+
+#: proximity.glade.h:29
+msgid "Scan for visible Bluetooth devices within reach. Show them in the list above."
+msgstr "Recherche les périphériques bluetooth à portée. Les affiche dans la liste ci-dessus."
+
+#: proximity.glade.h:30
+msgid "Scan the selected device (MAC Address field) for available rfcomm channels."
+msgstr "Recheche des canaux rfcomm libres pour les périphériques choisis (champ adresse MAC)"
+
+#: proximity.glade.h:31
 msgid "Select from _detected devices:"
 msgstr "Choisir parmi les périphériques _détectés:"
 
-#: proximity.glade.h:20
+#: proximity.glade.h:32
+msgid "Selected Confi_guration"
+msgstr "Confi_guration choisie"
+
+#: proximity.glade.h:34
+msgid "The MAC address of your bluetooth device (e.g. mobile phone or headset) in the format XX:XX:XX:XX:XX:XX"
+msgstr "L'adresse MAC de votre périphérique bluetooth (par ex. téléphone portable ou casque) est de la forme XX:XX:XX:XX:XX:XX"
+
+#: proximity.glade.h:36
+msgid "The filename of the file to be logged to. Please make sure this file is writable by the user that started BlueProximity."
+msgstr "Le nom du fichier auquel se connecter. Assurez-vous que ce fichier est accessible en écriture par l'utilisateur qui lance BlueProximity."
+
+#: proximity.glade.h:38
+msgid ""
+"The rfcomm channel where BlueProximity connects to your device.\n"
+"Must be an open channel, if in doubt please use the scan button."
+msgstr ""
+"Le canal rfcomm utilisé par BlueProximity pour se connecter.\n"
+"Doit être un canal libre. En cas de doute, utiliser le bouton recherche."
+
+#: proximity.glade.h:41
+msgid "Transfer the MAC address of the selected bluetooth device above into the address field below."
+msgstr "Transfère l'adresse MAC du périphérique choisi dans le champ ci-dessous."
+
+#: proximity.glade.h:42
 msgid "_Bluetooth Device"
 msgstr "Périphérique _Bluetooth"
 
-#: proximity.glade.h:21
+#: proximity.glade.h:43
 msgid "_Distance:"
 msgstr "_Distance:"
 
-#: proximity.glade.h:22
+#: proximity.glade.h:44
 msgid "_File"
 msgstr "_Fichier"
 
-#: proximity.glade.h:23
+#: proximity.glade.h:45
 msgid "_Locking"
 msgstr "_Verrouillage"
 
-#: proximity.glade.h:24
-msgid "_Proximity Details"
-msgstr "Informations _proximité"
+#: proximity.glade.h:46
+msgid "_Name of new configuration:"
+msgstr "_Nom de la nouvelle configuration."
 
-#: proximity.glade.h:25
+#: proximity.glade.h:47
+msgid "_New name of configuration:"
+msgstr "_Nouveau nom de la configuration:"
+
+#: proximity.glade.h:48
+msgid "_Proximity Details"
+msgstr "_Informations proximité"
+
+#: proximity.glade.h:49
+msgid "_Rename"
+msgstr "_Renommer"
+
+#: proximity.glade.h:50
 msgid "_Reset Min/Max"
 msgstr "_Réinitialisation Min/Max"
 
-#: proximity.glade.h:26
+#: proximity.glade.h:51
 msgid "_Scan for devices"
-msgstr "_Recherche de périphériques"
+msgstr "Recherche de _périphériques"
 
-#: proximity.glade.h:27
+#: proximity.glade.h:52
 msgid "_Syslog"
 msgstr "Journal _Système"
 
-#: proximity.glade.h:28
+#: proximity.glade.h:53
 msgid "_Unlocking command:"
 msgstr "Commande de _Déverrouillage"
 
-#: proximity.glade.h:29
+#: proximity.glade.h:54
 msgid "_Use selected device"
 msgstr "_Utiliser le périphérique sélectionné"
 
-#: proximity.glade.h:30
-msgid ""
-"gnome-screensaver-command -d\n"
-"xscreensaver-command -d"
-msgstr ""
-"gnome-screensaver-command -d\n"
-"xscreensaver-command -d"
-
-#: proximity.glade.h:32
-msgid ""
-"gnome-screensaver-command -l\n"
-"xscreensaver-command -l"
-msgstr ""
-"gnome-screensaver-command -l\n"
-"xscreensaver-command -l"
-
-#: proximity.glade.h:34
+#: proximity.glade.h:55
 msgid ""
 "gnome-screensaver-command -p\n"
 "xscreensaver-command -p"
@@ -313,33 +549,15 @@ msgstr ""
 "gnome-screensaver-command -p\n"
 "xscreensaver-command -p"
 
-#: proximity.glade.h:36
-msgid ""
-"local0\n"
-"local1\n"
-"local2\n"
-"local3\n"
-"local4\n"
-"local5\n"
-"local6\n"
-"local7\n"
-"user"
-msgstr ""
-"local0\n"
-"local1\n"
-"local2\n"
-"local3\n"
-"local4\n"
-"local5\n"
-"local6\n"
-"local7\n"
-"user"
-
-#: proximity.glade.h:45
+#: proximity.glade.h:57
 msgid "min: - max: - state: -"
 msgstr "min: - max: - état: -"
 
-#: proximity.glade.h:46
-msgid "~/blueproximity.log"
-msgstr "~/blueproximity.log"
+#: proximity.glade.h:58
+msgid ""
+"no\n"
+"entries"
+msgstr ""
+"pas\n"
+"d'entrées"
 

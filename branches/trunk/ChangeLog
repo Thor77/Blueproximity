@@ -6,6 +6,7 @@ Change log for BlueProximity
 - fixed: correct inheriting of classes from 'object' (Bug #1892724)
 - fixed: you are now told if your config files are broken (at least on the console) (Bug #1781957)
 - fixed: commands not ending will now not make blueproximity hang
+- added: french translation is back, thanks Claude
 - added: log file notice on hanging commands
 - added: support for multiple config files via *.conf files in ~/.blueproximity
 - added: new configurations can be added, deleted, renamed via gui

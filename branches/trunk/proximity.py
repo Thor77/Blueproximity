@@ -530,6 +530,7 @@ class ProximityGUI (object):
    en Lars Friedrichs <LarsFriedrichs@gmx.de>
    es César Palma <cesarpalma80@gmail.com>
    fa Ali Sattari <ali.sattari@gmail.com>
+   fr Claude <f5pbl@users.sourceforge.net>
    hu Kami <kamihir@freemail.hu>
    it e633 <e633@users.sourceforge.net>
    Prosper <prosper.nl@gmail.com>
@@ -537,7 +538,6 @@ class ProximityGUI (object):
    sv Jan Braunisch <x@r6.se>
    th Maythee Anegboonlap & pFz <null@llun.info>
 Former translators:
-   fr Claude <f5pbl@users.sourceforge.net>
    sv Alexander Jönsson <tp-sv@listor.tp-sv.se>
    sv Daniel Nylander <dnylander@users.sourceforge.net>
             """
