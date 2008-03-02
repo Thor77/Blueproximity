@@ -1,6 +1,6 @@
 #!/bin/bash
-#LANGS="de en es fa fr it ru sv th hu"
-LANGS="de en fr"
+#LANGS="de en es fa fr hu it ru sv th"
+LANGS="de en fr hu it"
 
 function create_mo() {
   mkdir -p LANG/$1/LC_MESSAGES
