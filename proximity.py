@@ -3,8 +3,8 @@
 
 # blueproximity
 SW_VERSION = '1.2.5'
-# Add security to your desktop by automatically locking and unlocking 
-# the screen when you and your phone leave/enter the desk. 
+# Add security to your desktop by automatically locking and unlocking
+# the screen when you and your phone leave/enter the desk.
 # Think of a proximity detector for your mobile phone via bluetooth.
 # requires external bluetooth util hcitool to run
 # (which makes it unix only at this time)
@@ -25,7 +25,7 @@ APP_NAME="blueproximity"
 ## This value gives us the base directory for language files and icons.
 # Set this value to './' for svn version
 # or to '/usr/share/blueproximity/' for packaged version
-dist_path = './' 
+dist_path = './'
 
 
 # system includes
@@ -72,7 +72,7 @@ lang = gettext.translation(APP_NAME, local_path, languages=langs, fallback = Tru
 """Install the language, map _() (which we marked our
 strings to translate with) to self.lang.gettext() which will
 translate them."""
-_ = lang.gettext    
+_ = lang.gettext
 
 
 # now the imports from external packages
@@ -154,7 +154,7 @@ conf_specs = [
     'log_to_file=boolean(default=False)',
     'log_filelog_filename=string(default=''' + os.getenv('HOME') + '/blueproximity.log'')'
     ]
-    
+
 
 ## The icon used at normal operation and in the info dialog.
 icon_base = 'blueproximity_base.svg'
@@ -177,13 +177,13 @@ class ProximityGUI (object):
     # @param show_window_on_start Set to True to show the config screen immediately after the start.
     # This is true if no prior config file has been detected (initial start).
     def __init__(self,configs,show_window_on_start):
-        
+
         #This is to block events from firing a config write because we initialy set a value
         self.gone_live = False
-        
+
         #Set the Glade file
-        self.gladefile = dist_path + "proximity.glade"  
-        self.wTree = gtk.glade.XML(self.gladefile) 
+        self.gladefile = dist_path + "proximity.glade"
+        self.wTree = gtk.glade.XML(self.gladefile)
 
         #Create our dictionary and connect it
         dic = { "on_btnInfo_clicked" : self.aboutPressed,
@@ -242,7 +242,7 @@ class ProximityGUI (object):
         colLabel.set_resizable(True)
         colLabel.set_sort_column_id(1)
         self.tree.append_column(colLabel)
-        
+
         #Prepare the channel/state table
         self.modelScan = gtk.ListStore(gobject.TYPE_STRING,gobject.TYPE_STRING)
         self.treeChan = self.wTree.get_widget("treeScanChannelResult")
@@ -255,7 +255,7 @@ class ProximityGUI (object):
         colLabel.set_resizable(True)
         colLabel.set_sort_column_id(1)
         self.treeChan.append_column(colLabel)
-        
+
         #Show the current settings
 	self.configs = configs
 	self.configname = configs[0][0]
@@ -264,10 +264,10 @@ class ProximityGUI (object):
         self.readSettings()
         #this is the gui timer
         self.timer = gobject.timeout_add(1000,self.updateState)
-        #fixme: this will execute the proximity command at the given interval - is now not working 
+        #fixme: this will execute the proximity command at the given interval - is now not working
         self.timer2 = gobject.timeout_add(1000*self.config['proximity_interval'],self.proximityCommand)
-        
-        
+
+
         #Only show if we started unconfigured
         if show_window_on_start:
             self.window.show()
@@ -276,7 +276,7 @@ class ProximityGUI (object):
         self.icon = gtk.StatusIcon()
         self.icon.set_tooltip(_("BlueProximity starting..."))
         self.icon.set_from_file(dist_path + icon_con)
-        
+
         #Setup the popup menu and associated callbacks
         self.popupmenu = gtk.Menu()
         menuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
@@ -296,16 +296,16 @@ class ProximityGUI (object):
 
         self.icon.connect('activate', self.showWindow)
         self.icon.connect('popup-menu', self.popupMenu, self.popupmenu)
-        
+
         self.icon.set_visible(True)
-        
+
         #now the control may fire change events
         self.gone_live = True
         #log start in all config files
 	for config in self.configs:
             config[2].logger.log_line(_('started.'))
 
-    ## Callback to just close and not destroy the rename config window 
+    ## Callback to just close and not destroy the rename config window
     def dlgRenameCancel_clicked(self,widget, data = None):
         self.windowRename.hide()
         return 1
@@ -351,7 +351,7 @@ class ProximityGUI (object):
         self.fillConfigCombo()
         self.windowRename.hide()
 
-    ## Callback to just close and not destroy the new config window 
+    ## Callback to just close and not destroy the new config window
     def dlgNewCancel_clicked(self,widget, data = None):
         self.windowNew.hide()
         return 1
@@ -542,21 +542,21 @@ Former translators:
    sv Daniel Nylander <dnylander@users.sourceforge.net>
             """
         license = _("""
-        BlueProximity is free software; you can redistribute it and/or modify it 
-        under the terms of the GNU General Public License as published by the 
-        Free Software Foundation; either version 2 of the License, or 
+        BlueProximity is free software; you can redistribute it and/or modify it
+        under the terms of the GNU General Public License as published by the
+        Free Software Foundation; either version 2 of the License, or
         (at your option) any later version.
 
-        BlueProximity is distributed in the hope that it will be useful, but 
-        WITHOUT ANY WARRANTY; without even the implied warranty of 
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+        BlueProximity is distributed in the hope that it will be useful, but
+        WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
         See the GNU General Public License for more details.
 
-        You should have received a copy of the GNU General Public License 
-        along with BlueProximity; if not, write to the 
+        You should have received a copy of the GNU General Public License
+        along with BlueProximity; if not, write to the
 
-        Free Software Foundation, Inc., 
-        59 Temple Place, Suite 330, 
+        Free Software Foundation, Inc.,
+        59 Temple Place, Suite 330,
         Boston, MA  02111-1307  USA
         """)
         about = gtk.AboutDialog()
@@ -594,14 +594,14 @@ Former translators:
     ## helper function to set a ComboBox's value to value if that exists in the Combo's list
     # The value is not changed if the new value is not member of the list.
     # @param widget a gtkComboBox object
-    # @param value the value the gtkComboBox should be set to.    
+    # @param value the value the gtkComboBox should be set to.
     def setComboValue(self, widget, value):
         model = widget.get_model()
         for row in model:
             if row[0] == value:
                 widget.set_active_iter(row.iter)
                 break
-        
+
 
     ## helper function to get a ComboBox's value
     def getComboValue(self, widget):
@@ -676,7 +676,7 @@ Former translators:
     ## Callback called by certain GUI elements if their values are changed.
     # We don't react if we are still initializing (self.gone_live==False)
     # because setting the values of the elements would already fire their change events.
-    # But in any case we kill a possibly existing connection. 
+    # But in any case we kill a possibly existing connection.
     # Changing the rfcomm channel e.g. fires this event instead of event_settings_changed.
     # @see event_settings_changed
     def event_settings_changed_reconnect(self,widget, data = None):
@@ -695,7 +695,7 @@ Former translators:
         self.wTree.get_widget("entryChannel").set_value(int(value))
         self.writeSettings()
 
-    ## Callback to just close and not destroy the main window 
+    ## Callback to just close and not destroy the main window
     def btnClose_clicked(self,widget, data = None):
         self.Close()
         return 1
@@ -711,7 +711,7 @@ Former translators:
             mac = self.model.get_value(selection_iter, 0)
             self.wTree.get_widget("entryMAC").set_text(mac)
             self.writeSettings()
-        
+
     ## Callback that is executed when the scan for devices button is clicked
     # actually it starts the scanning asynchronously to have the gui redraw nicely before hanging :-)
     def btnScan_clicked(self,widget, data = None):
@@ -722,7 +722,7 @@ Former translators:
         self.model.append(['...', _('Now scanning...')])
         self.setSensitiveConfigManagement(False)
         gobject.idle_add(self.cb_btnScan_clicked)
-        
+
     ## Asynchronous callback function to do the actual device discovery scan
     def cb_btnScan_clicked(self):
         tmpMac = self.proxi.dev_mac
@@ -739,7 +739,7 @@ Former translators:
             self.model.append([mac[0], mac[1]])
         self.window.window.set_cursor(None)
         self.setSensitiveConfigManagement(True)
-        
+
     ## Callback that is executed when the scan channels button is clicked.
     # It starts an asynchronous scan for the channels via initiating a ScanDevice object.
     # That object does the magic, updates the gui and afterwards calls the callback function btnScanChannel_done        .
@@ -768,7 +768,7 @@ Former translators:
             dialog.run()
             self.scanner = ScanDevice(mac,self.modelScan,was_paused,self.btnScanChannel_done)
         return 0
-    
+
     ## The callback that is called by the ScanDevice object that scans for a device's usable rfcomm channels.
     # It is called after all channels have been scanned.
     # @param was_paused informs this function about the pause state before the scan started.
@@ -807,10 +807,10 @@ Former translators:
             self.minDist = newVal
         if newVal < self.maxDist:
             self.maxDist = newVal
-        self.wTree.get_widget("labState").set_text(_("min: ") + 
+        self.wTree.get_widget("labState").set_text(_("min: ") +
             str(-self.minDist) + _(" max: ") + str(-self.maxDist) + _(" state: ") + self.proxi.State)
         self.wTree.get_widget("hscaleAct").set_value(-newVal)
-        
+
         #Update icon too
         if self.pauseMode:
             self.icon.set_from_file(dist_path + icon_pause)
@@ -841,7 +841,7 @@ Former translators:
             self.icon.set_from_file(dist_path + con_icons[connection_state])
             self.icon.set_tooltip(con_info + '\n' + simu)
         self.timer = gobject.timeout_add(1000,self.updateState)
-        
+
     def proximityCommand(self):
         #This is the proximity command callback called asynchronously as the updateState above
         if self.proxi.State == _('active') and not self.proxi.Simulate:
@@ -857,7 +857,7 @@ class Logger(object):
     def __init__(self):
         self.disable_syslogging()
         self.disable_filelogging()
-        
+
     ## helper function to convert a string (given by a ComboBox) to the corresponding
     # syslog module facility constant.
     # @param facility One of the 8 "localX" facilities or "user".
@@ -881,7 +881,7 @@ class Logger(object):
         self.syslog_facility = self.getFacilityFromString(facility)
         syslog.openlog('blueproximity',syslog.LOG_PID)
         self.syslogging = True
-        
+
     ## Deactivates the logging to the syslog server.
     def disable_syslogging(self):
         self.syslogging = False
@@ -890,7 +890,7 @@ class Logger(object):
     ## Activates the logging to the given file.
     # Actually tries to append to that file first, afterwards tries to write to it.
     # If both don't work it gives an error message on stdout and does not activate the logging.
-    # @param filename The complete filename where to log to        
+    # @param filename The complete filename where to log to
     def enable_filelogging(self, filename):
         self.filename = filename
         try:
@@ -926,7 +926,7 @@ class Logger(object):
                 self.flog.flush()
             except:
                 self.disable_filelogging()
-    
+
     ## Activate the logging mechanism that are requested by the given configuration.
     # @param config A ConfigObj object containing the needed settings.
     def configureFromConfig(self, config):
@@ -951,7 +951,7 @@ class ScanDevice(object):
     # @param device_mac MAC address of the bluetooth device to be scanned.
     # @param was_paused A parameter to be passed to the finishing callback function.
     # This is to automatically put the GUI in simulation mode if it has been before scanning. (dirty hack)
-    # @param callback A callback function to be called after scanning has been done. 
+    # @param callback A callback function to be called after scanning has been done.
     # It takes one parameter which is preset by the was_paused parameter.
     def __init__(self,device_mac,model,was_paused,callback):
         self.mac = device_mac
@@ -1025,7 +1025,7 @@ class Proximity (threading.Thread):
         self.timeAct = 0
         self.timeGone = 0
         self.timeProx = 0
-    
+
     ## Returns all active bluetooth devices found. This is a blocking call.
     def get_device_list(self):
         ret_tab = list()
@@ -1041,7 +1041,7 @@ class Proximity (threading.Thread):
         self.sock = None
         return 0
 
-    ## This function is NOT IN USE. It is a try to create a python only way to 
+    ## This function is NOT IN USE. It is a try to create a python only way to
     # get the rssi values for a connected device. It does not work at this time.
     def get_proximity_by_mac(self,dev_mac):
         sock = bluez.hci_open_dev(dev_id)
@@ -1233,7 +1233,7 @@ if __name__=='__main__':
     gtk.glade.bindtextdomain(APP_NAME, local_path)
     gtk.glade.textdomain(APP_NAME)
 
-    
+
     # react on ^C
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     # read config if any
@@ -1281,20 +1281,19 @@ if __name__=='__main__':
         # we can't log these messages since logging is not yet configured, so we just print it to stdout
 	print(_("Creating new configuration."))
 	print(_("Using config file '%s'.") % _('standard'))
-    
+
     # now start the proximity detection for each configuration
     for config in configs:
         p = Proximity(config[1])
         p.start()
         config.append(p)
-    
+
     configs.sort()
     # the idea behind 'configs' is an array containing the name, the configobj and the proximity object
     pGui = ProximityGUI(configs,new_config)
 
-    # make GTK threadable 
+    # make GTK threadable
     gtk.gdk.threads_init()
 
     # aaaaand action!
     gtk.main()
-    
