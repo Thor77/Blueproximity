@@ -1,14 +1,15 @@
-
-
-# This class represents the main configuration window and
-# updates the config file after changes made are saved
 class ProximityGUI (object):
+    '''
+    Main configuration window
+    '''
 
-    # Constructor sets up the GUI and reads the current config
-    # @param configs A list of lists of name, ConfigObj object, proximity object
-    # @param show_window_on_start Set to True to show the config screen immediately after the start.
-    # This is true if no prior config file has been detected (initial start).
     def __init__(self, configs, show_window_on_start):
+        '''
+        Set up GUI and read current config
+
+        @param configs A list of lists of name, ConfigObj object, proximity object
+        @param show_window_on_start Set to True to show the config screen immediately after the start
+        '''
 
         # This is to block events from firing a config write because we initialy set a value
         self.gone_live = False
@@ -138,13 +139,17 @@ class ProximityGUI (object):
         for config in self.configs:
             config[2].logger.log_line(_('started.'))
 
-    # Callback to just close and not destroy the rename config window
     def dlgRenameCancel_clicked(self, widget, data=None):
+        '''
+        Callback to just close and not destroy the rename config window
+        '''
         self.windowRename.hide()
         return 1
 
-    # Callback to rename a config file.
     def dlgRenameDo_clicked(self, widget, data=None):
+        '''
+        Callback to rename a config file.
+        '''
         newconfig = self.wTree.get_widget("entryRenameName").get_text()
         # check if something has been entered
         if (newconfig == ''):
@@ -184,13 +189,17 @@ class ProximityGUI (object):
         self.fillConfigCombo()
         self.windowRename.hide()
 
-    # Callback to just close and not destroy the new config window
     def dlgNewCancel_clicked(self, widget, data=None):
+        '''
+        Callback to just close and not destroy the new config window
+        '''
         self.windowNew.hide()
         return 1
 
-    # Callback to create a config file.
     def dlgNewDo_clicked(self, widget, data=None):
+        '''
+        Callback to create a config file.
+        '''
         newconfig = self.wTree.get_widget("entryNewName").get_text()
         # check if something has been entered
         if (newconfig == ''):
@@ -230,11 +239,13 @@ class ProximityGUI (object):
         # close the new config dialog
         self.windowNew.hide()
 
-    # Helper function to enable or disable the change or creation of the config files
-    # This is called during non blockable functions that rely on the config not
-    # being changed over the process like scanning for devices or channels
-    # @param activate set to True to activate buttons, False to disable
     def setSensitiveConfigManagement(self, activate):
+        '''
+        Helper function to enable or disable the change or creation of the config files
+        This is called during non blockable functions that rely on the config not
+        being changed over the process like scanning for devices or channels
+        @param activate set to True to activate buttons, False to disable
+        '''
         # get the widget
         combo = self.wTree.get_widget("comboConfig")
         combo.set_sensitive(activate)
@@ -245,8 +256,10 @@ class ProximityGUI (object):
         button = self.wTree.get_widget("btnDelete")
         button.set_sensitive(activate)
 
-    # Helper function to populate the list of configurations.
     def fillConfigCombo(self):
+        '''
+        Helper function to populate the list of configurations.
+        '''
         # get the widget
         combo = self.wTree.get_widget("comboConfig")
         model = combo.get_model()
@@ -266,8 +279,10 @@ class ProximityGUI (object):
         if (activePos != -1):
             combo.set_active(activePos)
 
-    # Callback to select a different config file for editing.
     def comboConfig_changed(self, widget, data=None):
+        '''
+        Callback to select a different config file for editing.
+        '''
         # get the widget
         combo = self.wTree.get_widget("comboConfig")
         model = combo.get_model()
@@ -286,14 +301,18 @@ class ProximityGUI (object):
                 self.proxi = newconf[2]
                 self.readSettings()
 
-    # Callback to create a new config file for editing.
-    def btnNew_clicked(self, widget, data = None):
+    def btnNew_clicked(self, widget, data=None):
+        '''
+        Callback to create a new config file for editing.
+        '''
         # reset the entry widget
         self.wTree.get_widget("entryNewName").set_text('')
         self.windowNew.show()
 
-    # Callback to delete a config file.
     def btnDelete_clicked(self, widget, data=None):
+        '''
+        Callback to delete a config file.
+        '''
         # never delete the last config
         if (len(self.configs) == 1):
             dlg = gtk.MessageDialog(None, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, _("The last configuration file cannot be deleted."))
@@ -326,22 +345,28 @@ class ProximityGUI (object):
                 # should this be a GUI message?
                 print(_("The configfile '%s' could not be deleted.") % configfile)
 
-    # Callback to rename a config file.
     def btnRename_clicked(self, widget, data=None):
+        '''
+        Callback to rename a config file.
+        '''
         # set the entry widget
         self.wTree.get_widget("entryRenameName").set_text(self.configname)
         self.windowRename.show()
 
-    # Callback to show the pop-up menu if icon is right-clicked.
     def popupMenu(self, widget, button, time, data=None):
+        '''
+        Callback to show the pop-up menu if icon is right-clicked.
+        '''
         if button == 3:
             if data:
                 data.show_all()
                 data.popup(None, None, None, 3, time)
         pass
 
-    # Callback to show and hide the config dialog.
     def showWindow(self, widget, data=None):
+        '''
+        Callback to show and hide the config dialog.
+        '''
         if self.window.get_property("visible"):
             self.Close()
         else:
@@ -349,8 +374,10 @@ class ProximityGUI (object):
             for config in self.configs:
                 config[2].Simulate = True
 
-    # Callback to create and show the info dialog.
     def aboutPressed(self, widget, data=None):
+        '''
+        Callback to create and show the info dialog.
+        '''
         logo = gtk.gdk.pixbuf_new_from_file(dist_path + icon_base)
         description = _("Leave it - it's locked, come back - it's back too...")
         copyright = """Copyright (c) 2007,2008 Lars Friedrichs"""
@@ -406,9 +433,11 @@ Former translators:
         about.connect('response', lambda widget, response: widget.destroy())
         about.show()
 
-    # Callback to activate and deactivate pause mode.
-    # This is actually done by removing the proximity object's mac address.
     def pausePressed(self, widget, data=None):
+        '''
+        Callback to activate and deactivate pause mode.
+        This is actually done by removing the proximity object's mac address.
+        '''
         if self.pauseMode:
             self.pauseMode = False
             for config in configs:
@@ -423,26 +452,31 @@ Former translators:
                 config[2].Simulate = True
                 config[2].kill_connection()
 
-
-    # helper function to set a ComboBox's value to value if that exists in the Combo's list
-    # The value is not changed if the new value is not member of the list.
-    # @param widget a gtkComboBox object
-    # @param value the value the gtkComboBox should be set to.
     def setComboValue(self, widget, value):
+        '''
+        helper function to set a ComboBox's value to value if that exists in the Combo's list
+        The value is not changed if the new value is not member of the list.
+        @param widget a gtkComboBox object
+        @param value the value the gtkComboBox should be set to.
+        '''
         model = widget.get_model()
         for row in model:
             if row[0] == value:
                 widget.set_active_iter(row.iter)
                 break
 
-    # helper function to get a ComboBox's value
     def getComboValue(self, widget):
+        '''
+        helper function to get a ComboBox's value
+        '''
         model = widget.get_model()
         iter = widget.get_active_iter()
         return model.get_value(iter, 0)
 
-    # Reads the config settings and sets all GUI components accordingly.
     def readSettings(self):
+        '''
+        Reads the config settings and sets all GUI components accordingly.
+        '''
         # Updates the controls to show the actual configuration of the running proximity
         was_live = self.gone_live
         self.gone_live = False
@@ -462,8 +496,10 @@ Former translators:
         self.wTree.get_widget("entryFile").set_text(self.config['log_filelog_filename'])
         self.gone_live = was_live
 
-    # Reads the current settings from the GUI and stores them in the configobj object.
     def writeSettings(self):
+        '''
+        Reads the current settings from the GUI and stores them in the configobj object.
+        '''
         # Updates the running proximity and the config file with the new settings from the controls
         was_live = self.gone_live
         self.gone_live = False
@@ -491,35 +527,43 @@ Former translators:
         self.config.write()
         self.gone_live = was_live
 
-    # Callback for resetting the values for the min/max viewer.
     def btnResetMinMax_clicked(self, widget, data=None):
+        '''
+        Callback for resetting the values for the min/max viewer.
+        '''
         self.minDist = -255
         self.maxDist = 0
 
-    # Callback called by almost all GUI elements if their values are changed.
-    # We don't react if we are still initializing (self.gone_live==False)
-    # because setting the values of the elements would already fire their change events.
-    # @see gone_live
     def event_settings_changed(self, widget, data=None):
+        '''
+        Callback called by almost all GUI elements if their values are changed.
+        We don't react if we are still initializing (self.gone_live==False)
+        because setting the values of the elements would already fire their change events.
+        @see gone_live
+        '''
         if self.gone_live:
             self.writeSettings()
         pass
 
-    # Callback called by certain GUI elements if their values are changed.
-    # We don't react if we are still initializing (self.gone_live==False)
-    # because setting the values of the elements would already fire their change events.
-    # But in any case we kill a possibly existing connection.
-    # Changing the rfcomm channel e.g. fires this event instead of event_settings_changed.
-    # @see event_settings_changed
     def event_settings_changed_reconnect(self, widget, data=None):
+        '''
+        Callback called by certain GUI elements if their values are changed.
+        We don't react if we are still initializing (self.gone_live==False)
+        because setting the values of the elements would already fire their change events.
+        But in any case we kill a possibly existing connection.
+        Changing the rfcomm channel e.g. fires this event instead of event_settings_changed.
+        @see event_settings_changed
+        '''
         self.proxi.kill_connection()
         if self.gone_live:
             self.writeSettings()
         pass
 
-    # Callback called when one clicks into the channel scan results.
-    # It sets the 'selected channel' field to the selected channel
     def event_scanChannelResult_changed(self, widget, data=None):
+        '''
+        Callback called when one clicks into the channel scan results.
+        It sets the 'selected channel' field to the selected channel
+        '''
         # Put selected channel in channel entry field
         selection = self.wTree.get_widget("treeScanChannelResult").get_selection()
         (model, iter) = selection.get_selected()
@@ -527,14 +571,18 @@ Former translators:
         self.wTree.get_widget("entryChannel").set_value(int(value))
         self.writeSettings()
 
-    # Callback to just close and not destroy the main window
     def btnClose_clicked(self, widget, data=None):
+        '''
+        Callback to just close and not destroy the main window
+        '''
         self.Close()
         return 1
 
-    # Callback called when one clicks on the 'use selected address' button
-    # it copies the MAC address of the selected device into the mac address field.
     def btnSelect_clicked(self, widget, data=None):
+        '''
+        Callback called when one clicks on the 'use selected address' button
+        it copies the MAC address of the selected device into the mac address field.
+        '''
         # Takes the selected entry in the mac/name table and enters its mac in the MAC field
         selection = self.tree.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
@@ -544,9 +592,11 @@ Former translators:
             self.wTree.get_widget("entryMAC").set_text(mac)
             self.writeSettings()
 
-    # Callback that is executed when the scan for devices button is clicked
-    # actually it starts the scanning asynchronously to have the gui redraw nicely before hanging :-)
     def btnScan_clicked(self, widget, data=None):
+        '''
+        Callback that is executed when the scan for devices button is clicked
+        actually it starts the scanning asynchronously to have the gui redraw nicely before hanging :-)
+        '''
         # scan the area for bluetooth devices and show the results
         watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
         self.window.window.set_cursor(watch)
@@ -555,8 +605,10 @@ Former translators:
         self.setSensitiveConfigManagement(False)
         gobject.idle_add(self.cb_btnScan_clicked)
 
-    # Asynchronous callback function to do the actual device discovery scan
     def cb_btnScan_clicked(self):
+        '''
+        Asynchronous callback function to do the actual device discovery scan
+        '''
         tmpMac = self.proxi.dev_mac
         self.proxi.dev_mac = ''
         self.proxi.kill_connection()
@@ -572,10 +624,12 @@ Former translators:
         self.window.window.set_cursor(None)
         self.setSensitiveConfigManagement(True)
 
-    # Callback that is executed when the scan channels button is clicked.
-    # It starts an asynchronous scan for the channels via initiating a ScanDevice object.
-    # That object does the magic, updates the gui and afterwards calls the callback function btnScanChannel_done        .
     def btnScanChannel_clicked(self, widget, data=None):
+        '''
+        Callback that is executed when the scan channels button is clicked.
+        It starts an asynchronous scan for the channels via initiating a ScanDevice object.
+        That object does the magic, updates the gui and afterwards calls the callback function btnScanChannel_done.
+        '''
         # scan the selected device for possibly usable channels
         if self.scanningChannels:
             self.wTree.get_widget("labelBtnScanChannel").set_label(_("Sca_n channels on device"))
@@ -601,11 +655,13 @@ Former translators:
             self.scanner = ScanDevice(mac, self.modelScan, was_paused, self.btnScanChannel_done)
         return 0
 
-    # The callback that is called by the ScanDevice object that scans for a device's usable rfcomm channels.
-    # It is called after all channels have been scanned.
-    # @param was_paused informs this function about the pause state before the scan started.
-    # That state will be reconstructed by the function.
     def btnScanChannel_done(self, was_paused):
+        '''
+        The callback that is called by the ScanDevice object that scans for a device's usable rfcomm channels.
+        It is called after all channels have been scanned.
+        @param was_paused informs this function about the pause state before the scan started.
+        That state will be reconstructed by the function.
+        '''
         self.wTree.get_widget("labelBtnScanChannel").set_label(_("Sca_n channels on device"))
         self.scanningChannels = False
         self.setSensitiveConfigManagement(True)
@@ -629,9 +685,11 @@ Former translators:
             time.sleep(2)
             gtk.main_quit()
 
-    # Updates the GUI (values, icon, tooltip) with the latest values
-    # is always called via gobject.timeout_add call to run asynchronously without a seperate thread.
     def updateState(self):
+        '''
+        Updates the GUI (values, icon, tooltip) with the latest values
+        is always called via gobject.timeout_add call to run asynchronously without a seperate thread.
+        '''
         # update the display with newest measurement values (once per second)
         newVal = int(self.proxi.Dist)  # Values are negative!
         if newVal > self.minDist:
