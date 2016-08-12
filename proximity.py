@@ -1,33 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# blueproximity
-SW_VERSION = '1.2.5'
-# Add security to your desktop by automatically locking and unlocking
-# the screen when you and your phone leave/enter the desk.
-# Think of a proximity detector for your mobile phone via bluetooth.
-# requires external bluetooth util hcitool to run
-# (which makes it unix only at this time)
-# Needed python extensions:
-#  ConfigObj (python-configobj)
-#  PyGTK (python-gtk2, python-glade2)
-#  Bluetooth (python-bluez)
-
-# copyright by Lars Friedrichs <larsfriedrichs@gmx.de>
-# this source is licensed under the GPL.
-# I'm a big fan of talkback about how it performs!
-# I'm also open to feature requests and notes on programming issues, I am no python master at all...
-# ToDo List can be found on sourceforge
-# follow http://blueproximity.sourceforge.net
-
-APP_NAME="blueproximity"
-
-## This value gives us the base directory for language files and icons.
-# Set this value to './' for svn version
-# or to '/usr/share/blueproximity/' for packaged version
-dist_path = './'
-
-
 # system includes
 import os
 import sys
@@ -38,8 +11,38 @@ import syslog
 import locale
 
 
-#Translation stuff
+# Translation stuff
 import gettext
+
+# blueproximity
+SW_VERSION = '1.2.5'
+'''
+Add security to your desktop by automatically locking and unlocking
+the screen when you and your phone leave/enter the desk.
+Think of a proximity detector for your mobile phone via bluetooth.
+requires external bluetooth util hcitool to run
+(which makes it unix only at this time)
+Needed python extensions:
+    ConfigObj (python-configobj)
+    PyGTK (python-gtk2, python-glade2)
+    Bluetooth (python-bluez)
+
+Copyright by Lars Friedrichs <larsfriedrichs@gmx.de>
+this source is licensed under the GPL.
+I'm a big fan of talkback about how it performs!
+I'm also open to feature requests and notes on programming issues,
+I am no python master at all...
+'''
+
+APP_NAME="blueproximity"
+
+## This value gives us the base directory for language files and icons.
+# Set this value to './' for svn version
+# or to '/usr/share/blueproximity/' for packaged version
+dist_path = './'
+
+
+#
 
 #Get the local directory since we are not installing anything
 local_path = dist_path + 'LANG/'
