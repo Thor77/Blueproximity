@@ -1,6 +1,8 @@
 Blueproximity
 =============
 
+[TODOs until reaching usable state](https://github.com/Thor77/Blueproximity/milestone/1)
+
 This software helps you add a little more security to your
 desktop. It does so by detecting one of your bluetooth devices,
 most likely your mobile phone, and keeping track of its distance.
