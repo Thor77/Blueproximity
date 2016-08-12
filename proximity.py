@@ -894,12 +894,12 @@ class Logger(object):
         self.filename = filename
         try:
             # let's append
-            self.flog = file(filename, 'a')
+            self.flog = open(filename, 'a')
             self.filelogging = True
         except:
             try:
                 # did not work, then try to create file (is this really needed or does python know another attribute to file()?
-                self.flog = file(filename, 'w')
+                self.flog = open(filename, 'w')
                 self.filelogging = True
             except:
                 print(_("Could not open logfile '%s' for writing." % filename))
