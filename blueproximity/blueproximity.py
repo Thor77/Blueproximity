@@ -71,27 +71,6 @@ except:
     sys.exit(1)
 
 
-# Setup config file specs and defaults
-# This is the ConfigObj's syntax
-conf_specs = [
-    'device_mac=string(max=17,default="")',
-    'device_channel=integer(1,30,default=7)',
-    'lock_distance=integer(0,127,default=7)',
-    'lock_duration=integer(0,120,default=6)',
-    'unlock_distance=integer(0,127,default=4)',
-    'unlock_duration=integer(0,120,default=1)',
-    'lock_command=string(default=''gnome-screensaver-command -l'')',
-    'unlock_command=string(default=''gnome-screensaver-command -d'')',
-    'proximity_command=string(default=''gnome-screensaver-command -p'')',
-    'proximity_interval=integer(5,600,default=60)',
-    'buffer_size=integer(1,255,default=1)',
-    'log_to_syslog=boolean(default=True)',
-    'log_syslog_facility=string(default=''local7'')',
-    'log_to_file=boolean(default=False)',
-    'log_filelog_filename=string(default=''' + os.getenv('HOME') + '/blueproximity.log'')'
-]
-
-
 # The icon used at normal operation and in the info dialog.
 icon_base = 'blueproximity_base.svg'
 # The icon used at distances greater than the unlock distance.
