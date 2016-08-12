@@ -79,19 +79,19 @@ _ = lang.gettext
 try:
     import gobject
 except:
-    print _("The program cannot import the module gobject.")
-    print _("Please make sure the GObject bindings for python are installed.")
-    print _("e.g. with Ubuntu Linux, type")
-    print _(" sudo apt-get install python-gobject")
+    print(_("The program cannot import the module gobject."))
+    print(_("Please make sure the GObject bindings for python are installed."))
+    print(_("e.g. with Ubuntu Linux, type"))
+    print(_(" sudo apt-get install python-gobject"))
     sys.exit(1)
 try:
     from configobj import ConfigObj
     from validate import Validator
 except:
-    print _("The program cannot import the module ConfigObj or Validator.")
-    print _("Please make sure the ConfigObject package for python is installed.")
-    print _("e.g. with Ubuntu Linux, type")
-    print _(" sudo apt-get install python-configobj")
+    print(_("The program cannot import the module ConfigObj or Validator."))
+    print(_("Please make sure the ConfigObject package for python is installed."))
+    print(_("e.g. with Ubuntu Linux, type"))
+    print(_(" sudo apt-get install python-configobj"))
     sys.exit(1)
 IMPORT_BT = 0
 try:
@@ -110,28 +110,28 @@ try:
 except:
     pass
 if IMPORT_BT != 2:
-    print _("The program cannot import the module bluetooth.")
-    print _("Please make sure the bluetooth bindings for python as well as bluez are installed.")
-    print _("e.g. with Ubuntu Linux, type")
-    print _(" sudo apt-get install python-bluez")
+    print(_("The program cannot import the module bluetooth."))
+    print(_("Please make sure the bluetooth bindings for python as well as bluez are installed."))
+    print(_("e.g. with Ubuntu Linux, type"))
+    print(_(" sudo apt-get install python-bluez"))
     sys.exit(1)
 try:
     import pygtk
     pygtk.require("2.0")
     import gtk
 except:
-    print _("The program cannot import the module pygtk.")
-    print _("Please make sure the GTK2 bindings for python are installed.")
-    print _("e.g. with Ubuntu Linux, type")
-    print _(" sudo apt-get install python-gtk2")
+    print(_("The program cannot import the module pygtk."))
+    print(_("Please make sure the GTK2 bindings for python are installed."))
+    print(_("e.g. with Ubuntu Linux, type"))
+    print(_(" sudo apt-get install python-gtk2"))
     sys.exit(1)
 try:
     import gtk.glade
 except:
-    print _("The program cannot import the module glade.")
-    print _("Please make sure the Glade2 bindings for python are installed.")
-    print _("e.g. with Ubuntu Linux, type")
-    print _(" sudo apt-get install python-glade2")
+    print(_("The program cannot import the module glade."))
+    print(_("Please make sure the Glade2 bindings for python are installed."))
+    print(_("e.g. with Ubuntu Linux, type"))
+    print(_(" sudo apt-get install python-glade2"))
     sys.exit(1)
 
 
@@ -343,7 +343,7 @@ class ProximityGUI (object):
         try:
             os.remove(oldfile)
         except:
-            print _("The configfile '%s' could not be deleted.") % oldfile
+            print(_("The configfile '%s' could not be deleted.") % oldfile)
         # change the gui name
         self.configname = newconfig
         # update the configs array
@@ -492,7 +492,7 @@ class ProximityGUI (object):
                 os.remove(configfile)
             except:
                 # should this be a GUI message?
-                print _("The configfile '%s' could not be deleted.") % configfile
+                print(_("The configfile '%s' could not be deleted.") % configfile)
 
     # Callback to rename a config file.
     def btnRename_clicked(self, widget, data=None):
@@ -521,11 +521,11 @@ class ProximityGUI (object):
     def aboutPressed(self, widget, data=None):
         logo = gtk.gdk.pixbuf_new_from_file(dist_path + icon_base)
         description = _("Leave it - it's locked, come back - it's back too...")
-        copyright = u"""Copyright (c) 2007,2008 Lars Friedrichs"""
+        copyright = """Copyright (c) 2007,2008 Lars Friedrichs"""
         people = [
-            u"Lars Friedrichs <LarsFriedrichs@gmx.de>",
-            u"Tobias Jakobs",
-            u"Zsolt Mazolt"]
+            "Lars Friedrichs <LarsFriedrichs@gmx.de>",
+            "Tobias Jakobs",
+            "Zsolt Mazolt"]
         translators = """Translators:
    de Lars Friedrichs <LarsFriedrichs@gmx.de>
    en Lars Friedrichs <LarsFriedrichs@gmx.de>
@@ -902,7 +902,7 @@ class Logger(object):
                 self.flog = file(filename, 'w')
                 self.filelogging = True
             except:
-                print _("Could not open logfile '%s' for writing." % filename)
+                print(_("Could not open logfile '%s' for writing." % filename))
                 self.disable_filelogging
 
     # Deactivates logging to a file.
@@ -1075,17 +1075,17 @@ class Proximity (threading.Thread):
                     addr = bluez.ba2str(pkt[1 + 6 * i:1 + 6 * i + 6])
                     rssi = struct.unpack("b", pkt[1+13*nrsp+i])[0]
                     results.append((addr, rssi))
-                    print "[%s] RSSI: [%d]" % (addr, rssi)
+                    print("[%s] RSSI: [%d]" % (addr, rssi))
             elif event == bluez.EVT_INQUIRY_COMPLETE:
                 done = True
             elif event == bluez.EVT_CMD_STATUS:
                 status, ncmd, opcode = struct.unpack("BBH", pkt[3:7])
                 if status != 0:
-                    print "uh oh..."
+                    print("uh oh...")
                     printpacket(pkt[3:7])
                     done = True
             else:
-                print "unrecognized packet type 0x%02x" % ptype
+                print("unrecognized packet type 0x%02x" % ptype)
 
         # restore old filter
         sock.setsockopt(bluez.SOL_HCI, bluez.HCI_FILTER, old_filter)
@@ -1240,10 +1240,10 @@ if __name__ == '__main__':
     try:
         # check if config directory exists
         os.mkdir(conf_dir)
-        print(_("Creating new config directory '%s'.") % conf_dir)
+        print((_("Creating new config directory '%s'.") % conf_dir))
         # we should now look for an old config file and try to move it to a better place...
         os.rename(os.path.join(os.getenv('HOME'), '.blueproximityrc'), os.path.join(conf_dir, _("standard") + ".conf"))
-        print(_("Moved old configuration to the new config directory."))
+        print((_("Moved old configuration to the new config directory.")))
     except:
         # we can't create it because it is already there...
         pass
@@ -1262,9 +1262,9 @@ if __name__ == '__main__':
                 # if everything worked add this config as functioning
                 configs.append([filename[:-5], config])
                 new_config = False
-                print(_("Using config file '%s'.") % filename)
+                print((_("Using config file '%s'.") % filename))
             except:
-                print(_("'%s' is not a valid config file.") % filename)
+                print((_("'%s' is not a valid config file.") % filename))
 
     # no previous configuration could be found so let's create a new one
     if new_config:
@@ -1276,8 +1276,8 @@ if __name__ == '__main__':
         config.write()
         configs.append([_('standard'), config])
         # we can't log these messages since logging is not yet configured, so we just print it to stdout
-    print(_("Creating new configuration."))
-    print(_("Using config file '%s'.") % _('standard'))
+    print((_("Creating new configuration.")))
+    print((_("Using config file '%s'.") % _('standard')))
 
     # now start the proximity detection for each configuration
     for config in configs:
