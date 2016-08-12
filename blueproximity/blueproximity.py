@@ -7,11 +7,6 @@ import sys
 import time
 import signal
 import syslog
-import locale
-
-
-# Translation stuff
-import gettext
 
 # blueproximity
 SW_VERSION = '1.2.5'
@@ -39,23 +34,6 @@ APP_NAME = "blueproximity"
 # Set this value to './' for svn version
 # or to '/usr/share/blueproximity/' for packaged version
 dist_path = './'
-
-# Get the local directory since we are not installing anything
-local_path = dist_path + 'LANG/'
-
-# Collect available languages
-available_languages = [locale.getdefaultlocale()[0]]  # system locale
-available_languages += os.environ.get('LANGUAGE', '').split(':')  # environment
-available_languages += ["en"]  # default language
-
-gettext.bindtextdomain(APP_NAME, local_path)
-gettext.textdomain(APP_NAME)
-# Get the language to use
-gettext_language = gettext.translation(
-    APP_NAME, local_path, languages=available_languages, fallback=True
-)
-# create _-shortcut for translations
-_ = gettext_language.gettext
 
 
 # now the imports from external packages
