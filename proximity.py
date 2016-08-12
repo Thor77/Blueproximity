@@ -43,36 +43,20 @@ dist_path = './'
 
 # Get the local directory since we are not installing anything
 local_path = dist_path + 'LANG/'
-# Init the list of languages to support
-langs = []
-# Check the default locale
-lc, encoding = locale.getdefaultlocale()
-if lc:
-    # If we have a default, it's the first in the list
-    langs = [lc]
-    # Now lets get all of the supported languages on the system
-language = os.environ.get('LANGUAGE', None)
-if language:
-    """langage comes back something like en_CA:en_US:en_GB:en
-    on linuxy systems, on Win32 it's nothing, so we need to
-    split it up into a list"""
-    langs += language.split(":")
-"""Now add on to the back of the list the translations that we
-know that we have, our defaults"""
-langs += ["en"]
 
-"""Now langs is a list of all of the languages that we are going
-to try to use.  First we check the default, then what the system
-told us, and finally the 'known' list"""
+# Collect available languages
+available_languages = [locale.getdefaultlocale()[0]]  # system locale
+available_languages += os.environ.get('LANGUAGE', '').split(':')  # environment
+available_languages += ["en"]  # default language
 
 gettext.bindtextdomain(APP_NAME, local_path)
 gettext.textdomain(APP_NAME)
 # Get the language to use
-lang = gettext.translation(APP_NAME, local_path, languages=langs, fallback=True)
-"""Install the language, map _() (which we marked our
-strings to translate with) to self.lang.gettext() which will
-translate them."""
-_ = lang.gettext
+gettext_language = gettext.translation(
+    APP_NAME, local_path, languages=available_languages, fallback=True
+)
+# create _-shortcut for translations
+_ = gettext_language.gettext
 
 
 # now the imports from external packages
