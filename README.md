@@ -26,14 +26,14 @@ Please read the whole manual - it's short enough, hopefully easy
 understandable and hey - it even got some pretty pictures in there
 too :-)
 
-Here's a list on contributors to the source:
- - Tobias Jakobs (GUI optimizations)
- - Zsolt Mazolt (GUI and KDE stuff)
+## Contributors
+* Tobias Jakobs (GUI optimizations)
+* Zsolt Mazolt (GUI and KDE stuff)
 
-Interesting commands:
- * Un-/Locking gnome-screenserver
-    gnome-screensaver-command -l
-    gnome-screensaver-command -d
- * Telling GAIM your status
-    gaim-remote "irc:setstatus?status=away&message=BlueProximity thinks I am away"
-    gaim-remote "irc:setstatus?status=available"
+## Interesting commands
+* Un-/Locking gnome-screenserver
+    * `gnome-screensaver-command -l`
+    * `gnome-screensaver-command -d`
+* Telling GAIM your status
+  * `gaim-remote "irc:setstatus?status=away&message=BlueProximity thinks I am away"`
+  * `gaim-remote "irc:setstatus?status=available"`
