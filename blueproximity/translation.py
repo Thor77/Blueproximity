@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import gettext
 from locale import getdefaultlocale
 from os import environ

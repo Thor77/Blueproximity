@@ -1,3 +1,6 @@
+# coding: utf-8
+
+
 # ScanDevice is a helper class used for scanning for open rfcomm channels
 # on a given device. It uses asynchronous calls via gobject.timeout_add to
 # not block the main process. It updates a given model after every scanned port

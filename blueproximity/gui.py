@@ -1,3 +1,6 @@
+# coding: utf-8
+
+
 class ProximityGUI (object):
     '''
     Main configuration window

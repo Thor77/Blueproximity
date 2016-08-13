@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import signal
 
 # Setup config file specs and defaults
