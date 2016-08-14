@@ -3,6 +3,7 @@
 from threading import Thread
 
 import bluetooth
+from blueproximity.translation import _
 
 
 class Proximity (Thread):
