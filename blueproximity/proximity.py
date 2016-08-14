@@ -5,15 +5,21 @@ from threading import Thread
 import bluetooth
 
 
-# This class does 'all the magic' like regular device detection and decision making
-# whether a device is known as present or away. Here is where all the bluetooth specific
-# part takes place. It is build to be run a a seperate thread and would run perfectly without any GUI.
-# Please note that the present-command is issued by the GUI whereas the locking and unlocking
-# is called by this class. This is inconsitent and to be changed in a future release.
 class Proximity (Thread):
-    # Constructor to setup our local variables and initialize threading.
-    # @param config a ConfigObj object that stores all our settings
+    '''
+    Does 'all the magic' like regular device detection and decision making
+    whether a device is known as present or away.
+    Here is where all the bluetooth specific part takes place.
+    It is build to be run a a seperate thread
+    and would run perfectly without any GUI.
+    Please note that the present-command is issued by the GUI
+    whereas the locking and unlocking is called by this class.
+    This is inconsitent and to be changed in a future release.
+    '''
     def __init__(self, config):
+        '''
+        :param config: ConfigObj that stores all our settings
+        '''
         Thread.__init__(self, name="WorkerThread")
         self.config = config
         self.Dist = -255
@@ -39,24 +45,31 @@ class Proximity (Thread):
         self.timeGone = 0
         self.timeProx = 0
 
-    # Returns all active bluetooth devices found. This is a blocking call.
     def get_device_list(self):
+        '''
+        Return all active bluetooth devices found. (blocking)
+        '''
         ret_tab = list()
         nearby_devices = bluetooth.discover_devices()
         for bdaddr in nearby_devices:
             ret_tab.append([str(bdaddr), str(bluetooth.lookup_name(bdaddr))])
         return ret_tab
 
-    # Kills the rssi detection connection.
     def kill_connection(self):
+        '''
+        Kill the rssi detection connection
+        '''
         if self.sock:
             self.sock.close()
         self.sock = None
         return 0
 
-    # This function is NOT IN USE. It is a try to create a python only way to
-    # get the rssi values for a connected device. It does not work at this time.
     def get_proximity_by_mac(self, dev_mac):
+        '''
+        Get rssi values for a connected device
+
+        Currently not in use and doesn't work
+        '''
         sock = bluez.hci_open_dev(dev_id)
         old_filter = sock.getsockopt(bluez.SOL_HCI, bluez.HCI_FILTER, 14)
 
@@ -105,10 +118,12 @@ class Proximity (Thread):
         sock.close()
         return results
 
-    # Returns the rssi value of a connection to the given mac address.
-    # @param dev_mac mac address of the device to check.
-    # This should also be removed but I still have to find a way to read the rssi value from python
     def get_proximity_once(self, dev_mac):
+        '''
+        Return the rssi value of a connection to the given mac address
+
+        :param dev_mac: mac address of the device to check
+        '''
         ret_val = os.popen("hcitool rssi " + dev_mac + " 2>/dev/null").readlines()
         if ret_val == []:
             ret_val = -255
@@ -116,12 +131,13 @@ class Proximity (Thread):
             ret_val = ret_val[0].split(':')[1].strip(' ')
         return int(ret_val)
 
-    # Fire up an rfcomm connection to a certain device on the given channel.
-    # Don't forget to set up your phone not to ask for a connection.
-    # (at least for this computer.)
-    # @param dev_mac mac address of the device to connect to.
-    # @param dev_channel rfcomm channel we want to connect to.
     def get_connection(self, dev_mac, dev_channel):
+        '''
+        Fire up an rfcomm connection to a certain device on the given channel
+
+        :param dev_mac: mac address of the device to connect to
+        :param dev_channel: rfcomm channel we want to connect to
+        '''
         try:
             self.procid = 1
             _sock = bluez.btsocket()
@@ -183,9 +199,11 @@ class Proximity (Thread):
             self.logger.log_line(_('A command for %s has been skipped because the former command did not finish yet.') % _('proximity'))
             self.ErrorMsg = _('A command for %s has been skipped because the former command did not finish yet.') % _('proximity')
 
-    # This is the main loop of the proximity detection engine.
-    # It checks the rssi value against limits and invokes all commands.
     def run(self):
+        '''
+        Main loop for proximity detection.
+        It checks the rssi value against limits and invokes all commands.
+        '''
         duration_count = 0
         state = _("gone")
         proxiCmdCounter = 0
