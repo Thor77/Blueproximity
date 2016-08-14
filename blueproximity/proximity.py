@@ -1,30 +1,8 @@
 # coding: utf-8
 
-import sys
 from threading import Thread
 
-IMPORT_BT = 0
-try:
-    import bluetooth
-    IMPORT_BT = IMPORT_BT + 1
-except:
-    pass
-try:
-    import _bluetooth as bluez
-    IMPORT_BT = IMPORT_BT + 1
-except:
-    pass
-try:
-    import bluetooth._bluetooth as bluez
-    IMPORT_BT = IMPORT_BT + 1
-except:
-    pass
-if IMPORT_BT != 2:
-    print(_("The program cannot import the module bluetooth."))
-    print(_("Please make sure the bluetooth bindings for python as well as bluez are installed."))
-    print(_("e.g. with Ubuntu Linux, type"))
-    print(_(" sudo apt-get install python-bluez"))
-    sys.exit(1)
+import bluetooth
 
 
 # This class does 'all the magic' like regular device detection and decision making
