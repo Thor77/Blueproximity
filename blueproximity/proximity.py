@@ -46,16 +46,6 @@ class Proximity (Thread):
         self.timeGone = 0
         self.timeProx = 0
 
-    def get_device_list(self):
-        '''
-        Return all active bluetooth devices found. (blocking)
-        '''
-        ret_tab = list()
-        nearby_devices = bluetooth.discover_devices()
-        for bdaddr in nearby_devices:
-            ret_tab.append([str(bdaddr), str(bluetooth.lookup_name(bdaddr))])
-        return ret_tab
-
     def kill_connection(self):
         '''
         Kill the rssi detection connection
