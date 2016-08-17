@@ -85,3 +85,6 @@ class BluetoothDevice(object):
     def __str__(self):
         return '{name}({mac}, {port})'.format(name=self.name, mac=self.mac,
                                               port=self.port)
+
+    def __repr__(self):
+        return self.__str__()
