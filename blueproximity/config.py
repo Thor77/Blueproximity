@@ -26,8 +26,8 @@ DEFAULT_CONFIG = {
         'interval': 60
     },
     'Log': {
-        'syslog': True,
-        'facility': 'local7',
+        'syslog': False,
+        'syslog_facility': 'local7',
         'file': False,
         'filename': 'blueproximity.log'
     }
