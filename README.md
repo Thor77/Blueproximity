@@ -1,4 +1,4 @@
-Blueproximity
+Blueproximity [![Documentation Status](https://readthedocs.org/projects/blueproximity/badge/?version=latest)](http://blueproximity.readthedocs.io/en/latest/?badge=latest) [![Build Status](https://travis-ci.org/Thor77/Blueproximity.svg?branch=master)](https://travis-ci.org/Thor77/Blueproximity)
 =============
 
 [TODOs until reaching usable state](https://github.com/Thor77/Blueproximity/milestone/1)
