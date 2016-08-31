@@ -26,7 +26,10 @@ class BluetoothDevice(object):
     '''
     def __init__(self, mac, name=None, port=None):
         self.mac = mac
-        self.name = name
+        if not name:
+            self.name = bluetooth.lookup_name(mac)
+        else:
+            self.name = name
         self.port = port
 
     def scan_ports(self):
