@@ -24,13 +24,13 @@ class BluetoothDevice(object):
     '''
     Abstract access to a bluetooth-device
     '''
-    def __init__(self, mac, name=None, port=None):
+    def __init__(self, mac, port=None, name=None):
         self.mac = mac
+        self.port = port
         if not name:
             self.name = bluetooth.lookup_name(mac)
         else:
             self.name = name
-        self.port = port
 
     def scan_ports(self):
         '''
