@@ -9,7 +9,8 @@ except ImportError:
 DEFAULT_CONFIG = {
     'Device': {
         'mac': None,
-        'port': None
+        'port': None,
+        'name': None
     },
     'Lock': {
         'distance': 7,
