@@ -23,7 +23,6 @@ DEFAULT_CONFIG = {
         'command': 'gnome-screensaver-command -d'
     },
     'Proximity': {
-        'command': 'gnome-screensaver-command -p',
         'interval': 60
     },
     'Log': {
