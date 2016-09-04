@@ -31,6 +31,9 @@ too :-)
 ## Contributors
 * Tobias Jakobs (GUI optimizations)
 * Zsolt Mazolt (GUI and KDE stuff)
+* christoss (Slovene translation)
+* eljak (Arabic translation)
+* byMeanMachine (Polish translation)
 
 ## Interesting commands
 * Un-/Locking gnome-screenserver
