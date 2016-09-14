@@ -12,7 +12,7 @@ local_path = 'LANG/'
 # Collect available languages
 available_languages = [getdefaultlocale()[0]]  # system locale
 available_languages += environ.get('LANGUAGE', '').split(':')  # environment
-available_languages += ["en"]  # default language
+available_languages += ['en']  # default language
 
 gettext.bindtextdomain(APP_NAME, local_path)
 gettext.textdomain(APP_NAME)
