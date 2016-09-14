@@ -38,9 +38,11 @@ class Worker(threading.Thread):
                 lock = 0
             # check for (un)lock threshold
             if unlock >= self.config.get('Unlock', 'duration'):
+                logger.info('Unlock threshold reached')
                 # set unlock command
                 command = self.config.get('Unlock', 'command')
             elif lock >= self.config.get('Lock', 'duration'):
+                logger.info('Lock threshold reached')
                 # set lock command
                 command = self.config.get('Lock', 'command')
             else:
@@ -50,6 +52,7 @@ class Worker(threading.Thread):
                 unlock = 0
                 lock = 0
                 # run command
+                logger.info('Running %s', command)
                 p = subprocess.run(command.split(), stdout=subprocess.PIPE)
                 if p.returncode != 0:
                     logger.critical(
