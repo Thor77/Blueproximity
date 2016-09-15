@@ -3,6 +3,7 @@ import subprocess
 
 import bluetooth
 import bluetooth._bluetooth as bluez
+from blueproximity.log import logger
 
 rssi_re = re.compile('^RSSI return value: (-?\d+)')
 
@@ -45,8 +46,7 @@ class BluetoothDevice(object):
                 self.disconnect()
                 return port
             except:
-                pass
-                # logger.debug('Couldn\'t get connection on port %s', port)
+                logger.debug('Couldn\'t get connection on port %s', port)
 
     def connect(self, port=None):
         '''
