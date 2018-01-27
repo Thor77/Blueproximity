@@ -19,7 +19,7 @@ def scan():
     '''
     def _scan():
         for mac, name in bluetooth.discover_devices(lookup_names=True):
-            yield BluetoothDevice(mac, name)
+            yield BluetoothDevice(mac=mac, name=name)
     return list(_scan())
 
 
