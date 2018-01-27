@@ -33,7 +33,21 @@ DEFAULT_CONFIG = {
 }
 
 
-def load(path=None):
+class MissingConfiguration(Exception):
+    pass
+
+
+def _validate(configuration):
+    '''
+    Validate `configuration` has all required parameters set
+    '''
+    if not configuration.get('Device', 'mac'):
+        raise MissingConfiguration('Device.mac')
+    if not configuration.get('Device', 'port'):
+        raise MissingConfiguration('Device.port')
+
+
+def load(path=None, validate=False):
     '''
     parse config at `config_path`
     :param config_path: path to config-file
@@ -51,4 +65,6 @@ def load(path=None):
             config.set(section, key, str(value))
     if path:
         config.read(path)
+    if validate:
+        _validate(config)
     return config
