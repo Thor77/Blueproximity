@@ -4,6 +4,7 @@ import subprocess
 
 import bluetooth
 import bluetooth._bluetooth as bluez
+
 from blueproximity.log import logger
 
 rssi_re = re.compile('^RSSI return value: (-?\d+)')
@@ -87,8 +88,9 @@ class BluetoothDevice(object):
         return -255
 
     def __str__(self):
-        return '{name}({mac}, {port})'.format(name=self.name, mac=self.mac,
-                                              port=self.port)
+        return '{name} ({mac}, {port})'.format(
+            name=self.name, mac=self.mac, port=self.port
+        )
 
     def __repr__(self):
         return self.__str__()
