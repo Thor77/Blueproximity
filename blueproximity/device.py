@@ -81,8 +81,8 @@ class BluetoothDevice(object):
         if p.returncode == 0:
             match = rssi_re.match(p.stdout.decode('utf-8'))
             if match:
-                return int(match.group(1))
-        return -255
+                return abs(int(match.group(1)))
+        return 255
 
     def __str__(self):
         return '{name} ({mac}, {port})'.format(
