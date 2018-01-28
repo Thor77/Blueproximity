@@ -48,7 +48,6 @@ class BluetoothDevice(object):
         for port in range(1, 30):
             try:
                 self.connect(port)
-                self.disconnect()
                 return port
             except bluetooth.btcommon.BluetoothError:
                 logger.debug('Couldn\'t get connection on port %s', port)
