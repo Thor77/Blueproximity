@@ -48,6 +48,7 @@ class BluetoothDevice(object):
         for port in range(1, 30):
             try:
                 self.connect(port)
+                logger.debug('Could connect on port %s', port)
                 return port
             except bluetooth.btcommon.BluetoothError:
                 logger.debug('Couldn\'t get connection on port %s', port)
@@ -66,6 +67,7 @@ class BluetoothDevice(object):
             return
         if not port:
             port = self.port
+        logger.debug('Connecting %s on port %s', self, port)
         self.sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM,
                                               bluez.btsocket())
         self.sock.connect((self.mac, port))
@@ -76,6 +78,7 @@ class BluetoothDevice(object):
         '''
         if not self.connected:
             return
+        logger.debug('Disconnecting %s', self)
         if self.sock:
             self.sock.close()
             self.sock = None
