@@ -73,6 +73,8 @@ class BluetoothDevice(object):
         '''
         Disconnect the device
         '''
+        if not self.connected:
+            return
         if self.sock:
             self.sock.close()
             self.sock = None
