@@ -61,6 +61,8 @@ class BluetoothDevice(object):
         :param port: port used for connection
         :type port: int
         '''
+        if self.connected:
+            return
         if not port:
             port = self.port
         self.sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM,
