@@ -29,6 +29,8 @@ class BluetoothDevice(object):
     Abstract access to a bluetooth-device
     '''
     def __init__(self, mac, port=None, name=None):
+        self.sock = None
+
         self.mac = mac
         self.port = port
         self.name = name
