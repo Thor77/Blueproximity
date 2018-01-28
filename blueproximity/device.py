@@ -6,6 +6,7 @@ import bluetooth
 import bluetooth._bluetooth as bluez
 
 from blueproximity.log import logger
+from blueproximity.exceptions import DeviceException
 
 rssi_re = re.compile('^RSSI return value: (-?\d+)')
 
@@ -49,6 +50,9 @@ class BluetoothDevice(object):
                 return port
             except bluetooth.btcommon.BluetoothError:
                 logger.debug('Couldn\'t get connection on port %s', port)
+        raise DeviceException(
+            '{}: Couldn\'t find suitable port for connection'.format(self)
+        )
 
     def connect(self, port=None):
         '''
