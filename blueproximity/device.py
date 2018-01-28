@@ -76,6 +76,15 @@ class BluetoothDevice(object):
             self.sock = None
 
     @property
+    def connected(self):
+        p = subprocess.run(
+            ['hcitool', 'lq', self.mac],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        return p.returncode == 0
+
+    @property
     def distance(self):
         '''
         Determinte distance of the device
