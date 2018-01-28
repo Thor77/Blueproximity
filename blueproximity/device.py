@@ -92,8 +92,11 @@ class BluetoothDevice(object):
         :return: distance of the device
         :rtype: int
         '''
-        p = subprocess.run(['hcitool', 'rssi', self.mac],
-                           stdout=subprocess.PIPE)
+        p = subprocess.run(
+            ['hcitool', 'rssi', self.mac],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL
+        )
         if p.returncode == 0:
             match = rssi_re.match(p.stdout.decode('utf-8'))
             if match:
