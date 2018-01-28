@@ -110,9 +110,11 @@ class BluetoothDevice(object):
         return 255
 
     def __str__(self):
-        return '{name} ({mac}, {port})'.format(
-            name=self.name, mac=self.mac, port=self.port
-        )
+        return 'BluetoothDevice(mac={mac}, port={port}, name={name}, '\
+            'connected={connected})'.format(
+                mac=self.mac, port=self.port,
+                name=self.name, connected=self.connected
+            )
 
     def __repr__(self):
         return self.__str__()
