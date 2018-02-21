@@ -6,11 +6,6 @@ except ImportError:
 
 
 DEFAULT_CONFIG = {
-    'Device': {
-        'mac': None,
-        'port': None,
-        'name': None
-    },
     'Lock': {
         'distance': 7,
         'duration': 7,
