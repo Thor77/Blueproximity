@@ -5,8 +5,8 @@ import subprocess
 import bluetooth
 import bluetooth._bluetooth as bluez
 
-from blueproximity.log import logger
 from blueproximity.exceptions import DeviceException
+from blueproximity.log import logger
 
 rssi_re = re.compile('^RSSI return value: (-?\d+)')
 
@@ -101,6 +101,7 @@ class BluetoothDevice(object):
         :rtype: int
         '''
         if not self.connected:
+            logger.debug('Device disconnected -> reconnecting')
             self.connect()
         p = subprocess.run(
             ['hcitool', 'rssi', self.mac],
