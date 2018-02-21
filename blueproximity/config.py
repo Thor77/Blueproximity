@@ -27,8 +27,18 @@ DEFAULT_CONFIG = {
     }
 }
 
+# generate dict of expected types for config settings
+# by using values from DEFAULT_CONFIG as a reference
+DEFAULT_CONFIG_TYPES = {
+    section: {
+        key: type(value)
+        for key, value in settings.items()
+    }
+    for section, settings in DEFAULT_CONFIG.items()
+}
 
-class MissingConfiguration(Exception):
+
+class InvalidConfiguration(Exception):
     pass
 
 
@@ -36,10 +46,18 @@ def _validate(configuration):
     '''
     Validate `configuration` has all required parameters set
     '''
-    if configuration.get('Device', 'mac') == 'None':
-        raise MissingConfiguration('Device.mac')
-    if configuration.getint('Device', 'port', fallback='None') == 'None':
-        raise MissingConfiguration('Device.port')
+    for section, settings in DEFAULT_CONFIG_TYPES.items():
+        for setting, expected_type in settings.items():
+            try:
+                # get value from configuration
+                # and try to convert it to the expected type
+                expected_type(configuration.get(section, setting))
+            except ValueError:
+                raise InvalidConfiguration(
+                    '{}.{} can\'t be converted to expected type {}'.format(
+                        section, setting, expected_type.__name__
+                    )
+                )
 
 
 def load(path=None, validate=False):
