@@ -15,5 +15,6 @@ class GUIWorker(Thread):
             logger.debug('Working on "%s"', next_task)
             # process task
             if next_task.action == 'quit':
+                self.queue.task_done()
                 break
             self.queue.task_done()
