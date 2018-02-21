@@ -27,7 +27,9 @@ def main():
     else:
         config_path = os.path.join(
             BaseDirectory.save_config_path(APP_NAME), 'config.ini')
-    configuration = blueproximity.config.load(config_path)
+    configuration = config.load(config_path, validate=True)
+    # initiate logging
+    init_logging(configuration)
 
     if args.gui:
         # start GUI

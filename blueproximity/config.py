@@ -41,9 +41,9 @@ def _validate(configuration):
     '''
     Validate `configuration` has all required parameters set
     '''
-    if not configuration.get('Device', 'mac'):
+    if configuration.get('Device', 'mac') == 'None':
         raise MissingConfiguration('Device.mac')
-    if not configuration.get('Device', 'port'):
+    if configuration.getint('Device', 'port', fallback='None') == 'None':
         raise MissingConfiguration('Device.port')
 
 
