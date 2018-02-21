@@ -4,8 +4,7 @@ import os.path
 
 from xdg import BaseDirectory
 
-import blueproximity.config
-from blueproximity import APP_NAME, ProximityGUI
+from blueproximity import APP_NAME, config, init_logging
 
 
 def cli():
@@ -31,9 +30,6 @@ def main():
     # initiate logging
     init_logging(configuration)
 
-    if args.gui:
-        # start GUI
-        ProximityGUI(configuration)
 
 if __name__ == '__main__':
     main()
