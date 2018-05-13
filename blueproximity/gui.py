@@ -14,14 +14,14 @@ Task = namedtuple('Task', ['action', 'args'])
 
 
 class DevicesPage(Gtk.Box):
-    def __init__(self, queue):
+    def __init__(self, input_queue, output_queue):
         super().__init__()
         self.orientation = Gtk.Orientation.VERTICAL
         self.add(Gtk.Label('Devices page content'))
 
 
 class BlueproximityGUI(Gtk.Window):
-    def __init__(self, queue):
+    def __init__(self, input_queue, output_queue):
         super().__init__(title='Blueproximity')
         self.set_default_size(400, 550)
 
@@ -29,7 +29,9 @@ class BlueproximityGUI(Gtk.Window):
         self.add(notebook)
 
         # Devices page
-        notebook.append_page(DevicesPage(queue), Gtk.Label('Devices'))
+        notebook.append_page(
+            DevicesPage(input_queue, output_queue), Gtk.Label('Devices')
+        )
 
         # Proximity page
         proximity_page = Gtk.Box()
@@ -43,15 +45,16 @@ class BlueproximityGUI(Gtk.Window):
 
 
 def run():
-    queue = PriorityQueue()
+    input_queue = PriorityQueue()
+    output_queue = PriorityQueue()
     # start gui worker
-    gw = GUIWorker(queue)
+    gw = GUIWorker(input_queue, output_queue)
     gw.start()
 
-    window = BlueproximityGUI(queue)
+    window = BlueproximityGUI(input_queue, output_queue)
     window.connect('delete-event', Gtk.main_quit)
     window.connect(
-        'delete-event', lambda *a: queue.put(a[2]), Task('quit', [])
+        'delete-event', lambda *a: input_queue.put(a[2]), Task('quit', [])
     )
     window.show_all()
     Gtk.main()
