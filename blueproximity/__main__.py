@@ -5,7 +5,7 @@ import os.path
 from xdg import BaseDirectory
 
 from blueproximity import (APP_NAME, BluetoothDevice, Worker, config,
-                           init_logging)
+                           init_logging, run_gui)
 
 
 def cli():
@@ -39,6 +39,9 @@ def main():
         worker.run()
     except KeyboardInterrupt:
         worker.stop()
+
+    if args.gui:
+        run_gui()
 
 
 if __name__ == '__main__':
