@@ -4,7 +4,8 @@ import os.path
 
 from xdg import BaseDirectory
 
-from blueproximity import APP_NAME, config, init_logging
+from blueproximity import (APP_NAME, BluetoothDevice, Worker, config,
+                           init_logging)
 
 
 def cli():
@@ -13,6 +14,9 @@ def cli():
     ''')
     parser.add_argument('--gui', help='Start GUI', action='store_true')
     parser.add_argument('-c', '--config', help='Path to configfile', type=str)
+    parser.add_argument(
+        '-m', '--mac', help='Provide mac of target device', type=str, required=True
+    )
     return parser.parse_args()
 
 
@@ -29,6 +33,9 @@ def main():
     configuration = config.load(config_path, validate=True)
     # initiate logging
     init_logging(configuration)
+    device = BluetoothDevice(args.mac)
+    worker = Worker(device, configuration)
+    worker.run()
 
 
 if __name__ == '__main__':
