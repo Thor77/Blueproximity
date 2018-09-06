@@ -35,7 +35,10 @@ def main():
     init_logging(configuration)
     device = BluetoothDevice(args.mac)
     worker = Worker(device, configuration)
-    worker.run()
+    try:
+        worker.run()
+    except KeyboardInterrupt:
+        worker.stop()
 
 
 if __name__ == '__main__':

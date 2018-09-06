@@ -13,6 +13,7 @@ class Worker(threading.Thread):
     def __init__(self, device, configuration):
         self.device = device
         self.configuration = configuration
+        self.stopped = False
         super().__init__()
 
     def run(self):
@@ -29,7 +30,7 @@ class Worker(threading.Thread):
         }
         # set initial state
         state = states['unlock']
-        while True:
+        while not self.stopped:
             last_state = state
             # determine current distance
             current_distance = self.device.distance
@@ -47,3 +48,11 @@ class Worker(threading.Thread):
             time.sleep(self.configuration.getint('Proximity', 'interval'))
         # disconnect from device
         self.device.disconnect()
+
+    def stop(self):
+        logger.info('Stopping daemon for "%s"', self.device)
+        # make sure loop doesn't run again
+        self.stopped = True
+        # disconnect devicd
+        self.device.disconnect()
+
