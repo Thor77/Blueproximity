@@ -1,6 +1,9 @@
 Blueproximity [![Documentation Status](https://readthedocs.org/projects/blueproximity/badge/?version=latest)](http://blueproximity.readthedocs.io/en/latest/?badge=latest) [![Build Status](https://travis-ci.org/Thor77/Blueproximity.svg?branch=master)](https://travis-ci.org/Thor77/Blueproximity)
 =============
 
+**Currently only [CLI](#CLI) usage is in a working state**
+**You have to pair your bluetooth device manually and specifc it's MAC-address as an argument**
+
 [TODOs until reaching usable state](https://github.com/Thor77/Blueproximity/milestone/1)
 
 This software helps you add a little more security to your
@@ -42,3 +45,30 @@ too :-)
 * Telling GAIM your status
   * `gaim-remote "irc:setstatus?status=away&message=BlueProximity thinks I am away"`
   * `gaim-remote "irc:setstatus?status=available"`
+
+## CLI
+```
+usage: blueproximity [-h] [--gui] [-c CONFIG] -m MAC
+
+Unlock your computer as soon as a bluetooth-device is in range
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --gui                 Start GUI
+  -c CONFIG, --config CONFIG
+                        Path to configfile
+  -m MAC, --mac MAC     Provide mac of target device
+```
+
+Example `config.ini`
+```
+[Lock]
+distance = 7
+duration = 7
+command = gnome-screensaver-command -l
+
+[Unlock]
+distance = 4
+duration = 1
+command = gnome-screensaver-command -d
+```
